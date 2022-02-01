@@ -1,100 +1,86 @@
 package model;
 
+public class Persona {
+    private String 	nombre;
+    private String 	apellidos;
+    private int 	edad;
 
-public class Equipo {
-    private String nombre;
-    private String club;
-    private Entrenador entrenador;
-    private String equipacionCasa;
-    private String equipacionFuera;
-    private int numJug;
-    private Jugador[] jugadores;
-
-    public static String equipacioncasa () {
-
-        String[] equipC = {"Rojo-Amarillo", "Verde-Blanco","Azul-Blanco","Rojo-Negro","Amarillo-Azul",
-                "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
-
-        int numero = (int) Math.floor(Math.random()*equipC.length);
-        String equipacioncasa = equipC[numero];
-
-        return equipacioncasa;
-
+    //Constructor
+    public Persona() {
+        this.apellidos = apellidoCreado()+" "+apellidoCreado();
+        //this.nombre =	nombreCreado();
+        this.edad = edadAsignada(apellidos);
     }
 
-    public static String equipfuera () {
 
-        String[] equipF = {"Rojo", "Verde","Azul","Negro","Amarillo",
-                "Naranja", "Rosa", "Blanco", "Gris"};
-
-        int numero = (int) Math.floor(Math.random()*equipF.length);
-        String equipacionfuera = equipF[numero];
-
-        return equipacionfuera;
-
-    }
-
-    public static int numeroJugadores () {
-
-        int numeroJ = (int) Math.floor(Math.random()*9)+11;
-
-        return numeroJ;
-
-    }
-
+    //NOMBRE
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public String getClub() {
-        return club;
-    }
-    public void setClub(String club) {
-        this.club = club;
-    }
-    public Entrenador getEntrenador() {
-        return entrenador;
-    }
-    public void setEntrenador(Entrenador entrenador) {
-        this.entrenador = entrenador;
-    }
-    public String getEquipacionCasa() {
-        return equipacionCasa;
-    }
-    public void setEquipacionCasa(String equipacionCasa) {
-        this.equipacionCasa = equipacionCasa;
-    }
-    public String getEquipacionFuera() {
-        return equipacionFuera;
-    }
-    public void setEquipacionFuera(String equipacionFuera) {
-        this.equipacionFuera = equipacionFuera;
-    }
-    public Jugador[] getJugadores() {
-        return jugadores;
-    }
-    public void setJugadores(Jugador[] jugadores) {
-        this.jugadores = jugadores;
-    }
-    private String toStringJugadores(Jugador[] jugadores) {
-        String listadoJugadores="";
-        for (Jugador j: jugadores) {
-            listadoJugadores+=j+"\n";
-        }
-        return listadoJugadores;
 
+    //APELLIDOS
+    public String getApellidos() {
+        return apellidos;
     }
+
+    public void setApellidos() {
+        this.apellidos = apellidoCreado();
+    }
+
+    //EDAD
+    public int getEdad() {
+        return edad;
+    }
+
+    public void setEdad(int edadMax, int edadMin) {
+        int edad = (int)Math.floor(Math.random()*(edadMax-edadMin))+edadMin;
+        this.edad = edad;
+    }
+
+    //GENERADOR SYSO
     @Override
     public String toString() {
-        return "Nombre del Equipo: "+this.nombre+"\n"+
-                "Club: "+this.club+"\n"+
-                "Entrenador"+"\n"+
-                entrenador+"\n"+
-                "Plantilla: "+"\n"+
-                toStringJugadores(this.jugadores);
-
+        return "Nombre: "+this.nombre+" "+this.apellidos+"\n"+"Edad: "+this.edad;
     }
 
+
+
+
+    //Generador de Apellidos aleatorios
+    public static String apellidoCreado () {
+        String apellidos[] = {"Marui", "Shima", "Sawa", "Toyo", "Cromwell", "Keller", "Perdido", "Zimmerman", "Anderson", "Gasper", "Degurechaff", "Jimenez",
+                "Gonzalez", "Lamata", "Feliz","Bragueta", "Amiano", "Enamorado", "Nigote", "Delano", "Messina",
+                "Di Montelroso", "Krauser", "Marston", "Auditore", "Bernstein", "Bogard", "Briggs", "Chaolan", "Eggman", "Dorian", "Dragunov",
+                "Drake", "Winters", "Falcon", "Freeman", "Hudson", "Ibn-La' Ahad", "Yamazaki", "Wesker", "Snake", "Tsung", "Takahashi", "Strife",
+                "Schugerg", "Schtauffen", "Sakazaki", "Hayabusa", "Porter", "Nikaido", "Nanakase", "Chief", "Tyrell", "Lannister", "Baratheon",
+                "Martell", "Stark", "Targaryen", "Tully", "Okabe", "Krusoe", "Vergassola", "Ali Baba", "Serebriakov"};
+
+
+        int numero=(int) Math.floor(Math.random()*apellidos.length)-1;
+        //String apellido = apellidos[numero];
+        return apellidos[numero];
+    }
+
+
+
+    public static String nombreCreado () {
+
+        String[] nombres = {"Altair","Ezio", "Sora", "Connor", "Kratos","Link","Zelda","Kirby","Megaman", "Bowser",
+                "Ratchet","Donkey Kong", "Goku", "Doraemon", "Perchita", "Suneo", "Gandalf", "Frodo", "Bilbo",
+                "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt","Trevor","Victor", "Jinx", "VI", "Catelyn",
+                "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro","Squall","Yuna", "Riku", "Jill", "Wesker",
+                "Kassandra", "Alexios", "Luigi","Cicerón","Duke","Tifa","Alucard","Drake", "Koopa","Axel","Arwen",
+                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron","Legolas","Leia","Luke", "Vader","Rosa"};
+
+
+        int numero = (int) Math.floor(Math.random()*nombres.length);
+        String nombre = nombres[numero];
+
+        return nombre[numero];
+
+    }
 }
