@@ -4,6 +4,10 @@ package model;
 public class Arbitro extends Persona {
     int licencia;
 
+    public Arbitro() {
+        super.setEdad(18, 45);
+    }
+
     public int getLicencia() {
         return licencia;
     }
@@ -11,12 +15,5 @@ public class Arbitro extends Persona {
     public void setLicencia(int licencia) {
         this.licencia = licencia;
     }
-
-    @Override
-    public String toString() {
-        return "Arbitro [licencia=" + licencia + ", getNombre()=" + getNombre() + ", getApellidos()=" + getApellidos()
-                + ", getEdad()=" + getEdad() + "]";
-    }
-
 
 }
