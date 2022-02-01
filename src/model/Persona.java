@@ -8,8 +8,8 @@ public class Persona {
     //Constructor
     public Persona() {
         this.apellidos = apellidoCreado()+" "+apellidoCreado();
-        //this.nombre =	nombreCreado();
-        this.edad = edadAsignada(apellidos);
+        this.nombre =	nombreCreado();
+        this.edad = edad;
     }
 
 
@@ -33,7 +33,7 @@ public class Persona {
 
     //EDAD
     public int getEdad() {
-        return edad;
+        return this.edad;
     }
 
     public void setEdad(int edadMax, int edadMin) {
@@ -80,7 +80,7 @@ public class Persona {
         int numero = (int) Math.floor(Math.random()*nombres.length);
         String nombre = nombres[numero];
 
-        return nombre[numero];
+        return nombres[numero];
 
     }
 }
