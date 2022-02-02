@@ -2,10 +2,11 @@ import model.*;
 
 public class Main {
 
-    public static void main(String[] args) {
+    //Inicializamos las probabilidades de Goles, una vez
+    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
-        //Inicializamos las probabilidades de Goles, una vez
-        int[] probabilidadGoles = generadorProbabilidades();
+    //TODO investigar porque static no funca
+    public static void main(String[] args) {
 
         //Instaciar Equipo
         Equipo equipo1 = new Equipo();
@@ -16,8 +17,10 @@ public class Main {
 
         //PARTIDO
         Partido partido = crearPartido("Juvenil");
+        System.out.println(
+            partido.toString()
+        );
 
-        //TODO: quedan por asignar los goles
     }
 
     //Generador de probabilidades, lo llamamos 1 vez
@@ -48,6 +51,11 @@ public class Main {
         return probabilidad;
     }
 
+    public static int generadorGoles() {
+        int numRamdon = (int)Math.floor(Math.random() * 100);
+        return PROBABILIDADESGOLES[numRamdon];
+    }
+
     //Crea un array de jugadores, con un tam variable entre 11 y 20,
     //Este tamaño: numJugadores, sale de Equipo.java
     public static Jugador[] crearJugadores(String categoria) {
@@ -70,14 +78,18 @@ public class Main {
         return equipo;
     }
 
-    //Creamos partido nuevo
+    //Creamos el evento del partido, pero todabia no lo jugamos en este metodo
     public static Partido crearPartido(String categoria) {
         Equipo equipoCasa = crearEquipo(categoria);
         Equipo equipoFuera = crearEquipo(categoria);
         Arbitro arbitro = new Arbitro();
         Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
 
+        partido.setGolesEquipoCasa(generadorGoles());
+        partido.setGolesEquipoFuera(generadorGoles());
+
         return partido;
     }
+    //TODO: Queda comprobar quien gana
+    
 }
-
