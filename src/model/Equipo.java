@@ -127,6 +127,7 @@ public class Equipo {
         return nombre[nom];
     }
 
+    //TODO renombrar equipacioncasa() y equipfuera(), no cumplen con lowerCamelCase.
     public static String equipacioncasa() {
 
         String[] equipC = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul",
@@ -149,16 +150,5 @@ public class Equipo {
 
         return equipacionfuera;
 
-    }
-
-    public static Jugador[] crearJugadores(String categoria) {
-        int numJugadores = Equipo.asigNumJugadores();
-        Jugador[] jugadores = new Jugador[numJugadores];
-
-        for (int i = 0; i < numJugadores; i++) {
-            Jugador jugador = new Jugador(categoria, i + 1);
-            jugadores[i] = jugador;
-        }
-        return jugadores;
     }
 }
