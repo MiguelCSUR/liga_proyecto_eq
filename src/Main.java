@@ -18,10 +18,13 @@ public class Main {
         //PARTIDO
         Partido partido = crearPartido("Juvenil");
         System.out.println(
-            partido.toString()
+                partido.toString()
         );
 
+        //Aquí comprobamos el ganador
+        comprobarGanador(partido);
     }
+
 
     //Generador de probabilidades, lo llamamos 1 vez
     public static int[] generadorProbabilidades() {
@@ -52,8 +55,23 @@ public class Main {
     }
 
     public static int generadorGoles() {
-        int numRamdon = (int)Math.floor(Math.random() * 100);
+        int numRamdon = (int) Math.floor(Math.random() * 100);
         return PROBABILIDADESGOLES[numRamdon];
+    }
+
+    //TODO: Borrar este metodo, cuando hagamos Clasificacion.java
+    //PROBISIONAL Un metodo simple que comprueba el ganador, no develve nada solo imprime texto
+    public static void comprobarGanador(Partido partido) {
+        if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
+            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
+        } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
+        } else {
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
+                    partido.getEquipoCasa().getNombre());
+        }
     }
 
     //Crea un array de jugadores, con un tam variable entre 11 y 20,
@@ -90,6 +108,5 @@ public class Main {
 
         return partido;
     }
-    //TODO: Queda comprobar quien gana
-    
 }
+
