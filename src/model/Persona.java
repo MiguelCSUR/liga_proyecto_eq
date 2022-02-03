@@ -49,7 +49,6 @@ public class Persona {
         return "Nombre: " + this.nombre + " " + this.apellidos + "\n" + "Edad: " + this.edad;
     }
 
-
     //Generador de Apellidos aleatorios
     public static String apellidoCreador() {
         String apellidos[] = {"Marui", "Shima", "Sawa", "Toyo", "Cromwell", "Keller", "Perdido", "Zimmerman", "Anderson", "Gasper", "Degurechaff", "Jimenez",

@@ -1,5 +1,6 @@
 package model;
 
+
 public class Partido extends Jornada{
 
     private Equipo equipoCasa;
@@ -56,11 +57,13 @@ public class Partido extends Jornada{
 
     @Override
     public String toString() {
+
         return "Partido: " +
                 "\nArbitro: " + arbitro.getNombre() + " " +  arbitro.getApellidos() +
                 "\nEquipo Casa: " + equipoCasa.getNombre() +
                 "\n\tGoles Equipo Casa: " + golesEquipoCasa +
                 "\nEquipo Fuera: " + equipoFuera.getNombre() +
                 "\n\tGoles Equipo Fuera: " + golesEquipoFuera;
+
     }
 }

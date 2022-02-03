@@ -86,7 +86,7 @@ public class Equipo {
         return this.puntos = puntos;
     }
 
-    public int getPuntos(){
+    public int getPuntos() {
         return puntos;
     }
 
@@ -148,17 +148,6 @@ public class Equipo {
 
         return equipacioncasa;
 
-    }
-
-    public static String equipfuera() {
-
-        String[] equipF = {"Rojo", "Verde", "Azul", "Negro", "Amarillo",
-                "Naranja", "Rosa", "Blanco", "Gris"};
-
-        int numero = (int) Math.floor(Math.random() * equipF.length);
-        String equipacionfuera = equipF[numero];
-
-        return equipacionfuera;
 
     }
 }

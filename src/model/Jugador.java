@@ -115,3 +115,4 @@ public class Jugador extends Persona {
                 "Dorsal: " + dorsal + " Posición: " + posicion + "\n";
     }
 }
+
