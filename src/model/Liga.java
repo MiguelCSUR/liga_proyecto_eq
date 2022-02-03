@@ -1,6 +1,8 @@
 package model;
 
 
+import java.util.Arrays;
+
 public class Liga {
 
     private String nombre;
@@ -119,5 +121,14 @@ public class Liga {
             listaArbitro[i]=arbitro;
         }
         return listaArbitro;
+    }
+
+    @Override
+    public String toString() {
+        return "Liga{" +
+                "nombre='" + nombre + '\'' +
+                ", equipos=" + Arrays.toString(equipos) +
+                ", arbitros=" + Arrays.toString(arbitros) +
+                '}';
     }
 }

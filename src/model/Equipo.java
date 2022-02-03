@@ -122,7 +122,7 @@ public class Equipo {
                 "Los Fenix", "Los Alkonostes", "Los Balwani", "Los Koscheii", "Los Lisovikii", "Los Peruni", "Las Rusalki",
                 "Los Vodianie", "Los Vondiki", "Los Domovie", "Los Chleni", "Los Jui", "Las Siski", "Las Zhopi", "Los Mineti"};
 
-        int nom = (int) Math.floor(Math.random() * nombre.length) - 1;
+        int nom = (int) Math.floor(Math.random() * nombre.length);
 
         return nombre[nom];
     }

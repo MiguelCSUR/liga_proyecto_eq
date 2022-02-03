@@ -10,21 +10,10 @@ public class Main {
 
     //TODO investigar porque static no funca
     public static void main(String[] args) {
-
-        //Hashmap, NOTAS
-        System.out.println("----------HASHMAP----------------");
-        Map<Equipo, Integer> mapaEquiposPuntos = new HashMap<Equipo, Integer>();
-
-        Equipo eq1 = new Equipo();
-        Equipo eq2 = new Equipo();
-        mapaEquiposPuntos.put(eq1, 100);
-        mapaEquiposPuntos.put(eq2, 0);
-
-
         //CALENDAR
         Calendar calendario = Calendar.getInstance();
         LocalDateTime localDateTime = LocalDateTime.now()/*.plusDays(1)*/;
-        DateTimeFormatter formmatDate = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+        DateTimeFormatter formmatDate = DateTimeFormatter.ofPattern("dd-MM-yy", Locale.ENGLISH);
         String formatter = formmatDate.format(localDateTime);
 
         System.out.println("---------------------");
@@ -35,20 +24,45 @@ public class Main {
         //Instaciar Equipo
         Equipo equipo1 = new Equipo();
 
-        //Asignar lista de jugadores al equipo
-        Jugador[] listaJugadores = crearJugadores("Juvenil");
-        equipo1.setJugadores(listaJugadores);
+        //Crear LISTA de Equipos
+        Equipo[] listaEquipos= new Equipo[8];
+        for(int i = 0;i<8;i++) {
+            listaEquipos[i] = crearEquipo("Juvenil");
+        }
+        Arbitro[] listaArbitro = crearListaArbitro();
 
-        //PARTIDO
-        Partido partido = crearPartido("Juvenil");
-        System.out.println(
-                partido.toString()
-        );
+        crearJornadas(listaEquipos,listaArbitro);
+
+        for (String i : people.keySet()) {
+            System.out.println("key: " + i + " value: " + people.get(i));
+        }
+
+//        Equipo equipo1 = new Equipo();
+//
+//        //Asignar lista de jugadores al equipo
+//        Jugador[] listaJugadores = crearJugadores("Juvenil");
+//        equipo1.setJugadores(listaJugadores);
+//
+//        //PARTIDO
+//        Partido partido = crearPartido("Juvenil");
+//        System.out.println(
+//                partido.toString()
+//        );
+
+        //Crear Jornada
+
 
         //Aquí comprobamos el ganador
 //        comprobarGanador(partido);
     }
 
+    public static Map<Equipo, Integer> initMapaEquiposPuntos(Equipo[] listaEquipos) {
+        Map<Equipo, Integer> mapaEquiposPuntos = new HashMap<Equipo, Integer>();
+        for (int i = 0; i < listaEquipos.length; i++) {
+            mapaEquiposPuntos.put(listaEquipos[i], 0);
+        }
+        return mapaEquiposPuntos;
+    }
 
     //Generador de probabilidades, lo llamamos 1 vez
     public static int[] generadorProbabilidades() {
@@ -119,13 +133,23 @@ public class Main {
         equipo.setJugadores(crearJugadores(categoria));
         return equipo;
     }
+    //TODO: Esto es un creacion de lista de arbitros provisional para provar el crear las jornadas
+    public static Arbitro[] crearListaArbitro(){
+        int numeroArbitros = 100;
+        Arbitro[] listaArbitro = new Arbitro[100];
+        for(int i = 0;i<100;i++){
+            Arbitro arbitro = new Arbitro();
+            listaArbitro[i]=arbitro;
+        }
+
+        return listaArbitro;
+    }
 
     //Creamos el evento del partido, pero todavía no lo jugamos en este método
-    public static Partido crearPartido(String categoria) {
-        Equipo equipoCasa = crearEquipo(categoria);
-        Equipo equipoFuera = crearEquipo(categoria);
-        Arbitro arbitro = new Arbitro();
-        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
+    public static Partido crearPartido(Equipo eq1,Equipo eq2,Arbitro arbitro) {
+        Equipo equipoCasa = eq1;
+        Equipo equipoFuera = eq2;
+        Partido partido = new Partido(eq1, eq2, arbitro);
 
         partido.setGolesEquipoCasa(generadorGoles());
         partido.setGolesEquipoFuera(generadorGoles());
@@ -147,70 +171,87 @@ public class Main {
         return numeroEquipos;
     }
 
-    public static int[][][] crearJornadas(Equipo[] listaEquipos) {
+    public static Partido[][] crearJornadas(Equipo[] listaEquipos, Arbitro [] listaArbitros) {
         int numeroEquipos = listaEquipos.length;
 
         int numEncuentros = (numeroEquipos * (numeroEquipos - 1)) / 2;
         int numRondas;
-        int numPartidosSimultaneos;
-        int equipo = 0;
+        int numeroPartidosPorRonda;
+        int equipoCasa = 0;
+        int equipoFuera = 0;
 
-            if (numeroEquipos % 2 == 0) {
-                numRondas = numeroEquipos - 1;
-                numPartidosSimultaneos = numeroEquipos / 2;
-            } else {
-                numRondas = numeroEquipos;
-                numPartidosSimultaneos = (numeroEquipos - 1) / 2;
-            }
+        if (numeroEquipos % 2 == 0) {
+            numRondas = numeroEquipos - 1;
+            numeroPartidosPorRonda = numeroEquipos / 2;
+        } else {
+            numRondas = numeroEquipos;
+            numeroPartidosPorRonda = (numeroEquipos - 1) / 2;
+        }
 
-            int[][][] rondas;
-            rondas = new int[numRondas][numPartidosSimultaneos][2];
-            if (numeroEquipos % 2 == 0) {
-                equipo = 2;
-                for (int i = 0; i < numRondas; i++) {
-                    rondas[i][0][0] = 1;
-                    for (int j = 1; j < numPartidosSimultaneos; j++) {
-                        rondas[i][j][0] = equipo;
-                        equipo++;
-                        if (equipo > numeroEquipos) equipo = 2;
-                    }
-                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
-                        rondas[i][j][1] = equipo;
-                        equipo++;
-                        if (equipo > numeroEquipos) equipo = 2;
-                    }
-                    equipo++;
-                    if (equipo > numeroEquipos) equipo = 2;
-                }
-            } else {
-                equipo = 1;
-                for (int i = 0; i < numRondas; i++) {
-                    for (int j = 0; j < numPartidosSimultaneos; j++) {
-                        rondas[i][j][0] = equipo;
-                        equipo++;
-                        if (equipo > numeroEquipos) equipo = 1;
-                    }
-                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
-                        rondas[i][j][1] = equipo;
-                        equipo++;
-                        if (equipo > numeroEquipos) equipo = 1;
-                    }
+        Partido[][] jornadas;
+        jornadas = new Partido[numRondas*2][numeroPartidosPorRonda];
+
+        if(numeroEquipos%2 == 0) {//para nº equipos par
+            for(int i = 0 ; i < numRondas ; i++) {
+                equipoCasa = i;
+                equipoFuera = numeroEquipos-1+i;
+                if (equipoFuera>numeroEquipos-1)	equipoFuera-=(numeroEquipos-1);
+                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+                    if (j==0)	jornadas[i][j] = crearPartido(listaEquipos[0], listaEquipos[equipoFuera], listaArbitros[j]);
+                    else		jornadas[i][j] = crearPartido(listaEquipos[equipoCasa], listaEquipos[equipoFuera], listaArbitros[j]);
+
+                    equipoCasa++;
+                    equipoFuera--;
+                    if (equipoCasa>numeroEquipos-1)	equipoCasa = 1;
+                    if (equipoFuera<1)				equipoFuera = numeroEquipos-1;
                 }
             }
-//            imprimirRondas(rondas, numRondas, numPartidos Simultaneos, numEncuentros);
-            return rondas;
-    }
+            for(int i = 0 ; i < numRondas ; i++) {//esto es exactamente igual pero al reves, para que los que jugaron en casa lo hagan fuera y viceversa
+                equipoCasa = i;
+                equipoFuera = numeroEquipos-1+i;
+                if (equipoFuera>numeroEquipos-1)	equipoFuera-=(numeroEquipos-1);
+                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+                    if (j==0){
+                        jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[0], listaArbitros[j]);
+                    }
+                    else		jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[equipoCasa], listaArbitros[j]);
 
-    //TODO: Este metodo es provisional
-    //Imprime las rondas, de los partidos. Que es la liga, no imprime horario.
-    public static void imprimirRondas(int[][][] rondas, int numRondas, int numPartidosSimultaneos, int numEncuentros) {
-        for (int i = 0; i < numRondas; i++) {
-            System.out.println("Ronda " + (i + 1));
-            for (int j = 0; j < numPartidosSimultaneos; j++) {
-                System.out.println("  Partido " + (j + 1) + ". Equipo " + rondas[i][j][0] + " vs Equipo " + rondas[i][j][1]);
+                    equipoCasa++;
+                    equipoFuera--;
+                    if (equipoCasa>numeroEquipos-1)	equipoCasa = 1;
+                    if (equipoFuera<1)				equipoFuera = numeroEquipos-1;
+                }
+            }
+        }else {//para nº equipos impar
+            for(int i = 0 ; i < numRondas ; i++) {
+                equipoCasa = i;
+                equipoFuera = numeroEquipos-1-i;
+                if (equipoCasa<0)	equipoCasa=numeroEquipos-1;
+                if (equipoFuera<0)	equipoFuera=numeroEquipos-1;
+                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+                    jornadas[i][j] = crearPartido(listaEquipos[equipoCasa], listaEquipos[equipoFuera], listaArbitros[j]);
+                }
+            }
+            for(int i = 0 ; i < numRondas ; i++) {//esto es exactamente igual pero al reves, para que los que jugaron en casa lo hagan fuera y viceversa
+                equipoCasa = 0-i;
+                equipoFuera = numeroEquipos-1-i;
+                if (equipoCasa<0)	equipoCasa=numeroEquipos-1;
+                if (equipoFuera<0)	equipoFuera=numeroEquipos-1;
+                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+                    jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[equipoCasa], listaArbitros[j]);
+                }
             }
         }
-        System.out.println("Número total de partidos: " + numEncuentros);
+        for(int i = 0 ; i < numRondas*2 ; i++) {//Para imprimir
+            System.out.println("Jornada "+ (i + 1));
+            for (int j = 0 ; j < numeroPartidosPorRonda ; j++){
+                System.out.println("Partido "+(j + 1));
+                System.out.println(jornadas[i][j]);
+            }
+        }
+
+        return jornadas;
     }
+
 }
 
