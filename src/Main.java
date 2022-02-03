@@ -1,5 +1,7 @@
 import model.*;
 
+import java.util.Scanner;
+
 public class Main {
 
     //Inicializamos las probabilidades de Goles, una vez
@@ -59,8 +61,8 @@ public class Main {
         return PROBABILIDADESGOLES[numRamdon];
     }
 
-    //TODO: Borrar este metodo, cuando hagamos Clasificacion.java
-    //PROBISIONAL Un metodo simple que comprueba el ganador, no develve nada solo imprime texto
+    //TODO: Borrar este método, cuando hagamos Clasificacion.java
+    //PROVISIONAL Un método simple que comprueba el ganador, no devuelve nada solo imprime texto
     public static void comprobarGanador(Partido partido) {
         if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
             System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
@@ -96,7 +98,7 @@ public class Main {
         return equipo;
     }
 
-    //Creamos el evento del partido, pero todabia no lo jugamos en este metodo
+    //Creamos el evento del partido, pero todavía no lo jugamos en este método
     public static Partido crearPartido(String categoria) {
         Equipo equipoCasa = crearEquipo(categoria);
         Equipo equipoFuera = crearEquipo(categoria);
@@ -107,6 +109,86 @@ public class Main {
         partido.setGolesEquipoFuera(generadorGoles());
 
         return partido;
+    }
+
+    //TODO: método provisional.
+    //Pide un número de numeroEquipos, solo lo acepta si es mayor de 1.
+    public static int numeroEquipos() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce el número de equipos: ");
+        int numeroEquipos = sc.nextInt();
+        while (numeroEquipos < 2) {
+            System.out.println("\nSe necesitan mas de un equipo para una liga.");
+            System.out.print("Introduce de nuevo otro número de equipos: ");
+            numeroEquipos = sc.nextInt();
+        }
+        return numeroEquipos;
+    }
+
+    public static int[][][] crearJornadas(Equipo[] listaEquipos) {
+        int numeroEquipos = listaEquipos.length;
+
+        int numEncuentros = (numeroEquipos * (numeroEquipos - 1)) / 2;
+        int numRondas;
+        int numPartidosSimultaneos;
+        int equipo = 0;
+
+            if (numeroEquipos % 2 == 0) {
+                numRondas = numeroEquipos - 1;
+                numPartidosSimultaneos = numeroEquipos / 2;
+            } else {
+                numRondas = numeroEquipos;
+                numPartidosSimultaneos = (numeroEquipos - 1) / 2;
+            }
+
+            int[][][] rondas;
+            rondas = new int[numRondas][numPartidosSimultaneos][2];
+            if (numeroEquipos % 2 == 0) {
+                equipo = 2;
+                for (int i = 0; i < numRondas; i++) {
+                    rondas[i][0][0] = 1;
+                    for (int j = 1; j < numPartidosSimultaneos; j++) {
+                        rondas[i][j][0] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 2;
+                    }
+                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
+                        rondas[i][j][1] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 2;
+                    }
+                    equipo++;
+                    if (equipo > numeroEquipos) equipo = 2;
+                }
+            } else {
+                equipo = 1;
+                for (int i = 0; i < numRondas; i++) {
+                    for (int j = 0; j < numPartidosSimultaneos; j++) {
+                        rondas[i][j][0] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 1;
+                    }
+                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
+                        rondas[i][j][1] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 1;
+                    }
+                }
+            }
+//            imprimirRondas(rondas, numRondas, numPartidos Simultaneos, numEncuentros);
+            return rondas;
+    }
+
+    //TODO: Este metodo es provisional
+    //Imprime las rondas, de los partidos. Que es la liga, no imprime horario.
+    public static void imprimirRondas(int[][][] rondas, int numRondas, int numPartidosSimultaneos, int numEncuentros) {
+        for (int i = 0; i < numRondas; i++) {
+            System.out.println("Ronda " + (i + 1));
+            for (int j = 0; j < numPartidosSimultaneos; j++) {
+                System.out.println("  Partido " + (j + 1) + ". Equipo " + rondas[i][j][0] + " vs Equipo " + rondas[i][j][1]);
+            }
+        }
+        System.out.println("Número total de partidos: " + numEncuentros);
     }
 }
 
