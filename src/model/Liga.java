@@ -99,6 +99,7 @@ public class Liga {
         Equipo[] listaEquipos = new Equipo[numEquipos];
 
         for(int i = 0; i<numEquipos;i++){
+            //TODO, este equipo esta vacio, los equipos se crean en el Main() con la función crearEquipo()
             Equipo equipo =new Equipo();
 
             listaEquipos[i]=equipo;

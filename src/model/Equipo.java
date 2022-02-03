@@ -11,8 +11,9 @@ public class Equipo {
     private int numJugadores;
     private Jugador[] jugadores;
 
-    //TODO provisional, pasar esta a clasificación
+    //TODO: Estas propiedades son probisionales deberian estar en otro sitio.
     private int puntos;
+    private int goles;
 
     public Equipo() {
         setNombre();
@@ -21,6 +22,7 @@ public class Equipo {
         setEntrenador(entrenador);
     }
 
+    //GETTERS SETTERS
     public void setJugadores(Jugador[] jugadores) {
         this.jugadores = jugadores;
     }
@@ -69,17 +71,29 @@ public class Equipo {
         return jugadores;
     }
 
-    public static int asigNumJugadores() {
-        int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
-        return numJugadores;
-    }
-
-    public int setPuntos(int puntos) {
-        return this.puntos = puntos;
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
     }
 
     public int getPuntos() {
         return puntos;
+    }
+
+    public void setGoles(int goles) {
+        this.goles = goles;
+    }
+
+    public int getGoles() {
+        return goles;
+    }
+
+    //GETTERS SETTERS
+
+
+
+    public static int asigNumJugadores() {
+        int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
+        return numJugadores;
     }
 
     @Override
@@ -138,7 +152,7 @@ public class Equipo {
         String equipacioncasa = equipC[numero];
 
         return equipacioncasa;
-
-
     }
+
 }
+

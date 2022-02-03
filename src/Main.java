@@ -33,13 +33,17 @@ public class Main {
 
         crearJornadas(listaEquipos,listaArbitro);
 
+        System.out.println("-------HASH!-------");
+
+        //inicializa Equipos Puntos a 0.
         Map<Equipo, Integer> mapaEquiposPuntos = initMapaEquiposPuntos(listaEquipos);
 
-        System.out.println("-------HASH!-------");
-        //inicializa Equipos Puntos a 0.
+        //printa el hashmapa
         for (Equipo i : mapaEquiposPuntos.keySet()) {
             System.out.println("Nombre Equipos: " + i.getNombre() + " Puntos: " + mapaEquiposPuntos.get(i));
         }
+
+
 
 //        Equipo equipo1 = new Equipo();
 //
@@ -103,16 +107,26 @@ public class Main {
 
     //TODO: Borrar este método, cuando hagamos Clasificacion.java
     //PROVISIONAL Un método simple que comprueba el ganador, no devuelve nada solo imprime texto
-    public static void comprobarGanador(Partido partido) {
+    public static void asignarPuntos(Partido partido) {
+            Equipo equipoCasa = partido.getEquipoCasa();
+            Equipo equipoFuera = partido.getEquipoFuera();
+
         if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
-            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
-                    partido.getEquipoFuera().getNombre());
+            //Empate
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 1);
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 1);
+//            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
+//                    partido.getEquipoFuera().getNombre());
         } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
-            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
-                    partido.getEquipoFuera().getNombre());
+            //Gana Equipo Casa
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 3);
+//            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
+//                    partido.getEquipoFuera().getNombre());
         } else {
-            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
-                    partido.getEquipoCasa().getNombre());
+            //Gana Equipo Fuera
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
+//            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
+//                    partido.getEquipoCasa().getNombre());
         }
     }
 
@@ -150,13 +164,24 @@ public class Main {
     }
 
     //Creamos el evento del partido, pero todavía no lo jugamos en este método
-    public static Partido crearPartido(Equipo eq1,Equipo eq2,Arbitro arbitro) {
-        Equipo equipoCasa = eq1;
-        Equipo equipoFuera = eq2;
-        Partido partido = new Partido(eq1, eq2, arbitro);
+    public static Partido crearPartido(Equipo equipoCasa,Equipo equipoFuera,Arbitro arbitro) {
+        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
 
-        partido.setGolesEquipoCasa(generadorGoles());
-        partido.setGolesEquipoFuera(generadorGoles());
+        //Generamos los golesEquipoCasa
+        int golesEquipoCasa =  generadorGoles();
+        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
+        partido.setGolesEquipoCasa(golesEquipoCasa);
+        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
+        //TODO: Este último paso es redundante eliminar en el futuro.
+        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
+
+        //Se repite el mismo proceso con golesEquipoFuera.
+        int golesEquipoFuera =  generadorGoles();
+        partido.setGolesEquipoFuera(golesEquipoFuera);
+        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
+
+        //Se asignan los puntos
+        asignarPuntos(partido);
 
         return partido;
     }
@@ -257,5 +282,8 @@ public class Main {
         return jornadas;
     }
 
+    public static void asignarPuntos() {
+
+    }
 }
 
