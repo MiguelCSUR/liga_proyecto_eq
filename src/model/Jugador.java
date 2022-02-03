@@ -7,6 +7,13 @@ public class Jugador extends Persona {
     private int dorsal;
     private Equipo equipo;
 
+    public Jugador(String categoria, int dorsal) {
+        this.categoria = categoria;
+        setCategoria(categoria);
+        this.dorsal = dorsal;
+        setDorsal(dorsal);
+    }
+
     public void setJugador(int dorsal, Equipo equipo) {
         this.dorsal = dorsal;
         this.equipo = equipo;
@@ -55,6 +62,7 @@ public class Jugador extends Persona {
             int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
             dorsal = numeroAleatorio;
         }
+
         switch (dorsal) {
             case 1:
                 return "Portero";
@@ -103,8 +111,7 @@ public class Jugador extends Persona {
     @Override
     public String toString() {
         return super.toString() + ", " + categoria + "\n" +
-                "Equipo: " + equipo.getNombre() + "\n" +
+//                "Equipo: " + equipo.getNombre() + "\n" +
                 "Dorsal: " + dorsal + " Posición: " + posicion + "\n";
     }
-
 }
