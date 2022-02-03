@@ -1,14 +1,36 @@
 import model.*;
 
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Main {
-
     //Inicializamos las probabilidades de Goles, una vez
     static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
     //TODO investigar porque static no funca
     public static void main(String[] args) {
+
+        //Hashmap, NOTAS
+        System.out.println("----------HASHMAP----------------");
+        Map<Equipo, Integer> mapaEquiposPuntos = new HashMap<Equipo, Integer>();
+
+        Equipo eq1 = new Equipo();
+        Equipo eq2 = new Equipo();
+        mapaEquiposPuntos.put(eq1, 100);
+        mapaEquiposPuntos.put(eq2, 0);
+
+
+        //CALENDAR
+        Calendar calendario = Calendar.getInstance();
+        LocalDateTime localDateTime = LocalDateTime.now()/*.plusDays(1)*/;
+        DateTimeFormatter formmatDate = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.ENGLISH);
+        String formatter = formmatDate.format(localDateTime);
+
+        System.out.println("---------------------");
+        System.out.println(formatter);
+        System.out.println("---------------------");
+
 
         //Instaciar Equipo
         Equipo equipo1 = new Equipo();

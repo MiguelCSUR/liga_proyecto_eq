@@ -74,14 +74,6 @@ public class Equipo {
         return numJugadores;
     }
 
-    private String toStringJugadores(Jugador[] jugadores) {
-        String listadoJugadores = "";
-        for (Jugador j : jugadores) {
-            listadoJugadores += j;
-        }
-        return listadoJugadores;
-    }
-
     public int setPuntos(int puntos) {
         return this.puntos = puntos;
     }
@@ -96,8 +88,7 @@ public class Equipo {
                 + " Club: " + this.club + "\n"
                 + "Entrenador: " + "\n"
                 + this.entrenador + "\n"
-                + "Plantilla: " + "\n"
-                + toStringJugadores(this.jugadores) + "\n";
+                + "Plantilla: " + "\n";
 
     }
 

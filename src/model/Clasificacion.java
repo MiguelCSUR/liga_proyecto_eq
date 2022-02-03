@@ -1,6 +1,7 @@
 package model;
 
 
-public class Clasificacion {
+public class Clasificacion extends Liga {
+    private Equipo[] listaEquipos;
 
 }
