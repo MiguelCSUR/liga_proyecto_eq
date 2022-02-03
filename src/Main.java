@@ -1,49 +1,23 @@
-import model.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+
+import java.util.Scanner;
 
 public class Main {
+
     //Inicializamos las probabilidades de Goles, una vez
     static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
     //TODO investigar porque static no funca
     public static void main(String[] args) {
-        //CALENDAR
-        Calendar calendario = Calendar.getInstance();
-        LocalDateTime localDateTime = LocalDateTime.now()/*.plusDays(1)*/;
-        DateTimeFormatter formmatDate = DateTimeFormatter.ofPattern("dd-MM-yy", Locale.ENGLISH);
-        String formatter = formmatDate.format(localDateTime);
 
-        System.out.println("---------------------");
-        System.out.println(formatter);
-        System.out.println("---------------------");
-
-
-        //Instaciar Equipo
-        Equipo equipo1 = new Equipo();
-
-        //Crear LISTA de Equipos
-        Equipo[] listaEquipos= new Equipo[8];
-        for(int i = 0;i<8;i++) {
+        //Crear lista de Equipos
+        Equipo[] listaEquipos= new Equipo[5];
+        for(int i = 0;i<5;i++) {
             listaEquipos[i] = crearEquipo("Juvenil");
         }
         Arbitro[] listaArbitro = crearListaArbitro();
 
         crearJornadas(listaEquipos,listaArbitro);
-
-        System.out.println("-------HASH!-------");
-
-        //inicializa Equipos Puntos a 0.
-        Map<Equipo, Integer> mapaEquiposPuntos = initMapaEquiposPuntos(listaEquipos);
-
-        //printa el hashmapa
-        for (Equipo i : mapaEquiposPuntos.keySet()) {
-            System.out.println("Nombre Equipos: " + i.getNombre() + " Puntos: " + mapaEquiposPuntos.get(i));
-        }
-
-
 
 //        Equipo equipo1 = new Equipo();
 //
@@ -64,13 +38,6 @@ public class Main {
 //        comprobarGanador(partido);
     }
 
-    public static Map<Equipo, Integer> initMapaEquiposPuntos(Equipo[] listaEquipos) {
-        Map<Equipo, Integer> mapaEquiposPuntos = new HashMap<Equipo, Integer>();
-        for (int i = 0; i < listaEquipos.length; i++) {
-            mapaEquiposPuntos.put(listaEquipos[i], 0);
-        }
-        return mapaEquiposPuntos;
-    }
 
     //Generador de probabilidades, lo llamamos 1 vez
     public static int[] generadorProbabilidades() {
@@ -107,26 +74,16 @@ public class Main {
 
     //TODO: Borrar este método, cuando hagamos Clasificacion.java
     //PROVISIONAL Un método simple que comprueba el ganador, no devuelve nada solo imprime texto
-    public static void asignarPuntos(Partido partido) {
-            Equipo equipoCasa = partido.getEquipoCasa();
-            Equipo equipoFuera = partido.getEquipoFuera();
-
+    public static void comprobarGanador(Partido partido) {
         if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
-            //Empate
-            equipoCasa.setPuntos(equipoCasa.getPuntos() + 1);
-            equipoFuera.setPuntos(equipoFuera.getPuntos() + 1);
-//            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
-//                    partido.getEquipoFuera().getNombre());
+            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
         } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
-            //Gana Equipo Casa
-            equipoCasa.setPuntos(equipoCasa.getPuntos() + 3);
-//            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
-//                    partido.getEquipoFuera().getNombre());
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
         } else {
-            //Gana Equipo Fuera
-            equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
-//            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
-//                    partido.getEquipoCasa().getNombre());
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
+                    partido.getEquipoCasa().getNombre());
         }
     }
 
@@ -164,24 +121,13 @@ public class Main {
     }
 
     //Creamos el evento del partido, pero todavía no lo jugamos en este método
-    public static Partido crearPartido(Equipo equipoCasa,Equipo equipoFuera,Arbitro arbitro) {
-        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
+    public static Partido crearPartido(Equipo eq1,Equipo eq2,Arbitro arbitro) {
+        Equipo equipoCasa = eq1;
+        Equipo equipoFuera = eq2;
+        Partido partido = new Partido(eq1, eq2, arbitro);
 
-        //Generamos los golesEquipoCasa
-        int golesEquipoCasa =  generadorGoles();
-        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
-        partido.setGolesEquipoCasa(golesEquipoCasa);
-        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
-        //TODO: Este último paso es redundante eliminar en el futuro.
-        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
-
-        //Se repite el mismo proceso con golesEquipoFuera.
-        int golesEquipoFuera =  generadorGoles();
-        partido.setGolesEquipoFuera(golesEquipoFuera);
-        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
-
-        //Se asignan los puntos
-        asignarPuntos(partido);
+        partido.setGolesEquipoCasa(generadorGoles());
+        partido.setGolesEquipoFuera(generadorGoles());
 
         return partido;
     }
@@ -203,86 +149,102 @@ public class Main {
     public static Partido[][] crearJornadas(Equipo[] listaEquipos, Arbitro [] listaArbitros) {
         int numeroEquipos = listaEquipos.length;
 
-        int numEncuentros = (numeroEquipos * (numeroEquipos - 1)) / 2;
-        int numRondas;
+        int numeroPartidosEnTotal = (numeroEquipos * (numeroEquipos - 1)) / 2;
+        int numeroRondas;
         int numeroPartidosPorRonda;
         int equipoCasa = 0;
         int equipoFuera = 0;
 
         if (numeroEquipos % 2 == 0) {
-            numRondas = numeroEquipos - 1;
+            numeroRondas = numeroEquipos - 1;
             numeroPartidosPorRonda = numeroEquipos / 2;
         } else {
-            numRondas = numeroEquipos;
+            numeroRondas = numeroEquipos;
             numeroPartidosPorRonda = (numeroEquipos - 1) / 2;
         }
 
         Partido[][] jornadas;
-        jornadas = new Partido[numRondas*2][numeroPartidosPorRonda];
+        jornadas = new Partido[numeroRondas*2][numeroPartidosPorRonda];
 
-        if(numeroEquipos%2 == 0) {//para nº equipos par
-            for(int i = 0 ; i < numRondas ; i++) {
-                equipoCasa = i;
-                equipoFuera = numeroEquipos-1+i;
-                if (equipoFuera>numeroEquipos-1)	equipoFuera-=(numeroEquipos-1);
-                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
-                    if (j==0)	jornadas[i][j] = crearPartido(listaEquipos[0], listaEquipos[equipoFuera], listaArbitros[j]);
-                    else		jornadas[i][j] = crearPartido(listaEquipos[equipoCasa], listaEquipos[equipoFuera], listaArbitros[j]);
+        int x=0;
+        int y=numeroEquipos-2;
+        
+        if(numeroEquipos%2==0) {//para los pares
+        	for(int i = 0 ; i < numeroRondas ; i++) {
+        		for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+        			if(j==0) {
+        				if(i%2==0)  	jornadas[i][j] = crearPartido(listaEquipos[x],listaEquipos[(numeroEquipos-1)],listaArbitros[j]);
+        				else 			jornadas[i][j] = crearPartido(listaEquipos[(numeroEquipos-1)],listaEquipos[x],listaArbitros[j]);
+        				x++;
+        			}else {
+            			jornadas[i][j] = crearPartido(listaEquipos[x],listaEquipos[y],listaArbitros[j]);
+        				x++;
+            			y--;
+        			}
+        			if(x>(numeroEquipos-2))	x=0;
+        			if(y<(0))				y=numeroEquipos-2;
+        		}
+        	}
+        	for(int i = 0 ; i < numeroRondas ; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
+        		for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
+        			if(j==0) {
+        				if(i%2==0)  	jornadas[i+numeroRondas][j] = crearPartido(listaEquipos[(numeroEquipos-1)],listaEquipos[x],listaArbitros[j]);
+        				else 			jornadas[i+numeroRondas][j] = crearPartido(listaEquipos[x],listaEquipos[(numeroEquipos-1)],listaArbitros[j]);
+        				x++;
+        			}else {
+            			jornadas[i+numeroRondas][j] = crearPartido(listaEquipos[y],listaEquipos[x],listaArbitros[j]);
+        				x++;
+            			y--;
+        			}
+        			if(x>(numeroEquipos-2))	x=0;
+        			if(y<(0))				y=numeroEquipos-2;
+        		}
+        	}
 
-                    equipoCasa++;
-                    equipoFuera--;
-                    if (equipoCasa>numeroEquipos-1)	equipoCasa = 1;
-                    if (equipoFuera<1)				equipoFuera = numeroEquipos-1;
-                }
-            }
-            for(int i = 0 ; i < numRondas ; i++) {//esto es exactamente igual pero al reves, para que los que jugaron en casa lo hagan fuera y viceversa
-                equipoCasa = i;
-                equipoFuera = numeroEquipos-1+i;
-                if (equipoFuera>numeroEquipos-1)	equipoFuera-=(numeroEquipos-1);
-                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
-                    if (j==0){
-                        jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[0], listaArbitros[j]);
-                    }
-                    else		jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[equipoCasa], listaArbitros[j]);
-
-                    equipoCasa++;
-                    equipoFuera--;
-                    if (equipoCasa>numeroEquipos-1)	equipoCasa = 1;
-                    if (equipoFuera<1)				equipoFuera = numeroEquipos-1;
-                }
-            }
-        }else {//para nº equipos impar
-            for(int i = 0 ; i < numRondas ; i++) {
-                equipoCasa = i;
-                equipoFuera = numeroEquipos-1-i;
-                if (equipoCasa<0)	equipoCasa=numeroEquipos-1;
-                if (equipoFuera<0)	equipoFuera=numeroEquipos-1;
-                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
-                    jornadas[i][j] = crearPartido(listaEquipos[equipoCasa], listaEquipos[equipoFuera], listaArbitros[j]);
-                }
-            }
-            for(int i = 0 ; i < numRondas ; i++) {//esto es exactamente igual pero al reves, para que los que jugaron en casa lo hagan fuera y viceversa
-                equipoCasa = 0-i;
-                equipoFuera = numeroEquipos-1-i;
-                if (equipoCasa<0)	equipoCasa=numeroEquipos-1;
-                if (equipoFuera<0)	equipoFuera=numeroEquipos-1;
-                for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
-                    jornadas[i+numRondas][j] = crearPartido(listaEquipos[equipoFuera], listaEquipos[equipoCasa], listaArbitros[j]);
-                }
-            }
+        }else {//para los impares
+        	//para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
+        	//asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno. 
+        	
+        	y++;//esto es por lo que he puesto en la linea de arriba
+        	for(int i = 0 ; i < numeroRondas ; i++) {
+        		for(int j = 0 ; j < numeroPartidosPorRonda+1 ; j++) {
+        			if(j==0)	 x++;//aunque nos lo saltemos la x hay que seguir sumandola en j = 0
+        			else {
+            			jornadas[i][j-1] = crearPartido(listaEquipos[x],listaEquipos[y],listaArbitros[j-1]);//la j-1 porque el 0 nos lo habiamos saltado
+        				x++;
+            			y--;
+        			}
+        			if(x>(numeroEquipos-1))	x=0;
+        			if(y<(0))				y=numeroEquipos-1;
+        		}
+        	}
+        	for(int i = 0 ; i < numeroRondas ; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
+        		for(int j = 0 ; j < numeroPartidosPorRonda+1 ; j++) {
+        			if(j==0)	 x++;
+        			else {
+            			jornadas[i+numeroRondas][j-1] = crearPartido(listaEquipos[y],listaEquipos[x],listaArbitros[j-1]);
+        				x++;
+            			y--;
+        			}
+        			if(x>(numeroEquipos-1))	x=0;
+        			if(y<(0))				y=numeroEquipos-1;
+        		}
+        	}
         }
-        for(int i = 0 ; i < numRondas*2 ; i++) {//Para imprimir
-            System.out.println("Jornada "+ (i + 1));
+        
+        
+        
+        for(int i = 0 ; i < numeroRondas*2 ; i++) {//Para imprimir
+            System.out.println("Jornada "+(i+1));
             for (int j = 0 ; j < numeroPartidosPorRonda ; j++){
-                System.out.println("Partido "+(j + 1));
+                System.out.println("Partido "+(j+1));
                 System.out.println(jornadas[i][j]);
             }
         }
+        System.out.println("En total hay "+numeroPartidosEnTotal+" partidos");
 
         return jornadas;
     }
 
-    public static void asignarPuntos() {
 
-    }
 }
