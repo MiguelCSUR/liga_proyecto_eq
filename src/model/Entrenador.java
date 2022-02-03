@@ -2,9 +2,12 @@ package model;
 
 
 public class Entrenador extends Persona{
-
     private int numeroLicencia;
     private Equipo equipo;
+
+    public Entrenador() {
+        super.setEdad(20, 60);
+    }
 
     public int getNumeroLicencia() {
         return numeroLicencia;
@@ -14,14 +17,6 @@ public class Entrenador extends Persona{
     }
     public Equipo getEquipo() {
         return equipo;
-    }
-    public void setEquipo(Equipo equipo) {
-        this.equipo = equipo;
-    }
-    @Override
-    public String toString() {
-        return super.toString()+"\n"+
-                "Numero Licencia: "+this.numeroLicencia+"\n";
     }
 
 }

@@ -1,162 +1,194 @@
-import model.Entrenador;
-import model.Equipo;
-import model.Jugador;
+import model.*;
+
+import java.util.Scanner;
 
 public class Main {
 
+    //Inicializamos las probabilidades de Goles, una vez
+    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
+
+    //TODO investigar porque static no funca
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
 
-        //Crear una Lista de Equipo
+        //Instaciar Equipo
+        Equipo equipo1 = new Equipo();
 
-        int edad = (int) Math.floor(Math.random()*15)+4;
-        int numeroEquipos = (int) Math.floor(Math.random()*13)+4;
-        Equipo[] listaEquipos = crearEquipos(numeroEquipos, edad);
+        //Asignar lista de jugadores al equipo
+        Jugador[] listaJugadores = crearJugadores("Juvenil");
+        equipo1.setJugadores(listaJugadores);
 
-        //Imprimimos los equipos
-        System.out.println("Numero de equipos: "+numeroEquipos);
-        for (Equipo e: listaEquipos) {
-            System.out.println(e.getNombre());
-        }
+        //PARTIDO
+        Partido partido = crearPartido("Juvenil");
+        System.out.println(
+                partido.toString()
+        );
 
+        //Aquí comprobamos el ganador
+//        comprobarGanador(partido);
     }
 
-    private static Jugador[] crearJugadores(int numeroJugadores, int edad, Equipo equipo) {
-        //Listado de Nombres, Apellidos, Posiciones para generador random
-        String[] nombres = {"Antonio", "Pepito", "Alejandra", "Ismael", "Hugo", "Oliver","Kalesi",
-                "Ingrid","Astrid","Indira","Jenny","Jessi","Vane","Joel","Bruno",
-                "Sasha","Billie","Masha","Pingu"};
-        String[] apellidos = {"Messi", "Vinicius", "Cristiano", "Ronaldo", "Piqué","Bale (lesionado)",
-                "Amunike","N'kono","Butragueño","Sanchís","Neymar","Batistuta","Maradona",
-                "Pelé","Beckenbauer"};
-        String[] posiciones = {"Portero/a","Defensa","Centrocampista","Delantero/a"};
 
-        //Estructura de Array de Jugadores
-        Jugador[] jugadores = new Jugador[numeroJugadores];
+    //Generador de probabilidades, lo llamamos 1 vez
+    public static int[] generadorProbabilidades() {
 
-        for (int i=0; i<numeroJugadores; i++) {
-            //Crear un Jugador
-            Jugador jug = new Jugador();
-            //Nombre
-            int numero = (int) Math.floor(Math.random()*nombres.length);
-            String nombre = nombres[numero];
-            jug.setNombre(nombre);
+        int[] probabilidad = new int[100];
 
-            //Apellidos
-            numero = (int) Math.floor(Math.random()*apellidos.length);
-            String apellido1 = apellidos[numero];
-            numero = (int) Math.floor(Math.random()*apellidos.length);
-            String apellido2 = apellidos[numero];
-            jug.setApellidos(apellido1+" "+apellido2);
-
-            //Posición
-//			numero = (int) Math.floor(Math.random()*11)+1;
-//
-//			jug.setPosicion(numero);
-
-            //Edad
-            jug.setEdad(edad);
-
-            //Dorsal
-            jug.setDorsal(i+1);
-
-            //Equipo
-            jug.setEquipo(equipo);
-
-            jugadores[i]=jug;
-
+        for (int i = 0; i < probabilidad.length; i++) {
+            if (i <= 24) {
+                probabilidad[i] = 1;
+            }
+            if (i > 24 && i <= 49) {
+                probabilidad[i] = 2;
+            }
+            if (i > 49 && i <= 69) {
+                probabilidad[i] = 3;
+            }
+            if (i > 69 && i <= 89) {
+                probabilidad[i] = 0;
+            }
+            if (i > 89 && i <= 96) {
+                probabilidad[i] = 4;
+            }
+            if (i > 96 && i <= 99) {
+                probabilidad[i] = 5;
+            }
         }
+        return probabilidad;
+    }
 
+    public static int generadorGoles() {
+        int numRamdon = (int) Math.floor(Math.random() * 100);
+        return PROBABILIDADESGOLES[numRamdon];
+    }
+
+    //TODO: Borrar este método, cuando hagamos Clasificacion.java
+    //PROVISIONAL Un método simple que comprueba el ganador, no devuelve nada solo imprime texto
+    public static void comprobarGanador(Partido partido) {
+        if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
+            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
+        } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
+                    partido.getEquipoFuera().getNombre());
+        } else {
+            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
+                    partido.getEquipoCasa().getNombre());
+        }
+    }
+
+    //Crea un array de jugadores, con un tam variable entre 11 y 20,
+    //Este tamaño: numJugadores, sale de Equipo.java
+    public static Jugador[] crearJugadores(String categoria) {
+        int numJugadores = Equipo.asigNumJugadores();
+        Jugador[] jugadores = new Jugador[numJugadores];
+        Equipo equipo = new Equipo();
+
+        //Se van creando los jugadores y asignando a un array
+        for (int i = 0; i < numJugadores; i++) {
+            Jugador jugador = new Jugador(categoria, i + 1);
+            jugador.setEquipo(equipo);
+            jugadores[i] = jugador;
+        }
         return jugadores;
     }
 
-    private static Equipo[] crearEquipos(int numeroEquipos,int edad) {
-
-        String [] nombreBarrios = {"El Candado", "Huelin", "Tiro Pichón", "Rincón de la Victoria", "La Rosaleda", "Torremolinos",
-                "Velez Málaga","Cerrado de Calderon", "El Puerto de la Torre", "Bresca", "Mezquitilla", "Teatinos", "Motril",
-                "Centro","Santa Paula", "El Palo", "Los Corazones", "Las Delicias", "Recogidas","Nueva Málaga", "Casas Blancas",
-                "La Palmilla","Los Asperones","Campanillas","La Corta"};
-        String [] mascotas = {"Los Pollos", "Los Araclanes", "Los Limones", "Los Delfines", "Los Chanquetes", "Los Gatitos",
-                "Los Boquerones", "Los Toros", "Los Perritos", "Los Halcones", "Los Ornitorrincos", "Los Caracoles",
-                "Los Palomos Cojos", "Los Heterosaurios", "Las Tortugas Ninjas", "Los Pintarrojas"};
-
-        Equipo [] listaEquipos= new Equipo[numeroEquipos];
-
-        for (int i=0; i<numeroEquipos; i++) {
-            //Creamos Equipo
-            Equipo equipo = new Equipo();
-
-            //Elegimos random un nombre y una mascota de las listas respectivas.
-            int numero = (int) Math.floor(Math.random()*nombreBarrios.length);
-            String barrio= nombreBarrios[numero];
-            numero = (int) Math.floor(Math.random()*mascotas.length);
-            String mascota= mascotas[numero];
-
-            //Definimos el club en base al nombre del barrio
-            equipo.setClub(barrio+" F.C.");
-
-            //Las pegamos con un "de" en medio
-            String nombre;
-            if (barrio.startsWith("El ")) {
-                barrio=barrio.substring(3);
-                nombre = mascota + " del "+ barrio;
-            }else {
-                nombre = mascota + " de "+ barrio;
-            }
-            
-            equipo.setNombre(nombre);
-            //Continuamos con entrenador
-            Entrenador entrenador = crearEntrenador(equipo);
-            equipo.setEntrenador(entrenador);
-
-            //Meter los jugadores
-            int numeroJugadores=(int) Math.floor(Math.random()*7)+15;
-            Jugador[] jugadores = crearJugadores(numeroJugadores,edad,equipo);
-            equipo.setJugadores(jugadores);
-
-            //Meter el equipo en el array de equipos
-
-            listaEquipos[i]=equipo;
-
-
-
-        }
-        return listaEquipos;
-
+    public static Equipo crearEquipo(String categoria) {
+        Equipo equipo = new Equipo();
+        equipo.setJugadores(crearJugadores(categoria));
+        return equipo;
     }
 
-    private static Entrenador crearEntrenador(Equipo equipo) {
-        //Listado de Nombres, Apellidos, Posiciones para generador random
-        String[] nombres = {"Antonio", "Pepito", "Alejandra", "Ismael", "Hugo", "Oliver","Kalesi",
-                "Ingrid","Astrid","Indira","Jenny","Jessi","Vane","Joel","Bruno",
-                "Sasha","Billie","Masha","Pingu"};
-        String[] apellidos = {"Messi", "Vinicius", "Cristiano", "Ronaldo", "Piqué","Bale (lesionado)",
-                "Amunike","N'kono","Butragueño","Sanchís","Neymar","Batistuta","Maradona",
-                "Pelé","Beckenbauer"};
-        Entrenador entrenador = new Entrenador();
+    //Creamos el evento del partido, pero todavía no lo jugamos en este método
+    public static Partido crearPartido(String categoria) {
+        Equipo equipoCasa = crearEquipo(categoria);
+        Equipo equipoFuera = crearEquipo(categoria);
+        Arbitro arbitro = new Arbitro();
+        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
 
-        //Nombre
-        int numero = (int) Math.floor(Math.random()*nombres.length);
-        String nombre = nombres[numero];
-        entrenador.setNombre(nombre);
+        partido.setGolesEquipoCasa(generadorGoles());
+        partido.setGolesEquipoFuera(generadorGoles());
 
-        //Apellidos
-        numero = (int) Math.floor(Math.random()*apellidos.length);
-        String apellido1 = apellidos[numero];
-        numero = (int) Math.floor(Math.random()*apellidos.length);
-        String apellido2 = apellidos[numero];
-        entrenador.setApellidos(apellido1+" "+apellido2);
+        return partido;
+    }
 
-        //Equipo
-        entrenador.setEquipo(equipo);
+    //TODO: método provisional.
+    //Pide un número de numeroEquipos, solo lo acepta si es mayor de 1.
+    public static int numeroEquipos() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Introduce el número de equipos: ");
+        int numeroEquipos = sc.nextInt();
+        while (numeroEquipos < 2) {
+            System.out.println("\nSe necesitan mas de un equipo para una liga.");
+            System.out.print("Introduce de nuevo otro número de equipos: ");
+            numeroEquipos = sc.nextInt();
+        }
+        return numeroEquipos;
+    }
 
-        //Edad
-        int edad = (int) Math.floor(Math.random()*47)+18;
-        entrenador.setEdad(edad);
-        //Licencia
-        int licencia = (int) Math.floor(Math.random()*100000);
-        entrenador.setNumeroLicencia(licencia);
+    public static int[][][] crearJornadas(Equipo[] listaEquipos) {
+        int numeroEquipos = listaEquipos.length;
 
-        return entrenador;
+        int numEncuentros = (numeroEquipos * (numeroEquipos - 1)) / 2;
+        int numRondas;
+        int numPartidosSimultaneos;
+        int equipo = 0;
+
+            if (numeroEquipos % 2 == 0) {
+                numRondas = numeroEquipos - 1;
+                numPartidosSimultaneos = numeroEquipos / 2;
+            } else {
+                numRondas = numeroEquipos;
+                numPartidosSimultaneos = (numeroEquipos - 1) / 2;
+            }
+
+            int[][][] rondas;
+            rondas = new int[numRondas][numPartidosSimultaneos][2];
+            if (numeroEquipos % 2 == 0) {
+                equipo = 2;
+                for (int i = 0; i < numRondas; i++) {
+                    rondas[i][0][0] = 1;
+                    for (int j = 1; j < numPartidosSimultaneos; j++) {
+                        rondas[i][j][0] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 2;
+                    }
+                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
+                        rondas[i][j][1] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 2;
+                    }
+                    equipo++;
+                    if (equipo > numeroEquipos) equipo = 2;
+                }
+            } else {
+                equipo = 1;
+                for (int i = 0; i < numRondas; i++) {
+                    for (int j = 0; j < numPartidosSimultaneos; j++) {
+                        rondas[i][j][0] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 1;
+                    }
+                    for (int j = numPartidosSimultaneos - 1; j >= 0; j--) {
+                        rondas[i][j][1] = equipo;
+                        equipo++;
+                        if (equipo > numeroEquipos) equipo = 1;
+                    }
+                }
+            }
+//            imprimirRondas(rondas, numRondas, numPartidos Simultaneos, numEncuentros);
+            return rondas;
+    }
+
+    //TODO: Este metodo es provisional
+    //Imprime las rondas, de los partidos. Que es la liga, no imprime horario.
+    public static void imprimirRondas(int[][][] rondas, int numRondas, int numPartidosSimultaneos, int numEncuentros) {
+        for (int i = 0; i < numRondas; i++) {
+            System.out.println("Ronda " + (i + 1));
+            for (int j = 0; j < numPartidosSimultaneos; j++) {
+                System.out.println("  Partido " + (j + 1) + ". Equipo " + rondas[i][j][0] + " vs Equipo " + rondas[i][j][1]);
+            }
+        }
+        System.out.println("Número total de partidos: " + numEncuentros);
     }
 }
+

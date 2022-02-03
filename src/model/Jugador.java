@@ -1,65 +1,69 @@
 package model;
 
 
-public final class Jugador extends Persona{
+public class Jugador extends Persona {
     private String categoria;
     private String posicion;
     private int dorsal;
     private Equipo equipo;
 
-    @Override
-    public void setEdad(int edad) {
-        super.setEdad(edad);
-        categoria=setCategoria(edad);
-
+    public Jugador(String categoria, int dorsal) {
+        this.categoria = categoria;
+        setCategoria(categoria);
+        this.dorsal = dorsal;
+        setDorsal(dorsal);
     }
 
-    public String getCategoria() {
+    public void setJugador(int dorsal, Equipo equipo) {
+        this.dorsal = dorsal;
+        this.equipo = equipo;
+    }
+
+    public String getCategoria(String chupetin) {
         return categoria;
     }
 
-    private String setCategoria(int edad) {
-        switch(edad) {
-            case 4:
-            case 5:
-                return "Chupetín";
-            case 6:
-            case 7:
-                return "Prebenjamín";
-            case 8:
-            case 9:
-                return "Benjamín";
-            case 10:
-            case 11:
-                return "Alevín";
-            case 12:
-            case 13:
-                return "Infantil";
-            case 14:
-            case 15:
-                return "Cadete";
-            case 16:
-            case 17:
-            case 18:
-                return "Juvenil";
+    public int setCategoria(String categoria) {
+        switch (categoria) {
+            case "Chupetin":
+                super.setEdad(4, 5);
+                return super.getEdad();
+            case "Prebenjamín":
+                super.setEdad(6, 7);
+                return super.getEdad();
+            case "Benjamín":
+                super.setEdad(8, 9);
+                return super.getEdad();
+            case "Alevín":
+                super.setEdad(10, 11);
+                return super.getEdad();
+            case "Infantil":
+                super.setEdad(12, 13);
+                return super.getEdad();
+            case "Cadete":
+                super.setEdad(14, 15);
+                return super.getEdad();
+            case "Juvenil":
+                super.setEdad(16, 18);
+                return super.getEdad();
             default:
-                return "N/A";
-
+                super.setEdad(19, 38);
+                return super.getEdad();
         }
     }
 
-    public String getPosicion() {
+    private String getPosicion() {
         return posicion;
     }
 
     public String setPosicion(int dorsal) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
 
-        while(dorsal>11)
-        {
-            int numeroAleatorio = (int) Math.floor(Math.random()*12)+1;
-            dorsal=numeroAleatorio;
+        while (dorsal > 11) {
+            int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
+            dorsal = numeroAleatorio;
         }
-        switch(dorsal) {
+
+        switch (dorsal) {
             case 1:
                 return "Portero";
             case 2:
@@ -82,16 +86,18 @@ public final class Jugador extends Persona{
             case 11:
                 return "Extremo izquierdo";
             default:
-                return"Error locotron";
+                return "Error se sale de dorsal en Jugador.setPosition()";
 
         }
     }
+
     public int getDorsal() {
         return dorsal;
     }
+
     public void setDorsal(int dorsal) {
         this.dorsal = dorsal;
-        posicion=setPosicion(dorsal);
+        posicion = setPosicion(dorsal);
     }
 
     public Equipo getEquipo() {
@@ -104,9 +110,8 @@ public final class Jugador extends Persona{
 
     @Override
     public String toString() {
-        return super.toString()+", "+categoria+"\n"+
-                "Equipo: "+equipo.getNombre()+"\n"+
-                "Dorsal: "+dorsal+" Posición: "+posicion+"\n";
+        return super.toString() + ", " + categoria + "\n" +
+//                "Equipo: " + equipo.getNombre() + "\n" +
+                "Dorsal: " + dorsal + " Posición: " + posicion + "\n";
     }
-
 }

@@ -1,0 +1,7 @@
+31/01/22 - Miguel - Creo Nuevo repositorio Git, pasando lo del anterior al nuevo proyecto más organizado
+
+01/02/22 - Miguel - Corregimos entre Nacho y yo las clases Jugador.java, Arbitro.java, Entrenador.java, Equipo.java
+
+01/02/22 - Miguel - Ya se generan Equipos, en Main.java
+
+03/02/22 - Miguel y Nacho - Creamos los partidos, ya se generan, partidos, resultados y se indica el ganador.
