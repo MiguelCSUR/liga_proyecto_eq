@@ -33,8 +33,12 @@ public class Main {
 
         crearJornadas(listaEquipos,listaArbitro);
 
-        for (String i : people.keySet()) {
-            System.out.println("key: " + i + " value: " + people.get(i));
+        Map<Equipo, Integer> mapaEquiposPuntos = initMapaEquiposPuntos(listaEquipos);
+
+        System.out.println("-------HASH!-------");
+        //inicializa Equipos Puntos a 0.
+        for (Equipo i : mapaEquiposPuntos.keySet()) {
+            System.out.println("Nombre Equipos: " + i.getNombre() + " Puntos: " + mapaEquiposPuntos.get(i));
         }
 
 //        Equipo equipo1 = new Equipo();
