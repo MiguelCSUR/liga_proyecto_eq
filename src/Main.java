@@ -24,7 +24,7 @@ public class Main {
         );
 
         //Aquí comprobamos el ganador
-        comprobarGanador(partido);
+//        comprobarGanador(partido);
     }
 
 
