@@ -13,6 +13,10 @@ public class Equipo {
     private int         numJugadores;
     private Jugador[]   jugadores;
 
+    //TODO: Estas propiedades son probisionales deberian estar en otro sitio.
+    private int puntos;
+    private int goles;
+
     public Equipo() {
         setNombre();
         setClub();
@@ -20,15 +24,6 @@ public class Equipo {
         setEntrenador(entrenador);
         setEquipacionCasa();
         setEquipacionFuera();
-        Jugador[] jugadores;
-
-    }
-
-
-
-    public void setJugadores(Jugador[] jugadores) {
-        this.jugadores = jugadores;
-        this.numJugadores = jugadores.length;
     }
 
     public String getNombre() {
@@ -69,6 +64,22 @@ public class Equipo {
 
     public void setEquipacionFuera() {
         this.equipacionFuera = equipacionesFuera();
+    }
+
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+
+    public int getPuntos() {
+        return puntos;
+    }
+
+    public void setGoles(int goles) {
+        this.goles = goles;
+    }
+
+    public int getGoles() {
+        return goles;
     }
 
     public Jugador[] getJugadores() {
