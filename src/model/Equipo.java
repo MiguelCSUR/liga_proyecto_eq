@@ -30,6 +30,7 @@ public class Equipo {
         return nombre;
     }
 
+    //TODO: El nombre del Equipo no coincide con la ciudad del club
     public void setNombre() {
         this.nombre = generadorMascota() + " de " + generadorCiudad();
     }

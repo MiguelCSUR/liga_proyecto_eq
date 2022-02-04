@@ -26,6 +26,12 @@ public class Main {
         liga1.setArbitros();
         liga1.setNombre(Liga.generadorNombres());
         liga1.setEquipos(Liga.genararListaEquipos(Liga.numeroEquipos()));
+        int numeroEquipos = liga1.getEquipos().length;
+        Jugador[] jugadores = crearJugadores("Chupetin");
+        for (int i = 0; i < numeroEquipos; i++) {
+            liga1.getEquipos()[i].setJugadores(crearJugadores("Chupetin"));
+
+        }
         System.out.println (liga1.getNombre());
         System.out.println (Arrays.stream(liga1.getEquipos()).toList());
 
