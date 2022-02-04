@@ -2,6 +2,7 @@ package model;
 
 import java.util.Scanner;
 
+//TODO: parece que no se esta usando, plantear borrarlo
 public class CalcularRondas {
 
     public static void main(String[] args) {

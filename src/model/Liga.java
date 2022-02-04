@@ -1,6 +1,5 @@
 package model;
 
-
 import java.util.Arrays;
 
 public class Liga {
@@ -40,7 +39,7 @@ public class Liga {
     }
 
     public void setArbitros() {
-        this.arbitros = generarListaArbitros(generarNumeroArbitros());
+        this.arbitros = generarListaArbitros(generarNumeroArbitros(numeroEquipos()));
     }
 
     public Clasificacion getClasificacion() {
@@ -99,7 +98,6 @@ public class Liga {
         Equipo[] listaEquipos = new Equipo[numEquipos];
 
         for(int i = 0; i<numEquipos;i++){
-            //TODO, este equipo esta vacio, los equipos se crean en el Main() con la función crearEquipo()
             Equipo equipo =new Equipo();
 
             listaEquipos[i]=equipo;
@@ -108,8 +106,11 @@ public class Liga {
     }
 
     //Crear función para determinar número de árbitros
-    public static int generarNumeroArbitros() {
-        return 1;
+    //Se basa en numero de equipos, donde se divide el numero de Equipos entre 2 y se crea ese numero de arbitros
+    public static int generarNumeroArbitros(int numEquipos) {
+        int numeroArbitros = numEquipos/2;
+
+        return numeroArbitros;
     }
 
     //Generador de árbitros
@@ -126,10 +127,12 @@ public class Liga {
 
     @Override
     public String toString() {
-        return "Liga{" +
-                "nombre='" + nombre + '\'' +
-                ", equipos=" + Arrays.toString(equipos) +
-                ", arbitros=" + Arrays.toString(arbitros) +
-                '}';
+        return
+                "Nombre de Liga= " + nombre + '\'' +
+                        ", Equipos= " + Arrays.toString(equipos) +'\''+
+
+                        ", Arbitros= " + Arrays.toString(arbitros);
+
+
     }
 }

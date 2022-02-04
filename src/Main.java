@@ -1,5 +1,6 @@
 import model.*;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,15 +13,28 @@ public class Main {
     //TODO investigar porque static no funca
     public static void main(String[] args) {
 
+        //TODO: Pasar a  una función. Posiblemente Liga
         //Crear lista de Equipos
         Equipo[] listaEquipos= new Equipo[5];
         for(int i = 0;i<5;i++) {
-
             listaEquipos[i] = crearEquipo("Juvenil");
         }
+
+        //Testeo LIGA
+        Liga liga1 = new  Liga();
+
+        liga1.setArbitros();
+        liga1.setNombre(Liga.generadorNombres());
+        liga1.setEquipos(Liga.genararListaEquipos(Liga.numeroEquipos()));
+        System.out.println (liga1.getNombre());
+        System.out.println (Arrays.stream(liga1.getEquipos()).toList());
+
+        System.out.println (Arrays.stream(liga1.getArbitros()).toList());
+
         Arbitro[] listaArbitro = crearListaArbitro();
 
         crearJornadas(listaEquipos, listaArbitro);
+
 
         //inicializa Equipos Puntos a 0.
         Map<Equipo, Integer> mapaEquiposPuntos = initMapaEquiposPuntos(listaEquipos);
@@ -28,8 +42,6 @@ public class Main {
 //        for (Equipo i : mapaEquiposPuntos.keySet()) {
 //            System.out.println("Nombre Equipos: " + i.getNombre() + " Puntos: " + mapaEquiposPuntos.get(i));
 //        }
-
-
 
     }
 
@@ -124,7 +136,7 @@ public class Main {
         return equipo;
     }
 
-    //TODO: Esto es un creacion de lista de arbitros provisional para provar el crear las jornadas
+    //TODO: Esto es un creacion de lista de arbitros provisional para probar el crear las jornadas
     public static Arbitro[] crearListaArbitro() {
         int numeroArbitros = 100;
         Arbitro[] listaArbitro = new Arbitro[100];
@@ -173,6 +185,7 @@ public class Main {
         return numeroEquipos;
     }
 
+    //TODO: Porque se crean 2 partidos por jornada? porque hay varios partidos 1, y 2.
     public static Partido[][] crearJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
         int numeroEquipos = listaEquipos.length;
 
@@ -196,7 +209,7 @@ public class Main {
 
         int x=0;
         int y=numeroEquipos-2;
-        
+
         if(numeroEquipos%2==0) {//para los pares
         	for(int i = 0 ; i < numeroRondas ; i++) {
         		for(int j = 0 ; j < numeroPartidosPorRonda ; j++) {
@@ -231,8 +244,8 @@ public class Main {
 
         }else {//para los impares
         	//para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
-        	//asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno. 
-        	
+        	//asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno.
+
         	y++;//esto es por lo que he puesto en la linea de arriba
         	for(int i = 0 ; i < numeroRondas ; i++) {
         		for(int j = 0 ; j < numeroPartidosPorRonda+1 ; j++) {
@@ -262,7 +275,7 @@ public class Main {
 
         for(int i = 0 ; i < numeroRondas*2 ; i++) {//Para imprimir
             System.out.println("Jornada "+(i+1));
-            for (int j = 0 ; j < numeroPartidosPorRonda ; j++){
+            for (int j = 0 ; j < numeroPartidosPorRonda ; j++) {
                 System.out.println("Partido "+(j+1));
                 System.out.println(listaJornadas[i][j]);
             }
@@ -270,7 +283,7 @@ public class Main {
         System.out.println("En total hay "+numeroPartidosEnTotal+" partidos");
 
         //TODO: metodos provisionales toString()
-        System.out.println("---CLASIFICACIÓN---");
+        System.out.println("\n---CLASIFICACIÓN---");
         for (int i = 0; i < listaEquipos.length; i++) {
             System.out.println("Equipo: " + listaEquipos[i].getNombre());
             System.out.println("\tcon puntos: " + listaEquipos[i].getPuntos());

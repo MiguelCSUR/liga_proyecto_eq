@@ -1,30 +1,34 @@
 package model;
+import java.util.Arrays;
+
 
 //En equipo generamos lo que pertenece a equipo, excepto la lista de jugadores
 //TODO: pasar a una clase generadora o GenerarEquipos, los metodos generadores
 public class Equipo {
-    private String nombre;
-    private String club;
-    private Entrenador entrenador; //Cualidad de Agregación
-    private String equipacionCasa;
-    private String equipacionFuera;
-    private int numJugadores;
-    private Jugador[] jugadores;
-
-    //TODO: Estas propiedades son probisionales deberian estar en otro sitio.
-    private int puntos;
-    private int goles;
+    private String      nombre;
+    private String      club;
+    private Entrenador  entrenador; //Cualidad de Agregación
+    private String      equipacionCasa;
+    private String      equipacionFuera;
+    private int         numJugadores;
+    private Jugador[]   jugadores;
 
     public Equipo() {
         setNombre();
         setClub();
         Entrenador entrenador = new Entrenador();
         setEntrenador(entrenador);
+        setEquipacionCasa();
+        setEquipacionFuera();
+        Jugador[] jugadores;
+
     }
 
-    //GETTERS SETTERS
+
+
     public void setJugadores(Jugador[] jugadores) {
         this.jugadores = jugadores;
+        this.numJugadores = jugadores.length;
     }
 
     public String getNombre() {
@@ -55,55 +59,42 @@ public class Equipo {
         return equipacionCasa;
     }
 
-    public void setEquipacionCasa(String equipacionCasa) {
-        this.equipacionCasa = equipacionCasa;
+    public void setEquipacionCasa() {
+        this.equipacionCasa = equipacionCasa();
     }
 
     public String getEquipacionFuera() {
         return equipacionFuera;
     }
 
-    public void setEquipacionFuera(String equipacionFuera) {
-        this.equipacionFuera = equipacionFuera;
+    public void setEquipacionFuera() {
+        this.equipacionFuera = equipacionesFuera();
     }
 
     public Jugador[] getJugadores() {
         return jugadores;
     }
 
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
-    }
-
-    public int getPuntos() {
-        return puntos;
-    }
-
-    public void setGoles(int goles) {
-        this.goles = goles;
-    }
-
-    public int getGoles() {
-        return goles;
-    }
-
-    //GETTERS SETTERS
-
-
-
     public static int asigNumJugadores() {
         int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
         return numJugadores;
     }
 
+
+
+    //String de Equipo-----03/02  Artsiom-Tsume
+    //Para invocar desde Liga correctamente.
     @Override
     public String toString() {
-        return "Nombre del Equipo: " + this.nombre + "\n"
-                + " Club: " + this.club + "\n"
-                + "Entrenador: " + "\n"
-                + this.entrenador + "\n"
-                + "Plantilla: " + "\n";
-
+        return
+                "Mombre de Equipo= " + nombre + "\n" +
+                        ", Nombre de Club= " + club + "\n" +
+                        ", Entrenador= " + entrenador +"\n" +
+                        ", Equipacion Casa= " + equipacionCasa + '\'' +
+                        ", Equipacion Fuera= " + equipacionFuera + "\n" +
+                        ", Numero de Jugadores= " + numJugadores +"\n"+
+                        ", Jugador= " + Arrays.toString(jugadores) +"\n"+"\n"
+                ;
     }
 
     //Generador de nombres equipos
@@ -141,18 +132,29 @@ public class Equipo {
         return nombre[nom];
     }
 
-
-    //TODO: no funca
-    public static String equipacionasa() {
+    //TODO renombrar equipacioncasa() y equipfuera(), no cumplen con lowerCamelCase.
+    public static String equipacionCasa() {
 
         String[] equipC = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul",
                 "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
 
         int numero = (int) Math.floor(Math.random() * equipC.length);
-        String equipacioncasa = equipC[numero];
+        // String equipacioncasa = equipC[numero];
 
-        return equipacioncasa;
+        return equipC[numero];
+
     }
 
+    public static String equipacionesFuera() {
+
+        String[] equipF = {"Rojo", "Verde", "Azul", "Negro", "Amarillo",
+                "Naranja", "Rosa", "Blanco", "Gris"};
+
+        int numero = (int) Math.floor(Math.random() * equipF.length);
+        //String equipacionfuera = equipF[numero];
+
+        return equipF[numero];
+
+    }
 }
 
