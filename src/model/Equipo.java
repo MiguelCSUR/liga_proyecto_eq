@@ -82,6 +82,10 @@ public class Equipo {
         return goles;
     }
 
+    public void setJugadores(Jugador[] jugadores) {
+        this.jugadores = jugadores;
+    }
+
     public Jugador[] getJugadores() {
         return jugadores;
     }
