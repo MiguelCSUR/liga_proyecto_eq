@@ -1,6 +1,8 @@
 package model;
 
 
+import java.time.LocalDate;
+
 public class Partido {
 
     private Equipo equipoCasa;
@@ -8,6 +10,9 @@ public class Partido {
     private Arbitro arbitro;
     private int golesEquipoCasa;
     private int golesEquipoFuera;
+    private String horaInicio;
+    private int numeroPartido;
+    private LocalDate fecha;
 
     public Partido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
         this.equipoCasa = equipoCasa;
@@ -53,6 +58,30 @@ public class Partido {
 
     public void setGolesEquipoFuera(int golesEquipoFuera) {
         this.golesEquipoFuera = golesEquipoFuera;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public void setHoraInicio(String horaInicio) {
+        this.horaInicio = horaInicio;
+    }
+
+    public int getNumeroPartido() {
+        return numeroPartido;
+    }
+
+    public void setNumeroPartido(int numeroPartido) {
+        this.numeroPartido = numeroPartido;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     @Override

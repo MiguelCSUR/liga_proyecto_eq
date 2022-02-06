@@ -10,6 +10,9 @@ public class Liga {
     private Arbitro[] arbitros;
     private Clasificacion clasificacion;
 
+    //TODO: indicar la fecha de inicio
+    private String fechaInicio;
+
     public String getNombre() {
         return nombre;
     }

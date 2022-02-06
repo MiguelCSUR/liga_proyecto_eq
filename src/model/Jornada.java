@@ -3,49 +3,49 @@ package model;
 
 import java.util.Arrays;
 
-public class Jornada extends Calendario{
-    //Serie de partidos
-    private int numeroRondas;
-    private int numeroPartidosPorRonda;
-    private int numeroPartidosEnTotal;
-    private Partido [][] rondas;
+public class Jornada {
+    //Esto iría en Liga
+    private int numeroJornadas;
+    private int numeroPartidosJornada;
+    private int numeroPartidosLiga;
+    private Partido [][] listaJornadas;
 
     public Jornada(int numeroRondas, int numeroPartidosPorRonda, int numeroPartidosEnTotal, Partido [][] rondas) {
-        this.numeroRondas = numeroRondas;
-        this.numeroPartidosPorRonda = numeroPartidosPorRonda;
-        this.numeroPartidosEnTotal = numeroPartidosEnTotal;
-        this.rondas = rondas;
+        this.numeroJornadas = numeroRondas;
+        this.numeroPartidosJornada = numeroPartidosPorRonda;
+        this.numeroPartidosLiga = numeroPartidosEnTotal;
+        this.listaJornadas = rondas;
     }
 
-    public int getNumeroRondas() {
-        return numeroRondas;
+    public int getNumeroJornadas() {
+        return numeroJornadas;
     }
-    public void setNumeroRondas(int numeroRondas) {
-        this.numeroRondas = numeroRondas;
+    public void setNumeroJornadas(int numeroJornadas) {
+        this.numeroJornadas = numeroJornadas;
     }
-    public int getNumeroPartidosPorRonda() {
-        return numeroPartidosPorRonda;
+    public int getNumeroPartidosJornada() {
+        return numeroPartidosJornada;
     }
-    public void setNumeroPartidosPorRonda(int numeroPartidosPorRonda) {
-        this.numeroPartidosPorRonda = numeroPartidosPorRonda;
+    public void setNumeroPartidosJornada(int numeroPartidosJornada) {
+        this.numeroPartidosJornada = numeroPartidosJornada;
     }
-    public int getNumeroPartidosEnTotal() {
-        return numeroPartidosEnTotal;
+    public int getNumeroPartidosLiga() {
+        return numeroPartidosLiga;
     }
-    public void setNumeroPartidosEnTotal(int numeroPartidosEnTotal) {
-        this.numeroPartidosEnTotal = numeroPartidosEnTotal;
+    public void setNumeroPartidosLiga(int numeroPartidosLiga) {
+        this.numeroPartidosLiga = numeroPartidosLiga;
     }
-    public Partido[][] getRondas() {
-        return rondas;
+    public Partido[][] getListaJornadas() {
+        return listaJornadas;
     }
     public void setJornadas(Partido[][] rondas) {
-        this.rondas = rondas;
+        this.listaJornadas = rondas;
     }
 
     @Override
     public String toString() {
-        return "Jornada [numeroRondas=" + numeroRondas + ", numeroPartidosPorRonda=" + numeroPartidosPorRonda
-                + ", numeroPartidosEnTotal=" + numeroPartidosEnTotal + ", rondas=" + Arrays.toString(rondas) + "]";
+        return "Jornada [numeroRondas=" + numeroJornadas + ", numeroPartidosPorRonda=" + numeroPartidosJornada
+                + ", numeroPartidosEnTotal=" + numeroPartidosLiga + ", rondas=" + Arrays.toString(listaJornadas) + "]";
     }
 
 }
