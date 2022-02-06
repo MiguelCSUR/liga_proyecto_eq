@@ -1,7 +1,7 @@
 package model;
 
 
-public class Partido extends Jornada{
+public class Partido {
 
     private Equipo equipoCasa;
     private Equipo equipoFuera;
