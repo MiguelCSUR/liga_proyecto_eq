@@ -1,8 +1,5 @@
 import model.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println(
-                generarJornada(crearListaEquipo("Chupetin", 10), crearListaArbitro()).toString()
+                crearJornada(crearListaEquipo("Chupetin", 10), crearListaArbitro()).toString()
         );
 
 //        Equipo equipo1 = new Equipo();
@@ -160,7 +157,7 @@ public class Main {
         return numeroEquipos;
     }
 
-    public static Jornada generarJornada(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
+    public static Jornada crearJornada(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
 
         int numeroEquipos = listaEquipos.length;
 
@@ -178,14 +175,13 @@ public class Main {
 
         Partido[][] rondas;
         rondas = new Partido[numeroRondas * 2][numeroPartidosPorRonda];
-        rondas = crearJornadas(listaEquipos, listaArbitros, numeroEquipos, numeroRondas, numeroPartidosPorRonda, rondas);
+        rondas = crearListaRondas(listaEquipos, listaArbitros, numeroEquipos, numeroRondas, numeroPartidosPorRonda, rondas);
         Jornada jornada = new Jornada(numeroRondas * 2, numeroPartidosPorRonda, numeroPartidosEnTotal, rondas);
 
         return jornada;
     }
 
-
-    public static Partido[][] crearJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros, int numeroEquipos, int numeroRondas, int numeroPartidosPorRonda, Partido[][] rondas) {
+    public static Partido[][] crearListaRondas(Equipo[] listaEquipos, Arbitro[] listaArbitros, int numeroEquipos, int numeroRondas, int numeroPartidosPorRonda, Partido[][] rondas) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         int x = 0;
         int y = numeroEquipos - 2;

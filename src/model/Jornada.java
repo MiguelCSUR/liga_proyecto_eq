@@ -4,6 +4,7 @@ package model;
 import java.util.Arrays;
 
 public class Jornada extends Calendario{
+    //Serie de partidos
     private int numeroRondas;
     private int numeroPartidosPorRonda;
     private int numeroPartidosEnTotal;
