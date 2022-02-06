@@ -4,4 +4,10 @@
 
 01/02/22 - Miguel - Ya se generan Equipos, en Main.java
 
+01/02/2022 - Pablo  - Clase entrenador y clase arbitro, aunque Nacho y Miguel lo han tenido que arreglar. 
+
+1/02/2022 - Pablo - CalcularRondas, que calcula las rondas y partidos de esas rondas para que todos los equipos se enfrenten entre ellos en los menos partidos y rondas posibles
+
 03/02/22 - Miguel y Nacho - Creamos los partidos, ya se generan, partidos, resultados y se indica el ganador.
+
+4/02/22 - Pablo - Clase Jornada y refactorizado CalcularRondas en calcularJornadas y generarJornada 
