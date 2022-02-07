@@ -54,6 +54,7 @@ public class Main {
             System.out.println("NO equivalente");
         }
 
+        //Debugger Calendario
         String categoria = "Chupetin";
         Calendario calendario = new Calendario();
         Partido[] listaPartido = new Partido[numPartidos];
@@ -71,6 +72,7 @@ public class Main {
             System.out.printf("El Partido %d será el %s, %s a las %s\n", partido.getNumeroPartido(),
                     dateToString(partido.getFecha()), partido.getFecha().getDayOfWeek(), partido.getHoraInicio());
         }
+
     }
 
     public static String dateToString(LocalDate fecha) {
@@ -199,25 +201,6 @@ public class Main {
         return listaEquipos;
     }
 
-    //TODO: Esto es un creacion de lista de arbitros provisional para provar el crear las jornadas
-    //RECORDAR QUE RAFA DIJO QUE NO NOS COMIERAMOS EL COCO Y QUE PUSIESEMOS int numeroArbitros = numeroEquipos/2;
-    public static int numArbitros(int numEquipos) {
-        int numArbitros = (int) Math.floor(numEquipos / 2);
-        return numArbitros;
-    }
-
-    public static Arbitro[] crearListaArbitro() {
-        int numeroArbitros = numArbitros(numeroEquipos());
-        Arbitro[] listaArbitro = new Arbitro[numeroArbitros];
-        for (int i = 0; i < numeroArbitros; i++) {
-            Arbitro arbitro = new Arbitro();
-            listaArbitro[i] = arbitro;
-        }
-
-        return listaArbitro;
-    }
-
-
     public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
         Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
 
@@ -256,7 +239,13 @@ public class Main {
 
     //TODO: este metodo crea Ligas, por lo que seria,
     //TODO: public static Liga crearLiga(etc..)
-    public static Jornada crearJornada(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
+    public static Jornada crearJornada(
+//            Equipo[] listaEquipos,
+//            Arbitro[] listaArbitros,
+            Liga liga
+    ) {
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Arbitro[] listaArbitros = liga.getListaArbitros();
 
         int numeroEquipos = listaEquipos.length;
 
@@ -274,14 +263,44 @@ public class Main {
 
         Partido[][] rondas;
         rondas = new Partido[numeroRondas * 2][numeroPartidosPorRonda];
-        rondas = crearListaJornadas(listaEquipos, listaArbitros, numeroEquipos, numeroRondas, numeroPartidosPorRonda, rondas);
+
+        //Refactorizacion: Diezmo Parametral
+//        rondas = crearListaJornadas(listaEquipos, listaArbitros, numeroEquipos, numeroRondas, numeroPartidosPorRonda, rondas);
+        rondas = crearListaJornadas(liga);
+
         Jornada jornada = new Jornada(numeroRondas * 2, numeroPartidosPorRonda, numeroPartidosEnTotal, rondas);
 
         return jornada;
     }
 
     //TODO: posiblemente crearCalendario
-    public static Partido[][] crearListaJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros, int numeroEquipos, int numeroRondas, int numeroPartidosPorRonda, Partido[][] rondas) {
+    public static Partido[][] crearListaJornadas(
+            //Refactorizacion: Diezmo Parametral
+//            Equipo[] listaEquipos, //TODO: Probar a pasar con un liga.getListaEquipos()
+//            Arbitro[] listaArbitros, //TODO: Probar a pasar con un liga.getListaArbitros()
+//            int numeroEquipos, //TODO: probar listaEquipos.length
+//            int numeroRondas,
+//            int numeroPartidosPorRonda, //TODO: esto puede calcularse...
+//            Partido[][] rondas,
+            Liga liga //RECIEN CREADA, intentaré llamar desde aqui al resto de parametros que sobran
+    )
+    {
+        //TODO: Posible refactor
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Arbitro[] listaArbitros = liga.getListaArbitros();
+        int numeroEquipos = liga.getListaEquipos().length;
+
+//         Refactorizacion: Diezmo Parametral
+//        Jornada jornada = crearJornada(listaEquipos, listaArbitros);
+        Jornada jornada = crearJornada(liga);
+
+
+        Partido[][] rondas = jornada.getListaJornadas();
+        //Estos no los tengo claros
+        int numeroRondas = rondas.length;
+        int numeroPartidosPorRonda = rondas[0].length;
+
+
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         int x = 0;
         int y = numeroEquipos - 2;
@@ -355,6 +374,7 @@ public class Main {
         return rondas;
     }
 
+    //Que es ordenar por equipos
     public static Equipo[] ordenarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
@@ -383,8 +403,4 @@ public class Main {
 
     //MÉTODOS CALENDARIOS
 
-    //TODO: nombre provisional, listado de dias y horas para los partidos
-//    public static String[][] calendarioFechas() {
-//
-//    }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.tools.javac.Main;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -148,6 +150,22 @@ public class Liga {
 
     public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
+    }
+
+    public static int numArbitros(int numEquipos) {
+        int numArbitros = (int) Math.floor(numEquipos / 2);
+        return numArbitros;
+    }
+
+    public static Arbitro[] crearListaArbitro() {
+        int numeroArbitros = numArbitros(numeroEquipos());
+        Arbitro[] listaArbitro = new Arbitro[numeroArbitros];
+        for (int i = 0; i < numeroArbitros; i++) {
+            Arbitro arbitro = new Arbitro();
+            listaArbitro[i] = arbitro;
+        }
+
+        return listaArbitro;
     }
 
     @Override
