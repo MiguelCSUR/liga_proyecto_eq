@@ -1,14 +1,16 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Liga {
 
     private String nombre;
-    private Equipo[] equipos;
+    private Equipo[] listaEquipos;
     private Calendario calendario;
-    private Arbitro[] arbitros;
+    private Arbitro[] listaArbitros;
     private Clasificacion clasificacion;
+    private LocalDate fechaInicial;
 
     //TODO: indicar la fecha de inicio
     private String fechaInicio;
@@ -21,12 +23,12 @@ public class Liga {
         this.nombre = generadorNombres();
     }
 
-    public Equipo[] getEquipos() {
-        return equipos;
+    public Equipo[] getListaEquipos() {
+        return listaEquipos;
     }
 
-    public void setEquipos(Equipo[] equipos) {
-        this.equipos = genararListaEquipos(numeroEquipos());
+    public void setListaEquipos(Equipo[] listaEquipos) {
+        this.listaEquipos = genararListaEquipos(numeroEquipos());
     }
 
     public Calendario getCalendario() {
@@ -37,12 +39,12 @@ public class Liga {
         this.calendario = calendario;
     }
 
-    public Arbitro[] getArbitros() {
-        return arbitros;
+    public Arbitro[] getListaArbitros() {
+        return listaArbitros;
     }
 
     public void setArbitros() {
-        this.arbitros = generarListaArbitros(generarNumeroArbitros(numeroEquipos()));
+        this.listaArbitros = generarListaArbitros(generarNumeroArbitros(numeroEquipos()));
     }
 
     public Clasificacion getClasificacion() {
@@ -128,14 +130,32 @@ public class Liga {
         return listaArbitro;
     }
 
+    public void setListaArbitros(Arbitro[] listaArbitros) {
+        this.listaArbitros = listaArbitros;
+    }
+
+    public LocalDate getFechaInicial() {
+        return fechaInicial;
+    }
+
+    public void setFechaInicial(LocalDate fechaInicial) {
+        this.fechaInicial = fechaInicial;
+    }
+
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
     @Override
     public String toString() {
         return
                 "Nombre de Liga= " + nombre + '\'' +
-                        ", Equipos= " + Arrays.toString(equipos) +'\''+
+                        ", Equipos= " + Arrays.toString(listaEquipos) +'\''+
 
-                        ", Arbitros= " + Arrays.toString(arbitros);
-
-
+                        ", Arbitros= " + Arrays.toString(listaArbitros);
     }
 }

@@ -71,30 +71,6 @@ public class Main {
             System.out.printf("El Partido %d será el %s, %s a las %s\n", partido.getNumeroPartido(),
                     dateToString(partido.getFecha()), partido.getFecha().getDayOfWeek(), partido.getHoraInicio());
         }
-
-        {
-//        System.out.println(
-//                crearJornada(crearListaEquipo("Chupetin", 10), crearListaArbitro()).toString()
-//        );
-
-//        Equipo equipo1 = new Equipo();
-//
-//        //Asignar lista de jugadores al equipo
-//        Jugador[] listaJugadores = crearJugadores("Juvenil");
-//        equipo1.setJugadores(listaJugadores);
-//
-//        //PARTIDO
-//        Partido partido = crearPartido("Juvenil");
-//        System.out.println(
-//                partido.toString()
-//        );
-
-            //Crear Jornada
-
-
-            //Aquí comprobamos el ganador
-//        comprobarGanador(partido);
-        }
     }
 
     public static String dateToString(LocalDate fecha) {
@@ -119,15 +95,16 @@ public class Main {
             if (diaSemana == SATURDAY || diaSemana == SUNDAY) {
                 //En findes semana se puede jugar por la mañana, los horarios de las posiciones 0, 1 y 2
                 int j = 0;
-                while (j < 6 && i < listaPartidos.length) {
+                while (j < listaHorarios.length && i < listaPartidos.length) {
                     listaPartidos[i].setHoraInicio(listaHorarios[j]);
                     listaPartidos[i].setFecha(fechaInicial);
                     j++;
                     i++;
                 }
             } else {
+                //j son los partidos a partir de la tarde
                 int j = 3;
-                while (j < 6 && i < listaPartidos.length) {
+                while (j < listaHorarios.length && i < listaPartidos.length) {
                     //Entre semana solo se juega por la tarde, los horarios de 3, 4 y 5
                     listaPartidos[i].setHoraInicio(listaHorarios[j]);
                     listaPartidos[i].setFecha(fechaInicial);
@@ -174,16 +151,20 @@ public class Main {
 
     //TODO: Borrar este método, cuando hagamos Clasificacion.java
     //PROVISIONAL Un método simple que comprueba el ganador, no devuelve nada solo imprime texto
-    public static void comprobarGanador(Partido partido) {
+    public static void asignarPuntos(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
         if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
-            System.out.printf("\n%s y %s han quedado en empate", partido.getEquipoCasa().getNombre(),
-                    partido.getEquipoFuera().getNombre());
+            //Empate
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 1);
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 1);
         } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
-            System.out.printf("\n%s han ganado a %s", partido.getEquipoCasa().getNombre(),
-                    partido.getEquipoFuera().getNombre());
+            //Gana Equipo Casa
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 3);
         } else {
-            System.out.printf("\n%s han ganado a %s", partido.getEquipoFuera().getNombre(),
-                    partido.getEquipoCasa().getNombre());
+            //Gana Equipo Fuera
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
 
@@ -237,14 +218,24 @@ public class Main {
     }
 
 
-    //Creamos el evento del partido, pero todavía no lo jugamos en este método
-    public static Partido crearPartido(Equipo eq1, Equipo eq2, Arbitro arbitro) {
-        Equipo equipoCasa = eq1;
-        Equipo equipoFuera = eq2;
-        Partido partido = new Partido(eq1, eq2, arbitro);
+    public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
+        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
 
-        partido.setGolesEquipoCasa(generadorGoles());
-        partido.setGolesEquipoFuera(generadorGoles());
+        //Generamos los golesEquipoCasa
+        int golesEquipoCasa = generadorGoles();
+        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
+        partido.setGolesEquipoCasa(golesEquipoCasa);
+        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
+        //TODO: Este último paso es redundante eliminar en el futuro.
+        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
+
+        //Se repite el mismo proceso con golesEquipoFuera.
+        int golesEquipoFuera = generadorGoles();
+        partido.setGolesEquipoFuera(golesEquipoFuera);
+        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
+
+        //Se asignan los puntos
+        asignarPuntos(partido);
 
         return partido;
     }
