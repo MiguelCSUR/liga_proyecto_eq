@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static java.time.DayOfWeek.*;
-import static model.Liga.crearEquipo;
+//import static model.Liga.crearEquipo;
 
 public class Main {
 

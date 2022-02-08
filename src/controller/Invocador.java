@@ -35,13 +35,25 @@ public class Invocador {
     //TODO: PERSONA - PABLO
 
     public static Persona crearPersona(int edadMin, int edadMax) {
-        Persona persona = new Persona(generarNombrePersona(), generarApellidos(), generarEdad(edadMin, edadMax));
+        Persona persona = new Persona();
+        persona.setNombre(generarNombrePersona());
+        persona.setApellidos(generarApellidos());
+        persona.setEdad(generarEdad(edadMax,edadMin));
         return persona;
     }
 
     public static String generarNombrePersona() {
-        int random = (int) Math.floor(Math.random() * Nombres.personaNombres().length);
-        return Nombres.personaNombres()[random];
+
+        String[] listaNombres = {"Altair", "Ezio", "Sora", "Connor", "Kratos", "Link", "Zelda", "Kirby", "Megaman", "Bowser",
+                "Ratchet", "Donkey Kong", "Goku", "Doraemon", "Perchita", "Suneo", "Gandalf", "Frodo", "Bilbo",
+                "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt", "Trevor", "Victor", "Jinx", "VI", "Catelyn",
+                "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro", "Squall", "Yuna", "Riku", "Jill", "Wesker",
+                "Kassandra", "Alexios", "Luigi", "Cetrico", "Cul", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
+                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader", "FerNardo", "PENElope"};
+
+        int random = (int) Math.floor(Math.random() * listaNombres.length);
+        return listaNombres[random];
+
     }
 
     public static String generarApellidos() {
@@ -55,45 +67,51 @@ public class Invocador {
     }
 
     //TODO: JUGADOR - PABLO
-
-    public static Jugador crearJugador() {
-        Jugador jugador = new Jugador(
-                generarNombrePersona(),
-                generarApellidos(),
-                generarEdad(edadMin, edadMax)
-        );
+    //Te he cambiado el codigo de crear jugador y te he creado una lista de jugadores
+    public static Jugador crearJugador(String categoria,int dorsal) {
+        Jugador jugador = new Jugador();
+        jugador.setNombre(generarNombrePersona());
+        jugador.setApellidos(generarApellidos());
+        jugador.setCategoria(categoria);
+        jugador.setDorsal(dorsal);
+        return jugador;
     }
 
-    public int generarEdadJugador(String categoria) {
+    public static Jugador[] crearListaJugadores(String categoria,Equipo equipo) {
+        int numJugadores = asigNumJugadores();
+        Jugador[] jugadores = new Jugador[numJugadores];
+        //Se van creando los jugadores y asignando a un array
+        for (int i = 0; i < numJugadores; i++) {
+            Jugador jugador = new Jugador();
+            jugador = crearJugador(categoria,i+1);
+            jugador.setEquipo(equipo);
+            jugadores[i] = jugador;
+        }
+        return jugadores;
+    }
+
+    public static int generarEdadJugador(String categoria) {
         switch (categoria) {
             case "Chupetin":
-                super.setEdad(4, 5);
-                return super.getEdad();
+                return generarEdad(4,5);
             case "Prebenjamín":
-                super.setEdad(6, 7);
-                return super.getEdad();
+                return generarEdad(6,7);
             case "Benjamín":
-                super.setEdad(8, 9);
-                return super.getEdad();
+                return generarEdad(8,9);
             case "Alevín":
-                super.setEdad(10, 11);
-                return super.getEdad();
+                return generarEdad(10,11);
             case "Infantil":
-                super.setEdad(12, 13);
-                return super.getEdad();
+                return generarEdad(12,13);
             case "Cadete":
-                super.setEdad(14, 15);
-                return super.getEdad();
+                return generarEdad(14,15);
             case "Juvenil":
-                super.setEdad(16, 18);
-                return super.getEdad();
+                return generarEdad(16,18);
             default:
-                super.setEdad(19, 38);
-                return super.getEdad();
+                return generarEdad(19,38);
         }
     }
 
-    public String generarPosicion(int dorsal) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
+    public static String generarPosicion(int dorsal) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
         while (dorsal > 11) {
             int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
             dorsal = numeroAleatorio;
@@ -127,24 +145,35 @@ public class Invocador {
     }
 
     //TODO: ENTRENADOR - PABLO
+    //Te he creado esta clase de entrenador
+    public static Entrenador crearEntrenador(Equipo equipo) {
+        int edadMin = 18;
+        int edadMax = 40;
+        Entrenador entrenador = new Entrenador();
+        entrenador.setNombre(generarNombrePersona());
+        entrenador.setApellidos(generarApellidos());
+        entrenador.setEdad(generarEdad(edadMax,edadMin));
+        entrenador.setNumeroLicencia(generarLicencia());
+        entrenador.setEquipo(equipo);
+        return entrenador;
+    }
+
     public static int generarLicencia() {
         return (int) Math.floor(Math.random() * 10000);
     }
 
     //TODO: ARBITRO - PABLO
-
-    public static void crearArbitro() {
+    //Tambien he tocado un poco esto(Nacho)
+    public static Arbitro crearArbitro() {
         int edadMin = 18;
         int edadMax = 40;
         Arbitro arbitro = new Arbitro(
                 generarNombrePersona(),
                 generarApellidos(),
-                generarEdad(edadMin, edadMax),
+                generarEdad(edadMax, edadMin),
                 generarLicencia());
+        return arbitro;
     }
-
-
-    //TODO: ARBITRO - PABLO
 
     //TODO: EQUIPO - NACHO
     //Generador de mascotas de los equipos
@@ -194,15 +223,15 @@ public class Invocador {
         int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
         return numJugadores;
     }
-
+    //Esto crea un equipo en individual
     public static Equipo crearEquipo(String categoria) {
         Equipo equipo = new Equipo();
-        equipo.setJugadores(crearJugadores(categoria));
         equipo.setNombre(generarNombreEquipo());
         equipo.setEquipacionCasa(generadorEquipacionCasa());
         equipo.setEquipacionCasa(generadorEquipacionFuera());
         equipo.setClub(generarClub());
-        equipo.setEntrenador(generarEntrenador());
+        equipo.setEntrenador(crearEntrenador(equipo));
+        equipo.setJugadores(crearListaJugadores(categoria,equipo));
         return equipo;
     }
 
