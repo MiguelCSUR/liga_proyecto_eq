@@ -14,16 +14,10 @@ public class Partido {
     private int numeroPartido;
     private LocalDate fecha;
 
-    public Partido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
-        this.equipoCasa = equipoCasa;
-        this.equipoFuera = equipoFuera;
-        this.arbitro = arbitro;
-    }
 
     public Equipo getEquipoCasa() {
         return equipoCasa;
     }
-
     public void setEquipoCasa(Equipo equipoCasa) {
         this.equipoCasa = equipoCasa;
     }
@@ -31,7 +25,6 @@ public class Partido {
     public Equipo getEquipoFuera() {
         return equipoFuera;
     }
-
     public void setEquipoFuera(Equipo equipoFuera) {
         this.equipoFuera = equipoFuera;
     }
@@ -39,7 +32,6 @@ public class Partido {
     public Arbitro getArbitro() {
         return arbitro;
     }
-
     public void setArbitro(Arbitro arbitro) {
         this.arbitro = arbitro;
     }
@@ -47,7 +39,6 @@ public class Partido {
     public int getGolesEquipoCasa() {
         return golesEquipoCasa;
     }
-
     public void setGolesEquipoCasa(int golesEquipoCasa) {
         this.golesEquipoCasa = golesEquipoCasa;
     }
@@ -55,7 +46,6 @@ public class Partido {
     public int getGolesEquipoFuera() {
         return golesEquipoFuera;
     }
-
     public void setGolesEquipoFuera(int golesEquipoFuera) {
         this.golesEquipoFuera = golesEquipoFuera;
     }
@@ -63,7 +53,6 @@ public class Partido {
     public String getHoraInicio() {
         return horaInicio;
     }
-
     public void setHoraInicio(String horaInicio) {
         this.horaInicio = horaInicio;
     }
@@ -71,7 +60,6 @@ public class Partido {
     public int getNumeroPartido() {
         return numeroPartido;
     }
-
     public void setNumeroPartido(int numeroPartido) {
         this.numeroPartido = numeroPartido;
     }
@@ -79,7 +67,6 @@ public class Partido {
     public LocalDate getFecha() {
         return fecha;
     }
-
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
