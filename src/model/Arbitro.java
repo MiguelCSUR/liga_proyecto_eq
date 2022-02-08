@@ -4,19 +4,16 @@ public class Arbitro extends Persona {
     int licencia;
 
 
-    public Arbitro() {
-        super.nombre=nombre;
-        super.apellidos = apellidos;
-        super.edad = edad;
+    public Arbitro(String nombre, String apellidos, int edad, int licencia) {
+        super(nombre, apellidos, edad);
         this.licencia = licencia;
     }
-
 
     public int getLicencia() {
         return licencia;
     }
-    public void setLicencia() {
-        this.licencia = generarLicencia();
+    public void setLicencia(int licencia) {
+        this.licencia = licencia;
     }
 
 }
