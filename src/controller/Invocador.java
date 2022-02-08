@@ -6,12 +6,11 @@
 //GENERAR para atributos, propiedades, parámetros que no sean objetos propios
 //generarNombre()
 //Ejemplo: String, int, Integer, etc
-<<<<<<< HEAD
 
 package controller;
 
 import data.Nombres;
-import model.Liga;
+import model.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +20,7 @@ public class Invocador {
     static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 //    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
-    //DATE
+    //TODO: DATE
     public static String dateToString (LocalDate fecha){
         return fecha.format(FORMATOFECHA);
     }
@@ -29,17 +28,6 @@ public class Invocador {
         return LocalDate.parse(fecha, FORMATOFECHA);
     }
 
-
-
-=======
-package controller;
-
-import model.*;
-
-public class Invocador {
-
-    
->>>>>>> 6693cc92029473fd8e966f7689acc4b158040bc8
     //TODO: PERSONA - PABLO
 
 
@@ -47,8 +35,8 @@ public class Invocador {
     //TODO: JUGADOR - PABLO
     //TODO: ENTRENADOR - PABLO
     //TODO: ARBITRO - PABLO
-    //TODO: EQUIPO - NACHO
 
+    //TODO: EQUIPO - NACHO
     //Generador de mascotas de los equipos
     public static String generadorMascota() {
         String[] nombre = {"Los Anfisbenas", "Las Aracnes", "Los Argos", "Los Basiliscos", "Los Centauros", "Los Ceerberos", "Los Cetus",
@@ -147,9 +135,10 @@ public class Invocador {
         String nombre = generadorCiudad() + " F.C ";
         return nombre;
     }
-    //TODO: PARTIDO - MIGUE
-    //TODO: JORNADA - NACHO
 
+    //TODO: PARTIDO - MIGUE
+
+    //TODO: JORNADA - NACHO
     public static Jornada[] crearListaJornadas (Equipo[]listaEquipos, Arbitro[]listaArbitros){
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
@@ -296,7 +285,9 @@ public class Invocador {
 
 
     //TODO: CALENDARIO - MIGUE
+    
     //TODO: CLASIFICACION - PABLO
+
     //TODO: LIGA - MIGUEL
     public static Liga crearLiga() {
         Liga liga = new Liga(generadorNombresLiga());
