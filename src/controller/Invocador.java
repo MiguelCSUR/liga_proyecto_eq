@@ -23,15 +23,17 @@ public class Invocador {
 //    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
     //TODO: DATE
-    public static String dateToString(LocalDate fecha) {
+    {
+        public static String dateToString (LocalDate fecha){
         return fecha.format(FORMATOFECHA);
     }
 
-    public static LocalDate stringToDate(String fecha) {
+        public static LocalDate stringToDate (String fecha){
         return LocalDate.parse(fecha, FORMATOFECHA);
     }
-
+    }
     //TODO: PERSONA - PABLO
+
     public static Persona crearPersona(int edadMin, int edadMax) {
         Persona persona = new Persona(generarNombrePersona(), generarApellidos(), generarEdad(edadMin, edadMax));
         return persona;
@@ -53,6 +55,77 @@ public class Invocador {
     }
 
     //TODO: JUGADOR - PABLO
+
+    public static Jugador crearJugador() {
+        Jugador jugador = new Jugador(
+                generarNombrePersona(),
+                generarApellidos(),
+                generarEdad(edadMin, edadMax)
+        );
+    }
+
+    public int generarEdadJugador(String categoria) {
+        switch (categoria) {
+            case "Chupetin":
+                super.setEdad(4, 5);
+                return super.getEdad();
+            case "Prebenjamín":
+                super.setEdad(6, 7);
+                return super.getEdad();
+            case "Benjamín":
+                super.setEdad(8, 9);
+                return super.getEdad();
+            case "Alevín":
+                super.setEdad(10, 11);
+                return super.getEdad();
+            case "Infantil":
+                super.setEdad(12, 13);
+                return super.getEdad();
+            case "Cadete":
+                super.setEdad(14, 15);
+                return super.getEdad();
+            case "Juvenil":
+                super.setEdad(16, 18);
+                return super.getEdad();
+            default:
+                super.setEdad(19, 38);
+                return super.getEdad();
+        }
+    }
+
+    public String generarPosicion(int dorsal) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
+        while (dorsal > 11) {
+            int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
+            dorsal = numeroAleatorio;
+        }
+
+        switch (dorsal) {
+            case 1:
+                return "Portero";
+            case 2:
+                return "Lateral derecho";
+            case 3:
+                return "Lateral izquierdp";
+            case 4:
+            case 5:
+                return "Central";
+            case 6:
+                return "Pivote";
+            case 7:
+                return "Extremo derecho";
+            case 8:
+                return "Centrocampista";
+            case 9:
+                return "Delantero";
+            case 10:
+                return "Mediapunta";
+            case 11:
+                return "Extremo izquierdo";
+            default:
+                return "Error se sale de dorsal en Jugador.setPosition()";
+        }
+    }
+
     //TODO: ENTRENADOR - PABLO
     public static int generarLicencia() {
         return (int) Math.floor(Math.random() * 10000);
@@ -69,6 +142,7 @@ public class Invocador {
                 generarEdad(edadMin, edadMax),
                 generarLicencia());
     }
+
 
     //TODO: ARBITRO - PABLO
 
