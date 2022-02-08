@@ -1,5 +1,7 @@
 package model;
 
+import controller.Invocador;
+
 import java.time.LocalDate;
 import java.util.Arrays;
 
@@ -15,7 +17,7 @@ public class Liga {
     public Liga(LocalDate fechaInicio, int numeroEquipos, String categoria) {
         this.fechaInicio = fechaInicio;
         this.nombre = generadorNombres();
-        this.listaEquipos = crearListaEquipos(numeroEquipos, categoria);
+        this.listaEquipos = Invocador.crearListaEquipos(numeroEquipos, categoria);
         this.listaArbitros = crearListaArbitros(generarNumeroArbitros(numeroEquipos));
     }
 
@@ -93,7 +95,7 @@ public class Liga {
     }
 
     public static Jugador[] crearJugadores(String categoria) {
-        int numJugadores = Equipo.asigNumJugadores();
+        int numJugadores = Invocador.asigNumJugadores();
         Jugador[] jugadores = new Jugador[numJugadores];
         Equipo equipo = new Equipo();
 
@@ -106,22 +108,6 @@ public class Liga {
         return jugadores;
     }
 
-    public static Equipo crearEquipo(String categoria) {
-        Equipo equipo = new Equipo();
-        equipo.setJugadores(crearJugadores(categoria));
-        return equipo;
-    }
-
-    //Asigna los equipos según el número de equipos que se han generado previamente
-    public static Equipo[] crearListaEquipos(int numEquipos, String categoria) {
-        Equipo[] listaEquipos = new Equipo[numEquipos];
-
-        for (int i = 0; i < numEquipos; i++) {
-            Equipo equipo = crearEquipo(categoria);
-            listaEquipos[i] = equipo;
-        }
-        return listaEquipos;
-    }
 
     //Crear función para determinar número de árbitros
     //Se basa en numero de equipos, donde se divide el numero de Equipos entre 2 y se crea ese numero de arbitros

@@ -1,3 +1,4 @@
+import controller.Invocador;
 import model.*;
 
 import javax.swing.text.DateFormatter;
@@ -39,7 +40,7 @@ public class Main {
 
         Equipo[] listaEquipos = liga.getListaEquipos();
         for (int i = 0; i < listaEquipos.length; i++) {
-            listaEquipos[i] = crearEquipo("Juvenil");
+            listaEquipos[i] = Invocador.crearEquipo("Juvenil");
         }
         Arbitro[] listaArbitro = liga.getListaArbitros();
 
