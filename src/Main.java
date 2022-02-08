@@ -1,17 +1,10 @@
+import controller.Invocador;
 import model.*;
 
-import javax.swing.text.DateFormatter;
-import java.text.Format;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
 
 import static java.time.DayOfWeek.*;
 import static model.Liga.crearEquipo;
@@ -25,7 +18,7 @@ public class Main {
     //TODO investigar porque static no funca
     public static void main(String[] args) throws ParseException {
 
-        Liga liga = new Liga(stringToDate("20-02-2022"), 20, "Chupetín");
+        Liga liga = new Liga(Invocador.stringToDate("20-02-2022"), 20, "Chupetín");
         for (int i = 0; i < liga.getListaArbitros().length; i++) {
             System.out.println(
                     liga.getListaArbitros()[i].getNombre()
@@ -54,13 +47,6 @@ public class Main {
         }
     } //FIN MAIN
 
-        public static String dateToString (LocalDate fecha){
-            return fecha.format(FORMATOFECHA);
-        }
-
-        public static LocalDate stringToDate (String fecha){
-            return LocalDate.parse(fecha, FORMATOFECHA);
-        }
 
         //Asigna las fechas a una lista de partidos
         public static void asignarHoraPartidos (Partido[]listaPartidos, LocalDate fechaInicial){

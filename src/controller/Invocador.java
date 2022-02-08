@@ -9,8 +9,27 @@
 
 package controller;
 
+import data.Nombres;
+import model.Liga;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 public class Invocador {
-    
+
+    static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
+
+    //DATE
+    public static String dateToString (LocalDate fecha){
+        return fecha.format(FORMATOFECHA);
+    }
+    public static LocalDate stringToDate (String fecha){
+        return LocalDate.parse(fecha, FORMATOFECHA);
+    }
+
+
+
     //TODO: PERSONA - PABLO
 
 
@@ -24,7 +43,15 @@ public class Invocador {
     //TODO: CALENDARIO - MIGUE
     //TODO: CLASIFICACION - PABLO
     //TODO: LIGA - MIGUEL
+    public static Liga crearLiga() {
+        Liga liga = new Liga(generadorNombresLiga());
+        return liga;
+    }
 
+    public static String generadorNombresLiga() {
+        int nombre = (int) Math.floor(Math.random() * Nombres.ligaNombres().length);
+        return Nombres.ligaNombres()[nombre];
+    }
 
 
 }
