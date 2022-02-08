@@ -1,6 +1,6 @@
 package controller;
 
-public class Generador {
+public class Invocador {
     //Criterios
     //CREAR para Objetos propios. Ejemplos: Persona, Equipo, etc
     //crearPartido() crearListaPartidos() crearEquipo
