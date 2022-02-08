@@ -21,19 +21,67 @@ public class Invocador {
 //    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
     //TODO: DATE
-    public static String dateToString (LocalDate fecha){
+    public static String dateToString(LocalDate fecha) {
         return fecha.format(FORMATOFECHA);
     }
-    public static LocalDate stringToDate (String fecha){
+
+    public static LocalDate stringToDate(String fecha) {
         return LocalDate.parse(fecha, FORMATOFECHA);
     }
 
     //TODO: PERSONA - PABLO
+    public static Persona crearPersona(int edadMin, int edadMax) {
+        Persona persona = new Persona(generarNombrePersona(), generarApellidos(), generarEdad(edadMin, edadMax));
+        return persona;
+    }
 
 
+    public static String generarNombrePersona() {
+
+        String[] listaNombres = {"Altair", "Ezio", "Sora", "Connor", "Kratos", "Link", "Zelda", "Kirby", "Megaman", "Bowser",
+                "Ratchet", "Donkey Kong", "Goku", "Doraemon", "Perchita", "Suneo", "Gandalf", "Frodo", "Bilbo",
+                "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt", "Trevor", "Victor", "Jinx", "VI", "Catelyn",
+                "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro", "Squall", "Yuna", "Riku", "Jill", "Wesker",
+                "Kassandra", "Alexios", "Luigi", "C�trico", "Culo", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
+                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader", "FerNardo", "PENElope"};
+
+        int random = (int) Math.floor(Math.random() * listaNombres.length);
+        return listaNombres[random];
+    }
+
+    public static String generarApellidos() {
+        String listaApellidos[] = {"Marui", "Shima", "Sawa", "Toyo", "Cromwell", "Keller", "Perdido", "Zimmerman", "Anderson", "Gasper", "Degurechaff", "Jimenez",
+                "Gonzalez", "Lamata", "Feliz", "Bragueta", "Amiano", "Enamorado", "Nigote", "Delano", "Messina",
+                "Di Montelroso", "Krauser", "Marston", "Auditore", "Bernstein", "Bogard", "Briggs", "Chaolan", "Eggman", "Dorian", "Dragunov",
+                "Drake", "Winters", "Falcon", "Freeman", "Hudson", "Ibn-La' Ahad", "Yamazaki", "Wesker", "Snake", "Tsung", "Takahashi", "Strife",
+                "Schugerg", "Schtauffen", "Sakazaki", "Hayabusa", "Porter", "Nikaido", "Nanakase", "Chief", "Tyrell", "Lannister", "Baratheon",
+                "Martell", "Stark", "Targaryen", "Tully", "Okabe", "Krusoe", "Vergassola", "Ali Baba", "Serebriakov", "Sempai"};
+
+        int random1 = (int) Math.floor(Math.random() * listaApellidos.length);
+        int random2 = (int) Math.floor(Math.random() * listaApellidos.length);
+        return listaApellidos[random1] + " " + listaApellidos[random2];
+    }
+
+    public static int generarEdad(int edadMax, int edadMin) {
+        return (int) Math.floor(Math.random() * (edadMax - edadMin)) + edadMin;
+    }
 
     //TODO: JUGADOR - PABLO
     //TODO: ENTRENADOR - PABLO
+    public static int generarLicencia() {
+        return (int) Math.floor(Math.random() * 10000);
+    }
+
+    //TODO: ARBITRO - PABLO
+
+    public static void crearArbitro(int edadMin, int edadMax) {
+        Arbitro arbitro = new Arbitro(
+                generarNombrePersona(),
+                generarApellidos(),
+                generarEdad(edadMin, edadMax),
+                generarLicencia());
+    }
+
     //TODO: ARBITRO - PABLO
 
     //TODO: EQUIPO - NACHO
@@ -85,6 +133,7 @@ public class Invocador {
         return equipC[numero];
 
     }
+
     //Creamos las equipaciones de los equipos de fuera y se la damos
     public static String generadorEquipacionFuera() {
 
@@ -126,12 +175,12 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static String generarNombreEquipo(){
+    public static String generarNombreEquipo() {
         String nombre = generadorMascota() + " de " + generadorCiudad();
         return nombre;
     }
 
-    public static String generarClub(){
+    public static String generarClub() {
         String nombre = generadorCiudad() + " F.C ";
         return nombre;
     }
@@ -139,7 +188,7 @@ public class Invocador {
     //TODO: PARTIDO - MIGUE
 
     //TODO: JORNADA - NACHO
-    public static Jornada[] crearListaJornadas (Equipo[]listaEquipos, Arbitro[]listaArbitros){
+    public static Jornada[] crearListaJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
         int numeroEquipos = listaEquipos.length;
@@ -187,6 +236,7 @@ public class Invocador {
         return listaJornadas;
 
     }
+
     //TODO: No se si esto va aqui porque son partidos
     {
         public static Partido[] crearPartidosJornadaParIda ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
@@ -285,7 +335,7 @@ public class Invocador {
 
 
     //TODO: CALENDARIO - MIGUE
-    
+
     //TODO: CLASIFICACION - PABLO
 
     //TODO: LIGA - MIGUEL

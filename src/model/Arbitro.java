@@ -1,19 +1,22 @@
 package model;
 
-
 public class Arbitro extends Persona {
     int licencia;
 
+
     public Arbitro() {
-        super.setEdad(18, 45);
+        super.nombre=nombre;
+        super.apellidos = apellidos;
+        super.edad = edad;
+        this.licencia = licencia;
     }
+
 
     public int getLicencia() {
         return licencia;
     }
-
-    public void setLicencia(int licencia) {
-        this.licencia = licencia;
+    public void setLicencia() {
+        this.licencia = generarLicencia();
     }
 
 }
