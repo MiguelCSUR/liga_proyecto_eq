@@ -24,55 +24,18 @@ public class Main {
     //TODO investigar porque static no funca
     public static void main(String[] args) throws ParseException {
 
-        //CALENDARIO
 
-//        Calendar cal=Calendar.getInstance();
-//        System.out.println("Time is "+cal.getTime());
-//        String str=cal.toString();
-//        System.out.println("Time is "+str);
-
-
-        //CALENDARIO!!
-        int numPartidos = 20;
-//        LocalDate myObj = LocalDate.now(); // Create a date object
-//        System.out.println(myObj); // Display the current date
-
-        //Fecha Inicial Liga.
-        String fechaInicial = "20-02-2222";
-        LocalDate date = stringToDate(fechaInicial);
-
-        //Sumar dias.
-//        date = date.plusDays(1);
-
-        //Coger dia del mes
-        DayOfWeek dayOfWeek = date.getDayOfWeek();
-        DayOfWeek dayOfWeek1 = THURSDAY;
-        //Comparar dias del mes
-        if (dayOfWeek == dayOfWeek1) {
-            System.out.println("Equivalente!");
-        } else {
-            System.out.println("NO equivalente");
+        Liga liga = new Liga(stringToDate("20-02-2022"), 6, "Chupetín");
+        for (int i = 0; i < liga.getListaArbitros().length; i++) {
+            System.out.println(
+            liga.getListaArbitros()[i].getNombre()
+            );
         }
-
-        //Debugger Calendario
-        String categoria = "Chupetin";
-        Calendario calendario = new Calendario();
-        Partido[] listaPartido = new Partido[numPartidos];
-        Arbitro arbitro = new Arbitro();
-        for (int i = 0; i < numPartidos; i++) {
-            Partido partido = crearPartido(crearEquipo(categoria), crearEquipo(categoria), arbitro);
-            partido.setNumeroPartido(i + 1);
-            listaPartido[i] = partido;
+        for (int i = 0; i < liga.getListaEquipos().length; i++) {
+            System.out.println(
+            liga.getListaEquipos()[i].getNombre()
+            );
         }
-
-        asignarHoraPartidos(listaPartido, stringToDate(fechaInicial));
-
-        //Printa Calendario
-        for (Partido partido : listaPartido) {
-            System.out.printf("El Partido %d será el %s, %s a las %s\n", partido.getNumeroPartido(),
-                    dateToString(partido.getFecha()), partido.getFecha().getDayOfWeek(), partido.getHoraInicio());
-        }
-
     }
 
     public static String dateToString(LocalDate fecha) {
@@ -172,34 +135,7 @@ public class Main {
 
     //Crea un array de jugadores, con un tam variable entre 11 y 20,
     //Este tamaño: numJugadores, sale de Equipo.java
-    public static Jugador[] crearJugadores(String categoria) {
-        int numJugadores = Equipo.asigNumJugadores();
-        Jugador[] jugadores = new Jugador[numJugadores];
-        Equipo equipo = new Equipo();
 
-        //Se van creando los jugadores y asignando a un array
-        for (int i = 0; i < numJugadores; i++) {
-            Jugador jugador = new Jugador(categoria, i + 1);
-            jugador.setEquipo(equipo);
-            jugadores[i] = jugador;
-        }
-        return jugadores;
-    }
-
-    public static Equipo crearEquipo(String categoria) {
-        Equipo equipo = new Equipo();
-        equipo.setJugadores(crearJugadores(categoria));
-        return equipo;
-    }
-
-    //Crear lista de Equipos
-    public static Equipo[] crearListaEquipo(String categoria, int numEquipos) {
-        Equipo[] listaEquipos = new Equipo[numEquipos];
-        for (int i = 0; i < 5; i++) {
-            listaEquipos[i] = crearEquipo("Juvenil");
-        }
-        return listaEquipos;
-    }
 
     public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
         Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
