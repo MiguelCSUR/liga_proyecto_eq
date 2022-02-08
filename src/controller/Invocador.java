@@ -12,6 +12,9 @@ package controller;
 public class Invocador {
     
     //TODO: PERSONA - PABLO
+
+
+
     //TODO: JUGADOR - PABLO
     //TODO: ENTRENADOR - PABLO
     //TODO: ARBITRO - PABLO
