@@ -25,7 +25,6 @@ public class Main {
     //TODO investigar porque static no funca
     public static void main(String[] args) throws ParseException {
 
-
         Liga liga = new Liga(stringToDate("20-02-2022"), 20, "Chupetín");
         for (int i = 0; i < liga.getListaArbitros().length; i++) {
             System.out.println(
@@ -37,8 +36,6 @@ public class Main {
                     liga.getListaEquipos()[i].getNombre()
             );
         }
-
-
 
         Equipo[] listaEquipos = liga.getListaEquipos();
         for (int i = 0; i < listaEquipos.length; i++) {
@@ -154,7 +151,6 @@ public class Main {
 
         //Crea un array de jugadores, con un tam variable entre 11 y 20,
         //Este tamaño: numJugadores, sale de Equipo.java
-
 
         public static Partido crearPartido (Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro){
             Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
@@ -347,8 +343,5 @@ public class Main {
             }
             return listaEquipos;
         }
-
-
-        //MÉTODOS CALENDARIOS
 
     }
