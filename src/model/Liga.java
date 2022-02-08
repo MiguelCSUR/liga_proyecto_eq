@@ -1,32 +1,38 @@
 package model;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 
 public class Liga {
 
     private String nombre;
-    private Equipo[] equipos;
+    private Equipo[] listaEquipos;
     private Calendario calendario;
-    private Arbitro[] arbitros;
+    private Arbitro[] listaArbitros;
     private Clasificacion clasificacion;
+    private LocalDate fechaInicio;
 
-    //TODO: indicar la fecha de inicio
-    private String fechaInicio;
+    public Liga(LocalDate fechaInicio, int numeroEquipos, String categoria) {
+        this.fechaInicio = fechaInicio;
+        this.nombre = generadorNombres();
+        this.listaEquipos = crearListaEquipos(numeroEquipos, categoria);
+        this.listaArbitros = crearListaArbitros(generarNumeroArbitros(numeroEquipos));
+    }
 
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.nombre = generadorNombres();
+        this.nombre = nombre;
     }
 
-    public Equipo[] getEquipos() {
-        return equipos;
+    public Equipo[] getListaEquipos() {
+        return listaEquipos;
     }
 
-    public void setEquipos(Equipo[] equipos) {
-        this.equipos = genararListaEquipos(numeroEquipos());
+    public void setListaEquipos(Equipo[] listaEquipos) {
+        this.listaEquipos = listaEquipos;
     }
 
     public Calendario getCalendario() {
@@ -37,13 +43,11 @@ public class Liga {
         this.calendario = calendario;
     }
 
-    public Arbitro[] getArbitros() {
-        return arbitros;
+    public Arbitro[] getListaArbitros() {
+        return listaArbitros;
     }
 
-    public void setArbitros() {
-        this.arbitros = generarListaArbitros(generarNumeroArbitros(numeroEquipos()));
-    }
+    //Setter lista arbitros
 
     public Clasificacion getClasificacion() {
         return clasificacion;
@@ -83,27 +87,38 @@ public class Liga {
                 "Copa Hombre Cubo", "Ea Sparatan", "La Candovell", "Juegos Colombiana", "Aplastadores Africanos", "Juegos Hitbird",
                 "Ca Go Gaming", "Juego Competitivo", "Juego Inferno", "Juego De Platino", "Imperra Gaming"};
 
-        int nombre = (int) Math.floor(Math.random()*nombres.length);
+        int nombre = (int) Math.floor(Math.random() * nombres.length);
 
         return nombres[nombre];
     }
 
-    //Función que nos genera el número de equipos de la liga entre 10 y 20
-    public static int numeroEquipos() {
-        int numEquipos = (int) Math.floor(Math.random()*10)+10;
+    public static Jugador[] crearJugadores(String categoria) {
+        int numJugadores = Equipo.asigNumJugadores();
+        Jugador[] jugadores = new Jugador[numJugadores];
+        Equipo equipo = new Equipo();
 
-        return numEquipos;
+        //Se van creando los jugadores y asignando a un array
+        for (int i = 0; i < numJugadores; i++) {
+            Jugador jugador = new Jugador(categoria, i + 1);
+            jugador.setEquipo(equipo);
+            jugadores[i] = jugador;
+        }
+        return jugadores;
+    }
+
+    public static Equipo crearEquipo(String categoria) {
+        Equipo equipo = new Equipo();
+        equipo.setJugadores(crearJugadores(categoria));
+        return equipo;
     }
 
     //Asigna los equipos según el número de equipos que se han generado previamente
-    public static Equipo[] genararListaEquipos(int numEquipos){
-
+    public static Equipo[] crearListaEquipos(int numEquipos, String categoria) {
         Equipo[] listaEquipos = new Equipo[numEquipos];
 
-        for(int i = 0; i<numEquipos;i++){
-            Equipo equipo =new Equipo();
-
-            listaEquipos[i]=equipo;
+        for (int i = 0; i < numEquipos; i++) {
+            Equipo equipo = crearEquipo(categoria);
+            listaEquipos[i] = equipo;
         }
         return listaEquipos;
     }
@@ -111,31 +126,45 @@ public class Liga {
     //Crear función para determinar número de árbitros
     //Se basa en numero de equipos, donde se divide el numero de Equipos entre 2 y se crea ese numero de arbitros
     public static int generarNumeroArbitros(int numEquipos) {
-        int numeroArbitros = numEquipos/2;
+        int numeroArbitros = numEquipos / 2;
 
         return numeroArbitros;
     }
 
     //Generador de árbitros
-    public static Arbitro[] generarListaArbitros(int numeroArbitro){
-
+    public static Arbitro[] crearListaArbitros(int numeroArbitro) {
         Arbitro[] listaArbitro = new Arbitro[numeroArbitro];
 
-        for(int i = 0; i<numeroArbitro;i++){
-            Arbitro arbitro =new Arbitro();
-            listaArbitro[i]=arbitro;
+        for (int i = 0; i < numeroArbitro; i++) {
+            Arbitro arbitro = new Arbitro();
+            listaArbitro[i] = arbitro;
         }
         return listaArbitro;
+    }
+
+    public void setListaArbitros(Arbitro[] listaArbitros) {
+        this.listaArbitros = listaArbitros;
+    }
+
+    public LocalDate getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(LocalDate fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public static int numArbitros(int numEquipos) {
+        int numArbitros = numEquipos / 2;
+        return numArbitros;
     }
 
     @Override
     public String toString() {
         return
                 "Nombre de Liga= " + nombre + '\'' +
-                        ", Equipos= " + Arrays.toString(equipos) +'\''+
+                        ", Equipos= " + Arrays.toString(listaEquipos) + '\'' +
 
-                        ", Arbitros= " + Arrays.toString(arbitros);
-
-
+                        ", Arbitros= " + Arrays.toString(listaArbitros);
     }
 }
