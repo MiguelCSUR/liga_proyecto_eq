@@ -8,7 +8,7 @@
 //Ejemplo: String, int, Integer, etc
 package controller;
 
-import model.Equipo;
+import model.*;
 
 public class Invocador {
 
@@ -120,7 +120,149 @@ public class Invocador {
     //TODO: PARTIDO - MIGUE
     //TODO: JORNADA - NACHO
 
+    public static Jornada[] crearListaJornadas (Equipo[]listaEquipos, Arbitro[]listaArbitros){
+        //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
+        //Creamos las variables que eligen el numero de partidos que hay
+        int numeroEquipos = listaEquipos.length;
+        int numeroPartidosEnTotal = (numeroEquipos * (numeroEquipos - 1)) / 2;
+        int numeroRondas;
+        int numeroPartidosPorRonda;
 
+
+        if (numeroEquipos % 2 == 0) {
+            numeroRondas = numeroEquipos - 1;
+            numeroPartidosPorRonda = numeroEquipos / 2;
+        } else {
+            numeroRondas = numeroEquipos;
+            numeroPartidosPorRonda = (numeroEquipos - 1) / 2;
+        }
+        Jornada[] listaJornadas = new Jornada[numeroRondas * 2];
+
+        if (numeroEquipos % 2 == 0) {//para los pares
+            for (int i = 0; i < numeroRondas; i++) {
+                Jornada jornada = new Jornada();
+                jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
+                listaJornadas[i] = jornada;
+            }
+            for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
+                Jornada jornada = new Jornada();
+                jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
+                listaJornadas[i + numeroRondas] = jornada;
+            }
+        } else {//para los impares
+            //para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
+            //asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno.
+            for (int i = 0; i < numeroRondas; i++) {
+                Jornada jornada = new Jornada();
+                jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
+                listaJornadas[i] = jornada;
+            }
+            for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
+                Jornada jornada = new Jornada();
+                jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
+                listaJornadas[i + numeroRondas] = jornada;
+
+            }
+        }
+        System.out.println("Numero Partidos total: " + numeroPartidosEnTotal * 2);
+        return listaJornadas;
+
+    }
+    //TODO: No se si esto va aqui porque son partidos
+    {
+        public static Partido[] crearPartidosJornadaParIda ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+        listaArbitros){
+        int numeroEquipos = listaEquipos.length;
+        int partidosPorRonda = numeroEquipos / 2;
+        int x = 0;
+        int y = numeroEquipos - 2;
+        Partido[] partido = new Partido[partidosPorRonda];
+        for (int j = 0; j < partidosPorRonda; j++) {
+            if (j == 0) {
+                if (numeroJornada % 2 == 0)
+                    partido[j] = crearPartido(listaEquipos[x], listaEquipos[(numeroEquipos - 1)], listaArbitros[j]);
+                else
+                    partido[j] = crearPartido(listaEquipos[(numeroEquipos - 1)], listaEquipos[x], listaArbitros[j]);
+                x++;
+            } else {
+                partido[j] = crearPartido(listaEquipos[x], listaEquipos[y], listaArbitros[j]);
+                x++;
+                y--;
+            }
+            if (x > (numeroEquipos - 2)) x = 0;
+            if (y < (0)) y = numeroEquipos - 2;
+        }
+        return partido;
+    }
+
+        public static Partido[] crearPartidosJornadaParVuelta ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+        listaArbitros){
+        int numeroEquipos = listaEquipos.length;
+        int partidosPorRonda = numeroEquipos / 2;
+        int x = 0;
+        int y = numeroEquipos - 2;
+        Partido[] partido = new Partido[partidosPorRonda];
+        for (int j = 0; j < partidosPorRonda; j++) {
+            if (j == 0) {
+                if (numeroJornada % 2 == 0)
+                    partido[j] = crearPartido(listaEquipos[(numeroEquipos - 1)], listaEquipos[x], listaArbitros[j]);
+                else
+                    partido[j] = crearPartido(listaEquipos[x], listaEquipos[(numeroEquipos - 1)], listaArbitros[j]);
+                x++;
+            } else {
+                partido[j] = crearPartido(listaEquipos[y], listaEquipos[x], listaArbitros[j]);
+                x++;
+                y--;
+            }
+            if (x > (numeroEquipos - 2)) x = 0;
+            if (y < (0)) y = numeroEquipos - 2;
+        }
+        return partido;
+    }
+
+        public static Partido[] crearPartidosJornadaImparIda ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+        listaArbitros){
+        int numeroEquipos = listaEquipos.length;
+        int partidosPorRonda = (numeroEquipos / 2) + 1;
+        int x = 0;
+        int y = numeroEquipos - 1;
+        Partido[] partido = new Partido[partidosPorRonda - 1];
+        for (int j = 0; j < partidosPorRonda; j++) {
+            if (j == 0) {
+                x++;
+            } else {
+                partido[j - 1] = crearPartido(listaEquipos[x], listaEquipos[y], listaArbitros[j - 1]);
+                x++;
+                y--;
+            }
+            if (x > (numeroEquipos - 1)) x = 0;
+            if (y < (0)) y = numeroEquipos - 1;
+        }
+        return partido;
+    }
+
+        public static Partido[] crearPartidosJornadaImparVuelta ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+        listaArbitros){
+        int numeroEquipos = listaEquipos.length;
+        int partidosPorRonda = (numeroEquipos / 2) + 1;
+        int x = 0;
+        int y = numeroEquipos - 1;
+        Partido[] partido = new Partido[partidosPorRonda - 1];
+        for (int j = 0; j < partidosPorRonda; j++) {
+            if (j == 0) {
+                x++;
+            } else {
+                partido[j - 1] = crearPartido(listaEquipos[y], listaEquipos[x], listaArbitros[j - 1]);
+                x++;
+                y--;
+            }
+            if (x > (numeroEquipos - 1)) x = 0;
+            if (y < (0)) y = numeroEquipos - 1;
+        }
+
+        return partido;
+    }
+    }
 
 
     //TODO: CALENDARIO - MIGUE
