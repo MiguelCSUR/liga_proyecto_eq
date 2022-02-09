@@ -14,6 +14,11 @@ public class Partido {
     private int numeroPartido;
     private LocalDate fecha;
 
+    public Partido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
+        this.equipoCasa = equipoCasa;
+        this.equipoFuera = equipoFuera;
+        this.arbitro = arbitro;
+    }
 
     public Equipo getEquipoCasa() {
         return equipoCasa;

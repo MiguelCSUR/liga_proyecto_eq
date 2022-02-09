@@ -12,48 +12,75 @@ package controller;
 import data.Nombres;
 import model.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static data.Nombres.personaNombres;
+import static java.time.DayOfWeek.SATURDAY;
+import static java.time.DayOfWeek.SUNDAY;
 
 public class Invocador {
 
     static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
+    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
     //TODO: DATE
-    {
-        public static String dateToString (LocalDate fecha){
+    public static String dateToString (LocalDate fecha){
         return fecha.format(FORMATOFECHA);
     }
-
-        public static LocalDate stringToDate (String fecha){
+    public static LocalDate stringToDate (String fecha){
         return LocalDate.parse(fecha, FORMATOFECHA);
     }
+
+    public static void asignarHoraPartidos (Partido[]listaPartidos, LocalDate fechaInicial){
+//        String[] listaHorarios = calendario.getListaHorarios();
+        //TODO: hay que instanciar calendario
+        String[] listaHorarios = {
+                "9:00", "10:30", "12:00", "16:00", "17:30", "19:00"
+        };
+
+        int i = 0;
+        while (i < listaPartidos.length) {
+            DayOfWeek diaSemana = fechaInicial.getDayOfWeek();
+            if (diaSemana == SATURDAY || diaSemana == SUNDAY) {
+                //En findes semana se puede jugar por la mañana, los horarios de las posiciones 0, 1 y 2
+                int j = 0;
+                while (j < listaHorarios.length && i < listaPartidos.length) {
+                    listaPartidos[i].setHoraInicio(listaHorarios[j]);
+                    listaPartidos[i].setFecha(fechaInicial);
+                    j++;
+                    i++;
+                }
+            } else {
+                //j son los partidos a partir de la tarde
+                int j = 3;
+                while (j < listaHorarios.length && i < listaPartidos.length) {
+                    //Entre semana solo se juega por la tarde, los horarios de 3, 4 y 5
+                    listaPartidos[i].setHoraInicio(listaHorarios[j]);
+                    listaPartidos[i].setFecha(fechaInicial);
+                    j++;
+                    i++;
+                }
+            }
+            fechaInicial = fechaInicial.plusDays(1);
+        }
     }
+
+
     //TODO: PERSONA - PABLO
 
     public static Persona crearPersona(int edadMin, int edadMax) {
         Persona persona = new Persona();
         persona.setNombre(generarNombrePersona());
         persona.setApellidos(generarApellidos());
-        persona.setEdad(generarEdad(edadMax,edadMin));
+        persona.setEdad(generarEdad(edadMax, edadMin));
         return persona;
     }
 
     public static String generarNombrePersona() {
-
-        String[] listaNombres = {"Altair", "Ezio", "Sora", "Connor", "Kratos", "Link", "Zelda", "Kirby", "Megaman", "Bowser",
-                "Ratchet", "Donkey Kong", "Goku", "Doraemon", "Perchita", "Suneo", "Gandalf", "Frodo", "Bilbo",
-                "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt", "Trevor", "Victor", "Jinx", "VI", "Catelyn",
-                "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro", "Squall", "Yuna", "Riku", "Jill", "Wesker",
-                "Kassandra", "Alexios", "Luigi", "Cetrico", "Cul", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
-                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader", "FerNardo", "PENElope"};
-
-        int random = (int) Math.floor(Math.random() * listaNombres.length);
-        return listaNombres[random];
-
+        int random = (int) Math.floor(Math.random() * Nombres.personaNombres().length);
+        return Nombres.personaNombres()[random];
     }
 
     public static String generarApellidos() {
@@ -62,13 +89,13 @@ public class Invocador {
         return Nombres.personaApellidos()[random1] + " " + Nombres.personaApellidos()[random2];
     }
 
-    public static int generarEdad(int edadMax, int edadMin) {
+    public static int generarEdad(int edadMin, int edadMax) {
         return (int) Math.floor(Math.random() * (edadMax - edadMin)) + edadMin;
     }
 
     //TODO: JUGADOR - PABLO
     //Te he cambiado el codigo de crear jugador y te he creado una lista de jugadores
-    public static Jugador crearJugador(String categoria,int dorsal) {
+    public static Jugador crearJugador(String categoria, int dorsal) {
         Jugador jugador = new Jugador();
         jugador.setNombre(generarNombrePersona());
         jugador.setApellidos(generarApellidos());
@@ -77,13 +104,13 @@ public class Invocador {
         return jugador;
     }
 
-    public static Jugador[] crearListaJugadores(String categoria,Equipo equipo) {
+    public static Jugador[] crearListaJugadores(String categoria, Equipo equipo) {
         int numJugadores = asigNumJugadores();
         Jugador[] jugadores = new Jugador[numJugadores];
         //Se van creando los jugadores y asignando a un array
         for (int i = 0; i < numJugadores; i++) {
             Jugador jugador = new Jugador();
-            jugador = crearJugador(categoria,i+1);
+            jugador = crearJugador(categoria, i + 1);
             jugador.setEquipo(equipo);
             jugadores[i] = jugador;
         }
@@ -93,21 +120,21 @@ public class Invocador {
     public static int generarEdadJugador(String categoria) {
         switch (categoria) {
             case "Chupetin":
-                return generarEdad(4,5);
+                return generarEdad(4, 5);
             case "Prebenjamín":
-                return generarEdad(6,7);
+                return generarEdad(6, 7);
             case "Benjamín":
-                return generarEdad(8,9);
+                return generarEdad(8, 9);
             case "Alevín":
-                return generarEdad(10,11);
+                return generarEdad(10, 11);
             case "Infantil":
-                return generarEdad(12,13);
+                return generarEdad(12, 13);
             case "Cadete":
-                return generarEdad(14,15);
+                return generarEdad(14, 15);
             case "Juvenil":
-                return generarEdad(16,18);
+                return generarEdad(16, 18);
             default:
-                return generarEdad(19,38);
+                return generarEdad(19, 38);
         }
     }
 
@@ -147,12 +174,12 @@ public class Invocador {
     //TODO: ENTRENADOR - PABLO
     //Te he creado esta clase de entrenador
     public static Entrenador crearEntrenador(Equipo equipo) {
-        int edadMin = 18;
-        int edadMax = 40;
+        final int EDADMIN = 18;
+        final int EDADMAX = 40;
         Entrenador entrenador = new Entrenador();
         entrenador.setNombre(generarNombrePersona());
         entrenador.setApellidos(generarApellidos());
-        entrenador.setEdad(generarEdad(edadMax,edadMin));
+        entrenador.setEdad(generarEdad(EDADMIN, EDADMAX));
         entrenador.setNumeroLicencia(generarLicencia());
         entrenador.setEquipo(equipo);
         return entrenador;
@@ -165,12 +192,12 @@ public class Invocador {
     //TODO: ARBITRO - PABLO
     //Tambien he tocado un poco esto(Nacho)
     public static Arbitro crearArbitro() {
-        int edadMin = 18;
-        int edadMax = 40;
+        final int EDADMIN = 18;
+        final int EDADMAX = 40;
         Arbitro arbitro = new Arbitro(
                 generarNombrePersona(),
                 generarApellidos(),
-                generarEdad(edadMax, edadMin),
+                generarEdad(EDADMIN, EDADMAX),
                 generarLicencia());
         return arbitro;
     }
@@ -209,12 +236,12 @@ public class Invocador {
     //Creamos las equipaciones de los equipos de fuera y se la damos
     public static String generadorEquipacionFuera() {
 
-        String[] equipF = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
+        String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
 
-        int numero = (int) Math.floor(Math.random() * equipF.length);
-        //String equipacionfuera = equipF[numero];
+        int numero = (int) Math.floor(Math.random() * equipacionFuera.length);
+        //String equipacionfuera = equipacionFuera[numero];
 
-        return equipF[numero];
+        return equipacionFuera[numero];
 
     }
 
@@ -223,6 +250,7 @@ public class Invocador {
         int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
         return numJugadores;
     }
+
     //Esto crea un equipo en individual
     public static Equipo crearEquipo(String categoria) {
         Equipo equipo = new Equipo();
@@ -231,7 +259,7 @@ public class Invocador {
         equipo.setEquipacionCasa(generadorEquipacionFuera());
         equipo.setClub(generarClub());
         equipo.setEntrenador(crearEntrenador(equipo));
-        equipo.setJugadores(crearListaJugadores(categoria,equipo));
+        equipo.setJugadores(crearListaJugadores(categoria, equipo));
         return equipo;
     }
 
@@ -257,6 +285,61 @@ public class Invocador {
     }
 
     //TODO: PARTIDO - MIGUE
+
+    public static int[] generadorProbabilidades() {
+
+        int[] probabilidad = new int[100];
+
+        for (int i = 0; i < probabilidad.length; i++) {
+            if (i <= 24) {
+                probabilidad[i] = 1;
+            }
+            if (i > 24 && i <= 49) {
+                probabilidad[i] = 2;
+            }
+            if (i > 49 && i <= 69) {
+                probabilidad[i] = 3;
+            }
+            if (i > 69 && i <= 89) {
+                probabilidad[i] = 0;
+            }
+            if (i > 89 && i <= 96) {
+                probabilidad[i] = 4;
+            }
+            if (i > 96 && i <= 99) {
+                probabilidad[i] = 5;
+            }
+        }
+        return probabilidad;
+    }
+
+    public static int generadorGoles() {
+        int numRamdon = (int) Math.floor(Math.random() * 100);
+        return PROBABILIDADESGOLES[numRamdon];
+    }
+
+    public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
+        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
+
+        //Generamos los golesEquipoCasa
+        int golesEquipoCasa = generadorGoles();
+        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
+        partido.setGolesEquipoCasa(golesEquipoCasa);
+        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
+        //TODO: Este último paso es redundante eliminar en el futuro.
+        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
+
+        //Se repite el mismo proceso con golesEquipoFuera.
+        int golesEquipoFuera = generadorGoles();
+        partido.setGolesEquipoFuera(golesEquipoFuera);
+        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
+
+        //Se asignan los puntos
+        asignarPuntos(partido);
+
+        return partido;
+    }
+
 
     //TODO: JORNADA - NACHO
     public static Jornada[] crearListaJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
@@ -309,9 +392,9 @@ public class Invocador {
     }
 
     //TODO: No se si esto va aqui porque son partidos
-    {
-        public static Partido[] crearPartidosJornadaParIda ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-        listaArbitros){
+
+    public static Partido[] crearPartidosJornadaParIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+            listaArbitros) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
         int x = 0;
@@ -334,8 +417,8 @@ public class Invocador {
         return partido;
     }
 
-        public static Partido[] crearPartidosJornadaParVuelta ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-        listaArbitros){
+    public static Partido[] crearPartidosJornadaParVuelta(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+            listaArbitros) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
         int x = 0;
@@ -358,8 +441,8 @@ public class Invocador {
         return partido;
     }
 
-        public static Partido[] crearPartidosJornadaImparIda ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-        listaArbitros){
+    public static Partido[] crearPartidosJornadaImparIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+            listaArbitros) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
         int x = 0;
@@ -379,8 +462,8 @@ public class Invocador {
         return partido;
     }
 
-        public static Partido[] crearPartidosJornadaImparVuelta ( int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-        listaArbitros){
+    public static Partido[] crearPartidosJornadaImparVuelta(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
+            listaArbitros) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
         int x = 0;
@@ -400,16 +483,58 @@ public class Invocador {
 
         return partido;
     }
-    }
 
 
     //TODO: CALENDARIO - MIGUE
 
     //TODO: CLASIFICACION - PABLO
 
+    public static void asignarPuntos(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
+            //Empate
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 1);
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 1);
+        } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
+            //Gana Equipo Casa
+            equipoCasa.setPuntos(equipoCasa.getPuntos() + 3);
+        } else {
+            //Gana Equipo Fuera
+            equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
+        }
+    }
+    public static Equipo[] clasificarEquipos(Equipo[]listaEquipos){
+
+        Equipo aux;
+        boolean cambios = true;//empieza true para meterse en el while
+
+        while (cambios) {
+            cambios = false;
+            for (int i = 1; i < listaEquipos.length; i++) {
+                if (listaEquipos[i].getPuntos() < listaEquipos[i - 1].getPuntos()) {
+                    aux = listaEquipos[i];
+                    listaEquipos[i] = listaEquipos[i - 1];
+                    listaEquipos[i - 1] = aux;
+                    cambios = true;
+                } else if (listaEquipos[i].getPuntos() == listaEquipos[i - 1].getPuntos()) {//si los puntos son iguales se miran los goles
+                    if (listaEquipos[i].getGoles() < listaEquipos[i - 1].getGoles()) {
+                        aux = listaEquipos[i];
+                        listaEquipos[i] = listaEquipos[i - 1];
+                        listaEquipos[i - 1] = aux;
+                        cambios = true;
+                    }
+                }
+            }
+        }
+        return listaEquipos;
+    }
+
+
     //TODO: LIGA - MIGUEL
     public static Liga crearLiga() {
-        Liga liga = new Liga(generadorNombresLiga());
+        Liga liga = new Liga();
         return liga;
     }
 
