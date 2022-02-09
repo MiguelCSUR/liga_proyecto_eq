@@ -16,24 +16,32 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static data.Nombres.personaNombres;
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
 
 public class Invocador {
 
+    final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
     static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
+    //HERRAMINTAS
+
+    public static int generarNumeroEntre(int minimo, int maximo) {
+        return (int) Math.floor(Math.random() * (maximo - minimo)) + minimo;
+    }
+
     //TODO: DATE
-    public static String dateToString (LocalDate fecha){
+
+    public static String dateToString(LocalDate fecha) {
         return fecha.format(FORMATOFECHA);
     }
-    public static LocalDate stringToDate (String fecha){
+
+    public static LocalDate stringToDate(String fecha) {
         return LocalDate.parse(fecha, FORMATOFECHA);
     }
 
-    public static void asignarHoraPartidos (Partido[]listaPartidos, LocalDate fechaInicial){
+    public static void asignarHoraPartidos(Partido[] listaPartidos, LocalDate fechaInicial) {
 //        String[] listaHorarios = calendario.getListaHorarios();
         //TODO: hay que instanciar calendario
         String[] listaHorarios = {
@@ -67,8 +75,7 @@ public class Invocador {
         }
     }
 
-
-    //TODO: PERSONA - PABLO
+    //TODO: PERSONA
 
     public static Persona crearPersona(int edadMin, int edadMax) {
         Persona persona = new Persona();
@@ -93,7 +100,8 @@ public class Invocador {
         return (int) Math.floor(Math.random() * (edadMax - edadMin)) + edadMin;
     }
 
-    //TODO: JUGADOR - PABLO
+    //TODO: JUGADOR
+
     //Te he cambiado el codigo de crear jugador y te he creado una lista de jugadores
     public static Jugador crearJugador(String categoria, int dorsal) {
         Jugador jugador = new Jugador();
@@ -105,7 +113,7 @@ public class Invocador {
     }
 
     public static Jugador[] crearListaJugadores(String categoria, Equipo equipo) {
-        int numJugadores = asigNumJugadores();
+        int numJugadores = generarNumeroJugadores();
         Jugador[] jugadores = new Jugador[numJugadores];
         //Se van creando los jugadores y asignando a un array
         for (int i = 0; i < numJugadores; i++) {
@@ -119,7 +127,7 @@ public class Invocador {
 
     public static int generarEdadJugador(String categoria) {
         switch (categoria) {
-            case "Chupetin":
+            case "Chupetín":
                 return generarEdad(4, 5);
             case "Prebenjamín":
                 return generarEdad(6, 7);
@@ -171,7 +179,8 @@ public class Invocador {
         }
     }
 
-    //TODO: ENTRENADOR - PABLO
+    //TODO: ENTRENADOR
+
     //Te he creado esta clase de entrenador
     public static Entrenador crearEntrenador(Equipo equipo) {
         final int EDADMIN = 18;
@@ -189,7 +198,8 @@ public class Invocador {
         return (int) Math.floor(Math.random() * 10000);
     }
 
-    //TODO: ARBITRO - PABLO
+    //TODO: ARBITRO
+
     //Tambien he tocado un poco esto(Nacho)
     public static Arbitro crearArbitro() {
         final int EDADMIN = 18;
@@ -202,9 +212,20 @@ public class Invocador {
         return arbitro;
     }
 
+    public static Arbitro[] crearListaArbitros() {
+        int numeroArbitros = (int)Math.floor(generarNumeroEquipos() / 2);
+        Arbitro[] listaArbitros = new Arbitro[numeroArbitros];
+        for (int i = 0; i < numeroArbitros; i++) {
+            Arbitro arbitro = crearArbitro();
+            listaArbitros[i] = arbitro;
+        }
+        return listaArbitros;
+    }
+
     //TODO: EQUIPO - NACHO
+
     //Generador de mascotas de los equipos
-    public static String generadorMascota() {
+    public static String generarMascota() {
         String[] nombre = {"Los Anfisbenas", "Las Aracnes", "Los Argos", "Los Basiliscos", "Los Centauros", "Los Ceerberos", "Los Cetus", "Los Cercopes", "Los Carontes", "Los Caribdis", "Los Ciclopes", "Los Demonios", "Los Eurinomos", "Las Empusas", "Las Erinias", "Los Gegenes", "Los Geriones", "Los Gigantes", "Las Gorgonas", "Las Grayas", "Los Hecatonquiros", "Las Arpias", "Los Hipocampos", "Los Ictiocentauros", "Los Ipotanes", "Los Keres", "Los Kobalos", "Los Lestrigones", "Los Licaones", "Las Lamias", "Las Hidras de Lerna", "Los Leones", "Las Manticoras", "Los Makhais", "Los Minotauros", "Los Mormos", "Los Onocentauros", "Los Ofiotauros", "Los Oriones", "Los Ortros", "Los Panes", "Los Satiros", "Las Escilas", "Las Sirenas", "Los Taraxipos", "Los Telequines", "Los Tifones", "Los Grifos", "Los Fenix", "Los Alkonostes", "Los Balwani", "Los Koscheii", "Los Lisovikii", "Los Peruni", "Las Rusalki", "Los Vodianie", "Los Vondiki", "Los Domovie", "Los Chleni", "Los Jui", "Las Siski", "Las Zhopi", "Los Mineti"};
 
         int nom = (int) Math.floor(Math.random() * nombre.length);
@@ -213,7 +234,7 @@ public class Invocador {
     }
 
     //Generador de nombres equipos
-    public static String generadorCiudad() {
+    public static String generarCiudad() {
         String[] nombre = {"Pueblo Paleta", "Ciudad Verde", "Ciudad Plateada", "Ciudad Celeste", "Ciudad Carmin", "Ciudad Lavanda", "Ciudad Azulona", "Ciudad Azafran", "Ciudad Fucsia", "Isla Canela", "Pueblo Primavera", "Ciudad Cerezo", "Ciudad Malva", "Pueblo Azalea", "Ciudad Trigal", "Ciudad Iris", "Ciudad Olivo", "Ciudad Orquidea", "Pueblo Caoba", "Ciudad Endrino", "Ciudad Blanca", "Villa Raiz", "Pueblo Escaso", "Ciudad Petalia", "Ciudad Ferrica", "Pueblo Azuliza", "Ciudad Portual", "Ciudad Malvalona", "Pueblo Verdegal", "Pueblo Paradal", "Pueblo Lavacalda", "Ciudad Arborada", "Ciudad Calagua", "Ciudad Algaria", "Arrecipolis", "Pueblo oromar", "Ciudad Colosalia", "Isla Prima", "Isla Secunda", "Isla Tera", "Isla Quarta", "Isla Inta", "Isla Eta", "Isla Inta", "Ciudad Oasis", "Pueblo Pirita", "Villa Agata", "Basix", "Puerto Ancla", "Isla Tempesta", "Villavera", "Otonia", "Hiberna", "Villaestio", "Ciudad Canal", "Pueblo Caelestis", "Pueblo Haruba", "Pueblo Arcilla", "Pueblo Terracota", "Ciudad Gres", "Ciudad Esmalte", "Ciudad Porcelana", "Ciudad Mayolica", "Pueblo Biscuit", "Ciudad Fayenza", "Ciudad Caolin"};
 
         int aleatorio = (int) Math.floor(Math.random() * nombre.length);
@@ -222,7 +243,7 @@ public class Invocador {
     }
 
     //Creamos las equipaciones de los equipos de casa y se la damos
-    public static String generadorEquipacionCasa() {
+    public static String generarEquipacionCasa() {
 
         String[] equipC = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
 
@@ -234,7 +255,7 @@ public class Invocador {
     }
 
     //Creamos las equipaciones de los equipos de fuera y se la damos
-    public static String generadorEquipacionFuera() {
+    public static String generarEquipacionFuera() {
 
         String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
 
@@ -246,7 +267,7 @@ public class Invocador {
     }
 
     //Creamos un numero aleatorio para elejir el maximo de jugadores que tendra un equipo
-    public static int asigNumJugadores() {
+    public static int generarNumeroJugadores() {
         int numJugadores = (int) Math.floor(Math.random() * 9) + 11;
         return numJugadores;
     }
@@ -255,8 +276,8 @@ public class Invocador {
     public static Equipo crearEquipo(String categoria) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
-        equipo.setEquipacionCasa(generadorEquipacionCasa());
-        equipo.setEquipacionCasa(generadorEquipacionFuera());
+        equipo.setEquipacionCasa(generarEquipacionCasa());
+        equipo.setEquipacionCasa(generarEquipacionFuera());
         equipo.setClub(generarClub());
         equipo.setEntrenador(crearEntrenador(equipo));
         equipo.setJugadores(crearListaJugadores(categoria, equipo));
@@ -275,12 +296,12 @@ public class Invocador {
     }
 
     public static String generarNombreEquipo() {
-        String nombre = generadorMascota() + " de " + generadorCiudad();
+        String nombre = generarMascota() + " de " + generarCiudad();
         return nombre;
     }
 
     public static String generarClub() {
-        String nombre = generadorCiudad() + " F.C ";
+        String nombre = generarCiudad() + " F.C ";
         return nombre;
     }
 
@@ -505,7 +526,8 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
-    public static Equipo[] clasificarEquipos(Equipo[]listaEquipos){
+
+    public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
         boolean cambios = true;//empieza true para meterse en el while
@@ -534,14 +556,36 @@ public class Invocador {
 
     //TODO: LIGA - MIGUEL
     public static Liga crearLiga() {
-        Liga liga = new Liga();
+        //TODO: queda pos setear Calendario y Clasificacion
+        String categoria = generarCategoriaLiga();
+        Liga liga = new Liga(generarFechaInicio(), categoria);
+        liga.setNombre(generarNombresLiga());
+        liga.setListaEquipos(crearListaEquipos(generarNumeroJugadores(), categoria));
+        liga.setListaArbitros(crearListaArbitros());
+        liga.setFechaInicio(generarFechaInicio());
+
         return liga;
     }
 
-    public static String generadorNombresLiga() {
-        int nombre = (int) Math.floor(Math.random() * Nombres.ligaNombres().length);
+    public static String generarNombresLiga() {
+        int nombre = generarNumeroEntre(0, Nombres.ligaNombres().length);
         return Nombres.ligaNombres()[nombre];
     }
 
+    //Genera una categoria aleatoria de la lista de categorias
+    public static String generarCategoriaLiga() {
+        int categoria = generarNumeroEntre(0, LISTACATEGORIAS.length);
+        return LISTACATEGORIAS[categoria];
+    }
 
+    //Genera una fecha aletoria entre mañana y dentro de 10 días
+    public static LocalDate generarFechaInicio() {
+        int dias = generarNumeroEntre(1, 10);
+        LocalDate fecha = LocalDate.now().plusDays(dias);
+        return fecha;
+    }
+
+    public static int generarNumeroEquipos() {
+        return generarNumeroEntre(5, 10);
+    }
 }
