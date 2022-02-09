@@ -25,7 +25,7 @@ public class Invocador {
     static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     static int[] PROBABILIDADESGOLES = generadorProbabilidades();
 
-    //HERRAMINTAS
+    //TODO: HERRAMINTAS
 
     public static int generarNumeroEntre(int minimo, int maximo) {
         return (int) Math.floor(Math.random() * (maximo - minimo)) + minimo;
@@ -76,27 +76,18 @@ public class Invocador {
     }
 
     //TODO: PERSONA
-
-    public static Persona crearPersona(int edadMin, int edadMax) {
-        Persona persona = new Persona();
-        persona.setNombre(generarNombrePersona());
-        persona.setApellidos(generarApellidos());
-        persona.setEdad(generarEdad(edadMax, edadMin));
-        return persona;
-    }
-
     public static String generarNombrePersona() {
         int random = (int) Math.floor(Math.random() * Nombres.personaNombres().length);
         return Nombres.personaNombres()[random];
     }
 
-    public static String generarApellidos() {
+    public static String generarApellidosPersona() {
         int random1 = (int) Math.floor(Math.random() * Nombres.personaApellidos().length);
         int random2 = (int) Math.floor(Math.random() * Nombres.personaApellidos().length);
         return Nombres.personaApellidos()[random1] + " " + Nombres.personaApellidos()[random2];
     }
 
-    public static int generarEdad(int edadMin, int edadMax) {
+    public static int generarEdadPersona(int edadMin, int edadMax) {
         return (int) Math.floor(Math.random() * (edadMax - edadMin)) + edadMin;
     }
 
@@ -106,9 +97,10 @@ public class Invocador {
     public static Jugador crearJugador(String categoria, int dorsal) {
         Jugador jugador = new Jugador();
         jugador.setNombre(generarNombrePersona());
-        jugador.setApellidos(generarApellidos());
+        jugador.setApellidos(generarApellidosPersona());
         jugador.setCategoria(categoria);
         jugador.setDorsal(dorsal);
+        jugador.setEdad(generarEdadJugador(categoria));
         return jugador;
     }
 
@@ -128,21 +120,21 @@ public class Invocador {
     public static int generarEdadJugador(String categoria) {
         switch (categoria) {
             case "Chupetín":
-                return generarEdad(4, 5);
+                return generarEdadPersona(4, 5);
             case "Prebenjamín":
-                return generarEdad(6, 7);
+                return generarEdadPersona(6, 7);
             case "Benjamín":
-                return generarEdad(8, 9);
+                return generarEdadPersona(8, 9);
             case "Alevín":
-                return generarEdad(10, 11);
+                return generarEdadPersona(10, 11);
             case "Infantil":
-                return generarEdad(12, 13);
+                return generarEdadPersona(12, 13);
             case "Cadete":
-                return generarEdad(14, 15);
+                return generarEdadPersona(14, 15);
             case "Juvenil":
-                return generarEdad(16, 18);
+                return generarEdadPersona(16, 18);
             default:
-                return generarEdad(19, 38);
+                return generarEdadPersona(19, 38);
         }
     }
 
@@ -187,8 +179,8 @@ public class Invocador {
         final int EDADMAX = 40;
         Entrenador entrenador = new Entrenador();
         entrenador.setNombre(generarNombrePersona());
-        entrenador.setApellidos(generarApellidos());
-        entrenador.setEdad(generarEdad(EDADMIN, EDADMAX));
+        entrenador.setApellidos(generarApellidosPersona());
+        entrenador.setEdad(generarEdadPersona(EDADMIN, EDADMAX));
         entrenador.setNumeroLicencia(generarLicencia());
         entrenador.setEquipo(equipo);
         return entrenador;
@@ -204,16 +196,16 @@ public class Invocador {
     public static Arbitro crearArbitro() {
         final int EDADMIN = 18;
         final int EDADMAX = 40;
-        Arbitro arbitro = new Arbitro(
-                generarNombrePersona(),
-                generarApellidos(),
-                generarEdad(EDADMIN, EDADMAX),
-                generarLicencia());
+        Arbitro arbitro = new Arbitro();
+        arbitro.setNombre(generarNombrePersona());
+        arbitro.setApellidos(generarApellidosPersona());
+        arbitro.setEdad(generarEdadPersona(EDADMIN, EDADMAX));
+        arbitro.setLicencia(generarLicencia());
         return arbitro;
     }
 
     public static Arbitro[] crearListaArbitros() {
-        int numeroArbitros = (int)Math.floor(generarNumeroEquipos() / 2);
+        int numeroArbitros = (int) Math.floor(generarNumeroEquipos() / 2);
         Arbitro[] listaArbitros = new Arbitro[numeroArbitros];
         for (int i = 0; i < numeroArbitros; i++) {
             Arbitro arbitro = crearArbitro();
@@ -222,7 +214,7 @@ public class Invocador {
         return listaArbitros;
     }
 
-    //TODO: EQUIPO - NACHO
+    //TODO: EQUIPO
 
     //Generador de mascotas de los equipos
     public static String generarMascota() {
@@ -305,7 +297,7 @@ public class Invocador {
         return nombre;
     }
 
-    //TODO: PARTIDO - MIGUE
+    //TODO: PARTIDO
 
     public static int[] generadorProbabilidades() {
 
@@ -361,8 +353,7 @@ public class Invocador {
         return partido;
     }
 
-
-    //TODO: JORNADA - NACHO
+    //TODO: JORNADA
     public static Jornada[] crearListaJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
@@ -504,11 +495,10 @@ public class Invocador {
 
         return partido;
     }
+    
+    //TODO: CALENDARIO
 
-
-    //TODO: CALENDARIO - MIGUE
-
-    //TODO: CLASIFICACION - PABLO
+    //TODO: CLASIFICACION
 
     public static void asignarPuntos(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();
@@ -553,8 +543,11 @@ public class Invocador {
         return listaEquipos;
     }
 
+    public static void mostarClasificacion() {
 
-    //TODO: LIGA - MIGUEL
+    }
+
+    //TODO: LIGA
     public static Liga crearLiga() {
         //TODO: queda pos setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();

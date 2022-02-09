@@ -1,6 +1,6 @@
 package model;
 
-public class Persona {
+public abstract class Persona {
     private String nombre;
     private String apellidos;
     private int edad;
@@ -26,11 +26,12 @@ public class Persona {
         return this.edad;
     }
 
-
     @Override
     public String toString() {
-        return "Nombre: " + this.nombre + " " + this.apellidos + " " + "Edad: " + this.edad;
+        return "Persona{" +
+                "nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", edad=" + edad +
+                '}';
     }
-
-
 }
