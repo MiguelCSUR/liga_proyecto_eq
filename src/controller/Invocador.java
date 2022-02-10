@@ -584,7 +584,7 @@ public class Invocador {
         return LISTACATEGORIAS[categoria];
     }
 
-    //Genera una fecha aletoria entre mañana y dentro de 10 días
+    //Genera una fecha aleatoria entre mañana y dentro de 10 días
     public static LocalDate generarFechaInicio() {
         int dias = generarNumeroEntre(1, 10);
         LocalDate fecha = LocalDate.now().plusDays(dias);

@@ -69,15 +69,15 @@ public class Liga {
         this.categoria = categoria;
     }
 
-    @Override
-    public String toString() {
-        return "Liga{" +
-                "nombre='" + nombre + '\'' +
-                ", listaEquipos=" + Arrays.toString(listaEquipos) +
-                ", calendario=" + calendario +
-                ", listaArbitros=" + Arrays.toString(listaArbitros) +
-                ", clasificacion=" + clasificacion +
-                ", fechaInicio=" + fechaInicio +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Liga{" +
+//                "nombre='" + nombre + '\'' +
+//                ", listaEquipos=" + Arrays.toString(listaEquipos) +
+//                ", calendario=" + calendario +
+//                ", listaArbitros=" + Arrays.toString(listaArbitros) +
+//                ", clasificacion=" + clasificacion +
+//                ", fechaInicio=" + fechaInicio +
+//                '}';
+//    }
 }
