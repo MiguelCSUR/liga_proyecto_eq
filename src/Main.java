@@ -13,10 +13,11 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         Liga liga = Invocador.crearLiga();
+        Calendario calendario = Invocador.crearCalendario(liga);
 
-        Jugador jugador = Invocador.crearJugador("Chupetin", 2);
-        System.out.println(
-            jugador.getEdad()
-        );
+        for (int i = 0; i < calendario.getListaJornadas().length; i++) {
+
+        }
+
     }
 }

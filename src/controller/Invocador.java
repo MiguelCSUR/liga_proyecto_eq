@@ -354,12 +354,18 @@ public class Invocador {
     }
 
     //TODO: JORNADA
-    public static Jornada[] crearListaJornadas(Equipo[] listaEquipos, Arbitro[] listaArbitros) {
+    public static Jornada[] crearListaJornadas(Liga liga) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
+        //
+        //TODO: pasando liga ya no hace falta pasar listaEquipos, y listaArbitros por separado
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Arbitro[] listaArbitros = liga.getListaArbitros();
         int numeroEquipos = listaEquipos.length;
         int numeroPartidosEnTotal = (numeroEquipos * (numeroEquipos - 1)) / 2;
         int numeroRondas;
+
+        //TODO: revisar si esta variable se usa
         int numeroPartidosPorRonda;
 
 
@@ -400,7 +406,6 @@ public class Invocador {
         }
         System.out.println("Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
-
     }
 
     //TODO: No se si esto va aqui porque son partidos
@@ -492,11 +497,19 @@ public class Invocador {
             if (x > (numeroEquipos - 1)) x = 0;
             if (y < (0)) y = numeroEquipos - 1;
         }
-
         return partido;
     }
-    
+
+
     //TODO: CALENDARIO
+
+    public static Calendario crearCalendario(Liga liga) {
+        Calendario calendario = new Calendario();
+        calendario.setListaJornadas(crearListaJornadas(liga));
+        //TODO: Miguel - Nose como sacarlo evitando el partido que nose juega
+//        calendario.setListaPartidos();
+        return calendario;
+    }
 
     //TODO: CLASIFICACION
 
