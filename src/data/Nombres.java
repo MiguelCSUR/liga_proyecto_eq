@@ -42,11 +42,34 @@ public class Nombres {
     }
 
     public static String[] personaApellidos() {
-        return new String[] {"Marui", "Shima", "Sawa", "Toyo", "Cromwell", "Keller", "Perdido", "Zimmerman", "Anderson", "Gasper", "Degurechaff", "Jimenez",
-                "Gonzalez", "Lamata", "Feliz", "Bragueta", "Amiano", "Enamorado", "Nigote", "Delano", "Messina",
+        return new String[] {"Marui", "Shima", "Sawa", "Toyo", "Cromwell", "Keller", "Perdido", "Zimmerman", "Anderson", "Gasper",
+                "Degurechaff", "Jimenez", "Gonzalez", "Lamata", "Feliz", "Bragueta", "Amiano", "Enamorado", "Nigote", "Delano", "Messina",
                 "Di Montelroso", "Krauser", "Marston", "Auditore", "Bernstein", "Bogard", "Briggs", "Chaolan", "Eggman", "Dorian", "Dragunov",
                 "Drake", "Winters", "Falcon", "Freeman", "Hudson", "Ibn-La' Ahad", "Yamazaki", "Wesker", "Snake", "Tsung", "Takahashi", "Strife",
                 "Schugerg", "Schtauffen", "Sakazaki", "Hayabusa", "Porter", "Nikaido", "Nanakase", "Chief", "Tyrell", "Lannister", "Baratheon",
                 "Martell", "Stark", "Targaryen", "Tully", "Okabe", "Krusoe", "Vergassola", "Ali Baba", "Serebriakov", "Sempai"};
     }
+
+    public static String[] mascotaNombres(){
+        return new String [] {"Los Anfisbenas", "Las Aracnes", "Los Argos", "Los Basiliscos", "Los Centauros", "Los Ceerberos", "Los Cetus",
+                "Los Cercopes", "Los Carontes", "Los Caribdis", "Los Ciclopes", "Los Demonios", "Los Eurinomos", "Las Empusas", "Las Erinias",
+                "Los Gegenes", "Los Geriones", "Los Gigantes", "Las Gorgonas", "Las Grayas", "Los Hecatonquiros", "Las Arpias", "Los Hipocampos",
+                "Los Ictiocentauros", "Los Ipotanes", "Los Keres", "Los Kobalos", "Los Lestrigones", "Los Licaones", "Las Lamias",
+                "Las Hidras de Lerna", "Los Leones", "Las Manticoras", "Los Makhais", "Los Minotauros", "Los Mormos", "Los Onocentauros",
+                "Los Ofiotauros", "Los Oriones", "Los Ortros", "Los Panes", "Los Satiros", "Las Escilas", "Las Sirenas", "Los Taraxipos",
+                "Los Telequines", "Los Tifones", "Los Grifos", "Los Fenix", "Los Alkonostes", "Los Balwani", "Los Koscheii", "Los Lisovikii",
+                "Los Peruni", "Las Rusalki", "Los Vodianie", "Los Vondiki", "Los Domovie", "Los Chleni", "Los Jui", "Las Siski", "Las Zhopi", "Los Mineti"};
+    }
+
+    public static String [] ciudadNombres(){
+        return new String []     {"Pueblo Paleta", "Ciudad Verde", "Ciudad Plateada", "Ciudad Celeste", "Ciudad Carmin", "Ciudad Lavanda", "Ciudad Azulona",
+                "Ciudad Azafran", "Ciudad Fucsia", "Isla Canela", "Pueblo Primavera", "Ciudad Cerezo", "Ciudad Malva", "Pueblo Azalea", "Ciudad Trigal",
+                "Ciudad Iris", "Ciudad Olivo", "Ciudad Orquidea", "Pueblo Caoba", "Ciudad Endrino", "Ciudad Blanca", "Villa Raiz", "Pueblo Escaso", "Ciudad Petalia",
+                "Ciudad Ferrica", "Pueblo Azuliza", "Ciudad Portual", "Ciudad Malvalona", "Pueblo Verdegal", "Pueblo Paradal", "Pueblo Lavacalda", "Ciudad Arborada",
+                "Ciudad Calagua", "Ciudad Algaria", "Arrecipolis", "Pueblo oromar", "Ciudad Colosalia", "Isla Prima", "Isla Secunda", "Isla Tera", "Isla Quarta",
+                "Isla Inta", "Isla Eta", "Isla Inta", "Ciudad Oasis", "Pueblo Pirita", "Villa Agata", "Basix", "Puerto Ancla", "Isla Tempesta", "Villavera", "Otonia",
+                "Hiberna", "Villaestio", "Ciudad Canal", "Pueblo Caelestis", "Pueblo Haruba", "Pueblo Arcilla", "Pueblo Terracota", "Ciudad Gres", "Ciudad Esmalte",
+                "Ciudad Porcelana", "Ciudad Mayolica", "Pueblo Biscuit", "Ciudad Fayenza", "Ciudad Caolin"};
+    }
+
 }

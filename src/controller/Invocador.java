@@ -218,20 +218,14 @@ public class Invocador {
 
     //Generador de mascotas de los equipos
     public static String generarMascota() {
-        String[] nombre = {"Los Anfisbenas", "Las Aracnes", "Los Argos", "Los Basiliscos", "Los Centauros", "Los Ceerberos", "Los Cetus", "Los Cercopes", "Los Carontes", "Los Caribdis", "Los Ciclopes", "Los Demonios", "Los Eurinomos", "Las Empusas", "Las Erinias", "Los Gegenes", "Los Geriones", "Los Gigantes", "Las Gorgonas", "Las Grayas", "Los Hecatonquiros", "Las Arpias", "Los Hipocampos", "Los Ictiocentauros", "Los Ipotanes", "Los Keres", "Los Kobalos", "Los Lestrigones", "Los Licaones", "Las Lamias", "Las Hidras de Lerna", "Los Leones", "Las Manticoras", "Los Makhais", "Los Minotauros", "Los Mormos", "Los Onocentauros", "Los Ofiotauros", "Los Oriones", "Los Ortros", "Los Panes", "Los Satiros", "Las Escilas", "Las Sirenas", "Los Taraxipos", "Los Telequines", "Los Tifones", "Los Grifos", "Los Fenix", "Los Alkonostes", "Los Balwani", "Los Koscheii", "Los Lisovikii", "Los Peruni", "Las Rusalki", "Los Vodianie", "Los Vondiki", "Los Domovie", "Los Chleni", "Los Jui", "Las Siski", "Las Zhopi", "Los Mineti"};
-
-        int nom = (int) Math.floor(Math.random() * nombre.length);
-
-        return nombre[nom];
+        int random = (int) Math.floor(Math.random() * Nombres.mascotaNombres().length);
+        return Nombres.mascotaNombres()[random];
     }
 
     //Generador de nombres equipos
     public static String generarCiudad() {
-        String[] nombre = {"Pueblo Paleta", "Ciudad Verde", "Ciudad Plateada", "Ciudad Celeste", "Ciudad Carmin", "Ciudad Lavanda", "Ciudad Azulona", "Ciudad Azafran", "Ciudad Fucsia", "Isla Canela", "Pueblo Primavera", "Ciudad Cerezo", "Ciudad Malva", "Pueblo Azalea", "Ciudad Trigal", "Ciudad Iris", "Ciudad Olivo", "Ciudad Orquidea", "Pueblo Caoba", "Ciudad Endrino", "Ciudad Blanca", "Villa Raiz", "Pueblo Escaso", "Ciudad Petalia", "Ciudad Ferrica", "Pueblo Azuliza", "Ciudad Portual", "Ciudad Malvalona", "Pueblo Verdegal", "Pueblo Paradal", "Pueblo Lavacalda", "Ciudad Arborada", "Ciudad Calagua", "Ciudad Algaria", "Arrecipolis", "Pueblo oromar", "Ciudad Colosalia", "Isla Prima", "Isla Secunda", "Isla Tera", "Isla Quarta", "Isla Inta", "Isla Eta", "Isla Inta", "Ciudad Oasis", "Pueblo Pirita", "Villa Agata", "Basix", "Puerto Ancla", "Isla Tempesta", "Villavera", "Otonia", "Hiberna", "Villaestio", "Ciudad Canal", "Pueblo Caelestis", "Pueblo Haruba", "Pueblo Arcilla", "Pueblo Terracota", "Ciudad Gres", "Ciudad Esmalte", "Ciudad Porcelana", "Ciudad Mayolica", "Pueblo Biscuit", "Ciudad Fayenza", "Ciudad Caolin"};
-
-        int aleatorio = (int) Math.floor(Math.random() * nombre.length);
-
-        return nombre[aleatorio];
+        int random = (int) Math.floor(Math.random() * Nombres.ciudadNombres().length);
+        return Nombres.ciudadNombres()[random];
     }
 
     //Creamos las equipaciones de los equipos de casa y se la damos
@@ -506,7 +500,7 @@ public class Invocador {
     public static Calendario crearCalendario(Liga liga) {
         Calendario calendario = new Calendario();
         calendario.setListaJornadas(crearListaJornadas(liga));
-        //TODO: Miguel - Nose como sacarlo evitando el partido que nose juega
+        //TODO: Miguel - No se como sacarlo evitando el partido que nose juega
 //        calendario.setListaPartidos();
         return calendario;
     }
@@ -562,7 +556,7 @@ public class Invocador {
 
     //TODO: LIGA
     public static Liga crearLiga() {
-        //TODO: queda pos setear Calendario y Clasificacion
+        //TODO: queda por setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();
         Liga liga = new Liga(generarFechaInicio(), categoria);
         liga.setNombre(generarNombresLiga());
