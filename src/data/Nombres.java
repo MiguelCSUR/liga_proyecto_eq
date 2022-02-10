@@ -1,6 +1,25 @@
 package data;
 
+import controller.Invocador;
+
+import java.time.format.DateTimeFormatter;
+
 public class Nombres {
+
+    public static DateTimeFormatter formatoFecha() {
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return formatoFecha;
+    }
+
+    public static int[] probabilidadesGoles() {
+        int[] probabilidadesGoles = Invocador.generadorProbabilidades();
+        return probabilidadesGoles;
+    }
+
+    public static String[] listaCategorias() {
+        return new String[] {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
+    }
+
     //Añadir Array de nombres
     public static String[] ligaNombres() {
         return new String[]{"Juegos Pentacard", "Juegos De Westcoast", "Mightyming Gaming", "Puente Escarlata", "Club De Pixelmate", "Juegos De Appleton",

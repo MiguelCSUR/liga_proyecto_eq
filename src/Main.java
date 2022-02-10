@@ -11,14 +11,14 @@ import static java.time.DayOfWeek.*;
 //import static model.Liga.crearEquipo;
 
 public class Main {
-    String prueba = "";
+    final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
+
+
     public static void main(String[] args) throws ParseException {
-        Menu.comprobarResolución();
-        System.out.println();
-        System.out.println();
 
-        Invocador.mostrarCalendario(Invocador.crearLiga());
+        Liga liga = Invocador.crearLiga();
+        Invocador.mostarClasificacion(liga);
+//        Invocador.mostrarCalendario(liga);
+
     }
-
-
 }

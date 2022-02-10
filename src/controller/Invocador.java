@@ -22,9 +22,7 @@ import static java.time.DayOfWeek.SUNDAY;
 public class Invocador {
 
     final static Liga LIGA = crearLiga();
-    final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
-    static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
+
 
     //TODO: HERRAMINTAS
 
@@ -35,11 +33,11 @@ public class Invocador {
     //TODO: DATE
 
     public static String dateToString(LocalDate fecha) {
-        return fecha.format(FORMATOFECHA);
+        return fecha.format(Nombres.formatoFecha());
     }
 
     public static LocalDate stringToDate(String fecha) {
-        return LocalDate.parse(fecha, FORMATOFECHA);
+        return LocalDate.parse(fecha, Nombres.formatoFecha());
     }
 
     public static void asignarHoraPartidos(Partido[] listaPartidos, LocalDate fechaInicial) {
@@ -323,7 +321,8 @@ public class Invocador {
 
     public static int generadorGoles() {
         int numRamdon = (int) Math.floor(Math.random() * 100);
-        return PROBABILIDADESGOLES[numRamdon];
+        int gol = Nombres.probabilidadesGoles()[numRamdon];
+        return gol;
     }
 
     public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
@@ -349,10 +348,10 @@ public class Invocador {
     }
 
     //Este metodo no crea nada, solo extrae la lista de partidos de una jornada previamente creada
-    private static Partido[] extraerListaPartidos(Liga liga, Jornada[] listaJornadas){
+    private static Partido[] extraerListaPartidos(Liga liga, Jornada[] listaJornadas) {
         Equipo[] listaEquipos = liga.getListaEquipos();
-        Partido[] listaPartidos =   new Partido[listaEquipos.length * (listaEquipos.length - 1)];
-        int contador =0;
+        Partido[] listaPartidos = new Partido[listaEquipos.length * (listaEquipos.length - 1)];
+        int contador = 0;
         for (int i = 0; i < listaJornadas.length; i++) {
             for (int j = 0; j < listaJornadas[i].getlistaPartidos().length; j++) {
                 listaPartidos[contador] = listaJornadas[i].getlistaPartidos()[j];
@@ -360,6 +359,7 @@ public class Invocador {
                 contador++;
             }
         }
+        asignarHoraPartidos(listaPartidos, liga.getFechaInicio());
         return listaPartidos;
     }
 
@@ -534,9 +534,9 @@ public class Invocador {
             System.out.println("\nJornada " + contadorJornadas + ".\n");
             for (int j = 0; j < listaPartidos.length; j++) {
                 Partido partido = listaPartidos[j];
-                System.out.println("\tPartido " + contadorPartidos + ".");
-                System.out.printf("\t\t%-20s  VS  %20s\n", "Casa", "Visitante");
-                System.out.printf("\t\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
+                System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", dateToString(partido.getFecha()), partido.getHoraInicio());
+                System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
+                System.out.printf("\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
                 contadorPartidos++;
             }
             contadorJornadas++;
@@ -588,8 +588,14 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostarClasificacion() {
-
+    public static void mostarClasificacion(Liga liga) {
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Equipo[] clasificacion = clasificarEquipos(listaEquipos);
+        System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
+        System.out.println("────────────────────────────────────────");
+        for (int i = clasificacion.length - 1; i >= 0; i--) {
+            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(), clasificacion[i].getPuntos(), clasificacion[i].getGoles());
+        }
     }
 
     //TODO: LIGA
@@ -614,8 +620,9 @@ public class Invocador {
 
     //Genera una categoria aleatoria de la lista de categorias
     public static String generarCategoriaLiga() {
-        int categoria = generarNumeroEntre(0, LISTACATEGORIAS.length);
-        return LISTACATEGORIAS[categoria];
+        int numeroCategorias = Nombres.listaCategorias().length - 1;
+        int categoria = generarNumeroEntre(0, numeroCategorias);
+        return Nombres.listaCategorias()[categoria];
     }
 
     //Genera una fecha aleatoria entre mañana y dentro de 10 días
