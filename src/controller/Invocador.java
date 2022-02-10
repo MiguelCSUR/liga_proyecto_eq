@@ -347,14 +347,14 @@ public class Invocador {
         return partido;
     }
 
-    public static Partido[] extraerListaPartidos(Liga liga){
+    //Este metodo no crea nada, solo extrae la lista de partidos de una jornada previamente creada
+    private static Partido[] extraerListaPartidos(Liga liga, Jornada[] listaJornadas){
         Equipo[] listaEquipos = liga.getListaEquipos();
-        Jornada[] jornadas = liga.getCalendario().getListaJornadas();
         Partido[] listaPartidos =   new Partido[listaEquipos.length * (listaEquipos.length - 1)];
         int contador =0;
-        for (int i = 0; i < jornadas.length; i++) {
-            for (int j = 0; j < jornadas[i].getlistaPartidos().length; j++) {
-                listaPartidos[contador] = jornadas[i].getlistaPartidos()[j];
+        for (int i = 0; i < listaJornadas.length; i++) {
+            for (int j = 0; j < listaJornadas[i].getlistaPartidos().length; j++) {
+                listaPartidos[contador] = listaJornadas[i].getlistaPartidos()[j];
                 listaPartidos[contador].setNumeroPartido(contador + 1);
                 contador++;
             }
@@ -514,9 +514,11 @@ public class Invocador {
 
     public static Calendario crearCalendario(Liga liga) {
         Calendario calendario = new Calendario();
-        calendario.setListaJornadas(crearListaJornadas(liga));
-        //TODO: Miguel - No se como sacarlo evitando el partido que nose juega
-//        calendario.setListaPartidos();
+        Jornada[] listaJornadas = crearListaJornadas(liga);
+        calendario.setListaJornadas(listaJornadas);
+        Partido[] listaPartidos = extraerListaPartidos(liga, listaJornadas);
+        calendario.setListaPartidos(listaPartidos);
+
         return calendario;
     }
 
