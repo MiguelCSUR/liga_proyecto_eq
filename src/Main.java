@@ -11,6 +11,7 @@ import static java.time.DayOfWeek.*;
 //import static model.Liga.crearEquipo;
 
 public class Main {
+    String prueba = "";
     public static void main(String[] args) throws ParseException {
         Menu.comprobarResolución();
         System.out.println();
