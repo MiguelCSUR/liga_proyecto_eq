@@ -1,7 +1,7 @@
 package controller.menus;
+import java.util.Scanner;
 
 public class MostrarLiga {
-
 
 public static void imprimirMenu(){
     System.out.println(" 1. Ver calendario ");
@@ -12,7 +12,6 @@ public static void imprimirMenu(){
     System.out.println();
     System.out.println("Elige una opción:");
 }
-
 public static void elegirOpcion(int opcion){
     switch(opcion){
         case 1:
@@ -32,5 +31,4 @@ public static void elegirOpcion(int opcion){
             System.out.println("ERROR. Opción introducida incorrecta");
     }
 }
-
 }

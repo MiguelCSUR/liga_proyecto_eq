@@ -347,6 +347,21 @@ public class Invocador {
         return partido;
     }
 
+    public static Partido[] extraerListaPartidos(Liga liga){
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Jornada[] jornadas = liga.getCalendario().getListaJornadas();
+        Partido[] listaPartidos =   new Partido[listaEquipos.length * (listaEquipos.length - 1)];
+        int contador =0;
+        for (int i = 0; i < jornadas.length; i++) {
+            for (int j = 0; j < jornadas[i].getlistaPartidos().length; j++) {
+                listaPartidos[contador] = jornadas[i].getlistaPartidos()[j];
+                listaPartidos[contador].setNumeroPartido(contador + 1);
+                contador++;
+            }
+        }
+        return listaPartidos;
+    }
+
     //TODO: JORNADA
     public static Jornada[] crearListaJornadas(Liga liga) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
