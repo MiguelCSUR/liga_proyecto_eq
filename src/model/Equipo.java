@@ -76,19 +76,6 @@ public class Equipo {
     }
 
     //Para invocar desde Liga correctamente.
-    @Override
-    public String toString() {
-        return
-                "Mombre de Equipo= " + nombre + "\n" +
-                        ", Nombre de Club= " + club + "\n" +
-                        ", Entrenador= " + entrenador +"\n" +
-                        ", Equipacion Casa= " + equipacionCasa + '\'' +
-                        ", Equipacion Fuera= " + equipacionFuera + "\n" +
-                        ", Numero de Jugadores= " + numJugadores +"\n"+
-                        ", Jugador= " + Arrays.toString(jugadores) +"\n"+"\n"
-                ;
-    }
-
 
 }
 

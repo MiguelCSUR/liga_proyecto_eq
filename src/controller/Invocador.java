@@ -204,8 +204,8 @@ public class Invocador {
         return arbitro;
     }
 
-    public static Arbitro[] crearListaArbitros() {
-        int numeroArbitros = (int) Math.floor(generarNumeroEquipos() / 2);
+    public static Arbitro[] crearListaArbitros(int numeroEquipos) {
+        int numeroArbitros = (int) Math.floor(numeroEquipos / 2);
         Arbitro[] listaArbitros = new Arbitro[numeroArbitros];
         for (int i = 0; i < numeroArbitros; i++) {
             Arbitro arbitro = crearArbitro();
@@ -293,7 +293,7 @@ public class Invocador {
     }
 
     public static String generarClub() {
-        String nombre = generarCiudad() + " F.C ";
+        String nombre = generarCiudad() + " F.C.";
         return nombre;
     }
 
@@ -511,6 +511,29 @@ public class Invocador {
         return calendario;
     }
 
+    //Falta asignar horas a la lista de partidos, que no hay lista de partidos.
+    public static void mostrarCalendario(Liga liga) {
+        Calendario calendario = Invocador.crearCalendario(liga);
+        Jornada[] listaJornadas = calendario.getListaJornadas();
+
+        int contadorJornadas = 1;
+        int contadorPartidos = 1;
+        System.out.println("Lista de Equipos: " + liga.getListaEquipos().length);
+        for (int i = 0; i < listaJornadas.length; i++) {
+            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
+            if (i != 0) System.out.println("───────────────────────────────────────────────────────");
+            System.out.println("\nJornada " + contadorJornadas + ".\n");
+            for (int j = 0; j < listaPartidos.length; j++) {
+                Partido partido = listaPartidos[j];
+                System.out.println("\tPartido " + contadorPartidos + ".");
+                System.out.printf("\t\t%-20s  VS  %20s\n", "Casa", "Visitante");
+                System.out.printf("\t\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
+                contadorPartidos++;
+            }
+            contadorJornadas++;
+        }
+    }
+
     //TODO: CLASIFICACION
 
     public static void asignarPuntos(Partido partido) {
@@ -565,9 +588,10 @@ public class Invocador {
         //TODO: queda pos setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();
         Liga liga = new Liga(generarFechaInicio(), categoria);
+        int numeroEquipos = generarNumeroJugadores();
         liga.setNombre(generarNombresLiga());
-        liga.setListaEquipos(crearListaEquipos(generarNumeroJugadores(), categoria));
-        liga.setListaArbitros(crearListaArbitros());
+        liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));
+        liga.setListaArbitros(crearListaArbitros(numeroEquipos));
         liga.setFechaInicio(generarFechaInicio());
 
         return liga;
