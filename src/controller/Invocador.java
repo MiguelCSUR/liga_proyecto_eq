@@ -21,6 +21,7 @@ import static java.time.DayOfWeek.SUNDAY;
 
 public class Invocador {
 
+    final static Liga LIGA = crearLiga();
     final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
     static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     static int[] PROBABILIDADESGOLES = generadorProbabilidades();
@@ -417,8 +418,6 @@ public class Invocador {
         return listaJornadas;
     }
 
-    //TODO: No se si esto va aqui porque son partidos
-
     public static Partido[] crearPartidosJornadaParIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
             listaArbitros) {
         int numeroEquipos = listaEquipos.length;
@@ -518,7 +517,6 @@ public class Invocador {
         calendario.setListaJornadas(listaJornadas);
         Partido[] listaPartidos = extraerListaPartidos(liga, listaJornadas);
         calendario.setListaPartidos(listaPartidos);
-
         return calendario;
     }
 
@@ -604,6 +602,7 @@ public class Invocador {
         liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));
         liga.setListaArbitros(crearListaArbitros(numeroEquipos));
         liga.setFechaInicio(generarFechaInicio());
+        liga.setCalendario(crearCalendario(liga));
 
         return liga;
     }
