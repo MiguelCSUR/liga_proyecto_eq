@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public class Calendario {
     private Jornada[] listaJornadas;
     private Partido[] listaPartidos;
@@ -26,5 +28,14 @@ public class Calendario {
     }
     public void setListaHorarios(String[] listaHorarios) {
         this.listaHorarios = listaHorarios;
+    }
+
+    @Override
+    public String toString() {
+        return "Calendario{" +
+                "listaJornadas=" + Arrays.toString(listaJornadas) +
+                ", listaPartidos=" + Arrays.toString(listaPartidos) +
+                ", listaHorarios=" + Arrays.toString(listaHorarios) +
+                '}';
     }
 }
