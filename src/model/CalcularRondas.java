@@ -3,6 +3,7 @@ package model;
 import java.util.Scanner;
 
 //TODO: no se esta usando, plantear borrarlo
+//ESTO ES DE LA EPOCA DE LAS JORNADAS DE TRES DIMENSIONES
 public class CalcularRondas {
 
     public static void main(String[] args) {

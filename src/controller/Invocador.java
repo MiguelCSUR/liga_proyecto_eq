@@ -562,7 +562,7 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
-
+//TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
@@ -589,7 +589,7 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostarClasificacion(Liga liga) {
+    public static void mostrarClasificacion(Liga liga) {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = clasificarEquipos(listaEquipos);
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
