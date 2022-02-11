@@ -17,7 +17,8 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
 //        Invocador.mostarClasificacion(liga);
-//        Invocador.mostrarCalendario(liga);
-        MostrarClasificacion.iniciarMenu(liga);
+        Invocador.mostrarCalendario(liga);
+//        MostrarClasificacion.iniciarMenu(liga);
+
     }
 }

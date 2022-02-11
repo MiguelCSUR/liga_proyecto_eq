@@ -14,7 +14,6 @@ import model.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
@@ -364,7 +363,7 @@ public class Invocador {
     }
 
     //TODO: JORNADA
-    public static Jornada[] crearListaJornadas(Liga liga) {
+    public static Jornada[] crearListaJornadas(Liga liga, int numeroJornadas) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
         //
@@ -414,7 +413,7 @@ public class Invocador {
 
             }
         }
-        System.out.println("Numero Partidos total: " + numeroPartidosEnTotal * 2);
+        System.out.println("DEBUG crearListaJornada(): Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
 
@@ -521,14 +520,21 @@ public class Invocador {
     }
 
     //Falta asignar horas a la lista de partidos, que no hay lista de partidos.
-    public static void mostrarCalendario(Liga liga) {
+    public static void mostrarCalendario(Liga liga, int numeroJornadas) {
+        int maximoJornadas = liga.getCalendario().getListaJornadas().length;
+        //Para mostar la jornada 5 que es la posicion array 6.
+
+        if (numeroJornadas > maximoJornadas) {
+            numeroJornadas = maximoJornadas;
+        } else if (numeroJornadas < 0) {
+            numeroJornadas = 0;
+        }
+
         Calendario calendario = Invocador.crearCalendario(liga);
         Jornada[] listaJornadas = calendario.getListaJornadas();
 
         int contadorJornadas = 1;
-        int contadorPartidos = 1;
-        System.out.println("Lista de Equipos: " + liga.getListaEquipos().length);
-        for (int i = 0; i < listaJornadas.length; i++) {
+        for (int i = 0; i < numeroJornadas; i++) {
             Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
             if (i != 0) System.out.println("───────────────────────────────────────────────────────");
             System.out.println("\nJornada " + contadorJornadas + ".\n");
@@ -537,10 +543,15 @@ public class Invocador {
                 System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", dateToString(partido.getFecha()), partido.getHoraInicio());
                 System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
                 System.out.printf("\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
-                contadorPartidos++;
             }
             contadorJornadas++;
         }
+    }
+
+    public static void mostrarCalendario(Liga liga) {
+        int numeroJornada = liga.getCalendario().getListaJornadas().length;
+
+        mostrarCalendario(liga, numeroJornada);
     }
 
     //TODO: CLASIFICACION
@@ -594,7 +605,8 @@ public class Invocador {
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
         System.out.println("────────────────────────────────────────");
         for (int i = clasificacion.length - 1; i >= 0; i--) {
-            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(), clasificacion[i].getPuntos(), clasificacion[i].getGoles());
+            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(),
+                    clasificacion[i].getPuntos(), clasificacion[i].getGoles());
         }
     }
 
