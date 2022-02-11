@@ -21,9 +21,8 @@ import static java.time.DayOfWeek.SUNDAY;
 
 public class Invocador {
 
-    final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
-    static DateTimeFormatter FORMATOFECHA = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    static int[] PROBABILIDADESGOLES = generadorProbabilidades();
+    final static Liga LIGA = crearLiga();
+
 
     //TODO: HERRAMINTAS
 
@@ -34,11 +33,11 @@ public class Invocador {
     //TODO: DATE
 
     public static String dateToString(LocalDate fecha) {
-        return fecha.format(FORMATOFECHA);
+        return fecha.format(Nombres.formatoFecha());
     }
 
     public static LocalDate stringToDate(String fecha) {
-        return LocalDate.parse(fecha, FORMATOFECHA);
+        return LocalDate.parse(fecha, Nombres.formatoFecha());
     }
 
     public static void asignarHoraPartidos(Partido[] listaPartidos, LocalDate fechaInicial) {
@@ -204,8 +203,8 @@ public class Invocador {
         return arbitro;
     }
 
-    public static Arbitro[] crearListaArbitros() {
-        int numeroArbitros = (int) Math.floor(generarNumeroEquipos() / 2);
+    public static Arbitro[] crearListaArbitros(int numeroEquipos) {
+        int numeroArbitros = (int) Math.floor(numeroEquipos / 2);
         Arbitro[] listaArbitros = new Arbitro[numeroArbitros];
         for (int i = 0; i < numeroArbitros; i++) {
             Arbitro arbitro = crearArbitro();
@@ -287,7 +286,7 @@ public class Invocador {
     }
 
     public static String generarClub() {
-        String nombre = generarCiudad() + " F.C ";
+        String nombre = generarCiudad() + " F.C.";
         return nombre;
     }
 
@@ -322,7 +321,8 @@ public class Invocador {
 
     public static int generadorGoles() {
         int numRamdon = (int) Math.floor(Math.random() * 100);
-        return PROBABILIDADESGOLES[numRamdon];
+        int gol = Nombres.probabilidadesGoles()[numRamdon];
+        return gol;
     }
 
     public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
@@ -345,6 +345,22 @@ public class Invocador {
         asignarPuntos(partido);
 
         return partido;
+    }
+
+    //Este metodo no crea nada, solo extrae la lista de partidos de una jornada previamente creada
+    private static Partido[] extraerListaPartidos(Liga liga, Jornada[] listaJornadas) {
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Partido[] listaPartidos = new Partido[listaEquipos.length * (listaEquipos.length - 1)];
+        int contador = 0;
+        for (int i = 0; i < listaJornadas.length; i++) {
+            for (int j = 0; j < listaJornadas[i].getlistaPartidos().length; j++) {
+                listaPartidos[contador] = listaJornadas[i].getlistaPartidos()[j];
+                listaPartidos[contador].setNumeroPartido(contador + 1);
+                contador++;
+            }
+        }
+        asignarHoraPartidos(listaPartidos, liga.getFechaInicio());
+        return listaPartidos;
     }
 
     //TODO: JORNADA
@@ -402,8 +418,6 @@ public class Invocador {
         System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
-
-    //TODO: No se si esto va aqui porque son partidos
 
     public static Partido[] crearPartidosJornadaParIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
             listaArbitros) {
@@ -500,10 +514,34 @@ public class Invocador {
 
     public static Calendario crearCalendario(Liga liga) {
         Calendario calendario = new Calendario();
-        calendario.setListaJornadas(crearListaJornadas(liga));
-        //TODO: Miguel - No se como sacarlo evitando el partido que nose juega
-//        calendario.setListaPartidos();
+        Jornada[] listaJornadas = crearListaJornadas(liga);
+        calendario.setListaJornadas(listaJornadas);
+        Partido[] listaPartidos = extraerListaPartidos(liga, listaJornadas);
+        calendario.setListaPartidos(listaPartidos);
         return calendario;
+    }
+
+    //Falta asignar horas a la lista de partidos, que no hay lista de partidos.
+    public static void mostrarCalendario(Liga liga) {
+        Calendario calendario = Invocador.crearCalendario(liga);
+        Jornada[] listaJornadas = calendario.getListaJornadas();
+
+        int contadorJornadas = 1;
+        int contadorPartidos = 1;
+        System.out.println("Lista de Equipos: " + liga.getListaEquipos().length);
+        for (int i = 0; i < listaJornadas.length; i++) {
+            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
+            if (i != 0) System.out.println("───────────────────────────────────────────────────────");
+            System.out.println("\nJornada " + contadorJornadas + ".\n");
+            for (int j = 0; j < listaPartidos.length; j++) {
+                Partido partido = listaPartidos[j];
+                System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", dateToString(partido.getFecha()), partido.getHoraInicio());
+                System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
+                System.out.printf("\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
+                contadorPartidos++;
+            }
+            contadorJornadas++;
+        }
     }
 
     //TODO: CLASIFICACION
@@ -551,8 +589,14 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostarClasificacion() {
-
+    public static void mostarClasificacion(Liga liga) {
+        Equipo[] listaEquipos = liga.getListaEquipos();
+        Equipo[] clasificacion = clasificarEquipos(listaEquipos);
+        System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
+        System.out.println("────────────────────────────────────────");
+        for (int i = clasificacion.length - 1; i >= 0; i--) {
+            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(), clasificacion[i].getPuntos(), clasificacion[i].getGoles());
+        }
     }
 
     //TODO: LIGA
@@ -560,10 +604,12 @@ public class Invocador {
         //TODO: queda por setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();
         Liga liga = new Liga(generarFechaInicio(), categoria);
+        int numeroEquipos = generarNumeroJugadores();
         liga.setNombre(generarNombresLiga());
-        liga.setListaEquipos(crearListaEquipos(generarNumeroJugadores(), categoria));
-        liga.setListaArbitros(crearListaArbitros());
+        liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));
+        liga.setListaArbitros(crearListaArbitros(numeroEquipos));
         liga.setFechaInicio(generarFechaInicio());
+        liga.setCalendario(crearCalendario(liga));
 
         return liga;
     }
@@ -575,11 +621,12 @@ public class Invocador {
 
     //Genera una categoria aleatoria de la lista de categorias
     public static String generarCategoriaLiga() {
-        int categoria = generarNumeroEntre(0, LISTACATEGORIAS.length);
-        return LISTACATEGORIAS[categoria];
+        int numeroCategorias = Nombres.listaCategorias().length - 1;
+        int categoria = generarNumeroEntre(0, numeroCategorias);
+        return Nombres.listaCategorias()[categoria];
     }
 
-    //Genera una fecha aletoria entre mañana y dentro de 10 días
+    //Genera una fecha aleatoria entre mañana y dentro de 10 días
     public static LocalDate generarFechaInicio() {
         int dias = generarNumeroEntre(1, 10);
         LocalDate fecha = LocalDate.now().plusDays(dias);

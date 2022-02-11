@@ -37,14 +37,6 @@ public class Jugador extends Persona {
         this.equipo = equipo;
     }
 
-    @Override
-    public String toString() {
-        return "Jugador{" +
-                "categoria='" + categoria + '\'' +
-                ", posicion='" + posicion + '\'' +
-                ", dorsal=" + dorsal +
-                ", equipo=" + equipo +
-                '}';
-    }
+
 }
 

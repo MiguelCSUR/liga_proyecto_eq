@@ -1,4 +1,5 @@
 import controller.Invocador;
+import controller.menus.Menu;
 import model.*;
 
 import java.text.ParseException;
@@ -10,14 +11,14 @@ import static java.time.DayOfWeek.*;
 //import static model.Liga.crearEquipo;
 
 public class Main {
+    final static String[] LISTACATEGORIAS = {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
+
+
     public static void main(String[] args) throws ParseException {
 
         Liga liga = Invocador.crearLiga();
-        Calendario calendario = Invocador.crearCalendario(liga);
-
-        for (int i = 0; i < calendario.getListaJornadas().length; i++) {
-
-        }
+        Invocador.mostarClasificacion(liga);
+//        Invocador.mostrarCalendario(liga);
 
     }
 }
