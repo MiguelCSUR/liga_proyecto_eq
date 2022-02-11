@@ -7,4 +7,9 @@ public class Menu {
         System.out.println("completa en una sola linea ara que se vea el programa");
         System.out.println("correctamente. Gracias");
     }
+    public static void limpiarPantalla() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
 }
