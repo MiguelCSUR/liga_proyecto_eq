@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         Liga liga = Invocador.crearLiga();
-        Invocador.mostarClasificacion(liga);
+        Invocador.mostrarClasificacion(liga);
 //        Invocador.mostrarCalendario(liga);
 
     }
