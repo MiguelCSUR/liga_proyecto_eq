@@ -1,4 +1,5 @@
 import controller.Invocador;
+import controller.menus.GenerarLiga;
 import controller.menus.Menu;
 import model.*;
 
@@ -15,9 +16,7 @@ public class Main {
 
 
     public static void main(String[] args) throws ParseException {
-
-        Liga liga = Invocador.crearLiga();
-        Invocador.mostrarClasificacion(liga);
+        GenerarLiga.iniciarImprimirMenuLiga();
 //        Invocador.mostrarCalendario(liga);
 
     }

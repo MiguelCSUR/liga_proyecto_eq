@@ -652,4 +652,10 @@ public class Invocador {
     public static int generarNumeroEquipos() {
         return generarNumeroEntre(5, 10);
     }
+
+    public static void generarEspacio(){
+        for (int i = 0; i < 100; i++) {
+            System.out.println();
+        }
+    }
 }
