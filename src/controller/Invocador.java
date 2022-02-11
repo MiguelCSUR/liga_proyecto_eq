@@ -364,7 +364,7 @@ public class Invocador {
     }
 
     //TODO: JORNADA
-    public static Jornada[] crearListaJornadas(Liga liga) {
+    public static Jornada[] crearListaJornadas(Liga liga,int maximoJornadas) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
         //
@@ -388,16 +388,25 @@ public class Invocador {
         }
         Jornada[] listaJornadas = new Jornada[numeroRondas * 2];
 
+        int contadorJornadas = 0;
         if (numeroEquipos % 2 == 0) {//para los pares
             for (int i = 0; i < numeroRondas; i++) {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
         } else {//para los impares
             //para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
@@ -406,12 +415,19 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
         }
         System.out.println("Numero Partidos total: " + numeroPartidosEnTotal * 2);
@@ -602,7 +618,7 @@ public class Invocador {
     public static Liga crearLiga() {
         //TODO: queda por setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();
-        Liga liga = new Liga(generarFechaInicio(), categoria);
+        Liga liga = new Liga();
         int numeroEquipos = generarNumeroJugadores();
         liga.setNombre(generarNombresLiga());
         liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));
