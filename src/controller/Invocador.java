@@ -363,7 +363,7 @@ public class Invocador {
     }
 
     //TODO: JORNADA
-    public static Jornada[] crearListaJornadas(Liga liga, int numeroJornadas) {
+    public static Jornada[] crearListaJornadas(Liga liga,int maximoJornadas) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
         //
@@ -387,16 +387,25 @@ public class Invocador {
         }
         Jornada[] listaJornadas = new Jornada[numeroRondas * 2];
 
+        int contadorJornadas = 0;
         if (numeroEquipos % 2 == 0) {//para los pares
             for (int i = 0; i < numeroRondas; i++) {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
         } else {//para los impares
             //para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
@@ -405,15 +414,27 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-
+                if(contadorJornadas>maximoJornadas){
+                    return listaJornadas;
+                }
+                contadorJornadas++;
             }
         }
+<<<<<<< ours
         System.out.println("DEBUG crearListaJornada(): Numero Partidos total: " + numeroPartidosEnTotal * 2);
+=======
+        //debertia de borrarse este syso, ya que este metodo solo deberia crear el array y no imprimir NADA
+        System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
+>>>>>>> theirs
         return listaJornadas;
     }
 
@@ -572,7 +593,7 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
-
+//TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
@@ -599,7 +620,7 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostarClasificacion(Liga liga) {
+    public static void mostrarClasificacion(Liga liga) {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = clasificarEquipos(listaEquipos);
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
@@ -614,7 +635,7 @@ public class Invocador {
     public static Liga crearLiga() {
         //TODO: queda por setear Calendario y Clasificacion
         String categoria = generarCategoriaLiga();
-        Liga liga = new Liga(generarFechaInicio(), categoria);
+        Liga liga = new Liga();
         int numeroEquipos = generarNumeroJugadores();
         liga.setNombre(generarNombresLiga());
         liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));

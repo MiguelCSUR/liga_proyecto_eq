@@ -15,10 +15,6 @@ public class Liga {
     private LocalDate fechaInicio;
     private String categoria;
 
-    public Liga(LocalDate fechaInicio, String categoria) {
-        this.fechaInicio = fechaInicio;
-        this.categoria = categoria;
-    }
 
     public String getNombre() {
         return nombre;
