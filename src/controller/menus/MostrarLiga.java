@@ -1,5 +1,10 @@
 package controller.menus;
 
+import controller.Invocador;
+import model.Calendario;
+import model.Clasificacion;
+import model.Liga;
+
 public class MostrarLiga {
 
 
@@ -13,18 +18,18 @@ public static void imprimirMenu(){
     System.out.println("Elige una opción:");
 }
 
-public static void elegirOpcion(int opcion){
+public static void elegirOpcion(int opcion, Liga liga){
     switch(opcion){
         case 1:
-            System.out.println(
-            Calendario.toString());
+           //Invocador.mostrarCalendario(liga);
             break;
         case 2:
-            System.out.println(Clasificacion.toString());
+            //MostrarLiga();
             break;
         case 3:
             break;
         case 4:
+            System.out.println("No se podrá volver a esta liga");
             break;
         case 5:
             break;
@@ -32,5 +37,7 @@ public static void elegirOpcion(int opcion){
             System.out.println("ERROR. Opción introducida incorrecta");
     }
 }
+
+
 
 }

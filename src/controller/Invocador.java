@@ -398,7 +398,8 @@ public class Invocador {
 
             }
         }
-        System.out.println("Numero Partidos total: " + numeroPartidosEnTotal * 2);
+        //debertia de borrarse este syso, ya que este metodo solo deberia crear el array y no imprimir NADA
+        System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
 
