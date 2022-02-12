@@ -23,17 +23,19 @@ public class Main {
 
         Invocador.jugarJornada(liga, 2);
 
-        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
-        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 
-        Invocador.mostrarCalendarioConGoles(liga);
-
-        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
-        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
-        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+        //TODO: DEBUG
+//        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
+//        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
+//        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+//
+//        Invocador.mostrarCalendarioConGoles(liga);
+//
+//        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
+//        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
+//        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 
     }
 }
