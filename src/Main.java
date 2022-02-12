@@ -1,4 +1,5 @@
 import controller.Invocador;
+import controller.menus.GenerarLiga;
 import controller.menus.Menu;
 import controller.menus.MostrarClasificacion;
 import model.*;
@@ -16,6 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws ParseException {
 
+
         Liga liga = Invocador.crearLiga();
 //        Invocador.mostrarClasificacion(liga);
 
@@ -24,7 +26,7 @@ public class Main {
         Invocador.jugarJornada(liga, 2);
 
 
-        //TODO: DEBUG
+        //TODO: DEBUG - jugar Jornanda, luego en mostartCalendarioConGoles, los goles estan a 0
 //        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
@@ -36,6 +38,11 @@ public class Main {
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
 //        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+
+        //TODO: DEBUG
+//        GenerarLiga.iniciarImprimirMenuLiga();
+//        Invocador.mostrarCalendario(liga);
+
 
     }
 }
