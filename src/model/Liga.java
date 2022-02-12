@@ -14,6 +14,7 @@ public class Liga {
     private Clasificacion clasificacion;
     private LocalDate fechaInicio;
     private String categoria;
+    private int ultimaJornadaJugada;
 
 
     public String getNombre() {
@@ -65,4 +66,10 @@ public class Liga {
         this.categoria = categoria;
     }
 
+    public int getUltimaJornadaJugada() {
+        return ultimaJornadaJugada;
+    }
+    public void setUltimaJornadaJugada(int ultimaJornadaJugada) {
+        this.ultimaJornadaJugada = ultimaJornadaJugada;
+    }
 }

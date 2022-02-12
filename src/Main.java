@@ -17,8 +17,23 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         Liga liga = Invocador.crearLiga();
-        Invocador.mostrarClasificacion(liga);
-//        Invocador.mostrarCalendario(liga);
+//        Invocador.mostrarClasificacion(liga);
+
+//        System.out.println("Numero de Rondas" + Invocador.calcularNumeroJornadas(liga.getListaEquipos().length));
+
+        Invocador.jugarJornada(liga, 2);
+
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
+        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+
+        Invocador.mostrarCalendarioConGoles(liga);
+
+        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
+        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
+        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 
     }
 }

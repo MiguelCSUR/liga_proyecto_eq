@@ -325,25 +325,7 @@ public class Invocador {
     }
 
     public static Partido crearPartido(Equipo equipoCasa, Equipo equipoFuera, Arbitro arbitro) {
-        Partido partido = new Partido(equipoCasa, equipoFuera, arbitro);
-
-        //Generamos los golesEquipoCasa
-        int golesEquipoCasa = generadorGoles();
-        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
-        partido.setGolesEquipoCasa(golesEquipoCasa);
-        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
-        //TODO: Este último paso es redundante eliminar en el futuro.
-        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
-
-        //Se repite el mismo proceso con golesEquipoFuera.
-        int golesEquipoFuera = generadorGoles();
-        partido.setGolesEquipoFuera(golesEquipoFuera);
-        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
-
-        //Se asignan los puntos
-        asignarPuntos(partido);
-
-        return partido;
+        return new Partido(equipoCasa, equipoFuera, arbitro);
     }
 
     //Este metodo no crea nada, solo extrae la lista de partidos de una jornada previamente creada
@@ -362,8 +344,55 @@ public class Invocador {
         return listaPartidos;
     }
 
+    public static void jugarPartido(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        System.out.println();
+        //Generamos los golesEquipoCasa
+        int golesEquipoCasa = generadorGoles();
+        //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
+        partido.setGolesEquipoCasa(golesEquipoCasa);
+        //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
+        //TODO: Este último paso es redundante eliminar en el futuro.
+        equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
+
+        //Se repite el mismo proceso con golesEquipoFuera.
+        int golesEquipoFuera = generadorGoles();
+        partido.setGolesEquipoFuera(golesEquipoFuera);
+        equipoFuera.setGoles(equipoFuera.getGoles() + golesEquipoFuera);
+
+        //Se asignan los puntos
+        asignarPuntos(partido);
+
+        //DEBUG
+        System.out.println("DEBUG jugarPartido()");
+        System.out.println("Partido" + partido.getNumeroPartido());
+//        System.out.println(equipoCasa.getClub() + " Goles: " + golesEquipoCasa + " Puntos: " + equipoCasa.getPuntos());
+//        System.out.println(equipoFuera.getClub() + " Goles: " + golesEquipoFuera + " Puntos: " + equipoFuera.getPuntos());
+
+        System.out.println(equipoCasa.getClub() + " Goles: " + partido.getGolesEquipoCasa() + " Puntos: " + equipoCasa.getPuntos());
+        System.out.println(equipoFuera.getClub() + " Goles: " + partido.getGolesEquipoFuera() + " Puntos: " + equipoFuera.getPuntos());
+    }
+
     //TODO: JORNADA
-    public static Jornada[] crearListaJornadas(Liga liga,int maximoJornadas) {
+
+    public static int calcularNumeroJornadas(int numeroEquipos) {
+        int numeroRondas;
+        if (numeroEquipos % 2 == 0) {
+            numeroRondas = numeroEquipos - 1;
+        } else {
+            numeroRondas = numeroEquipos;
+        }
+        return numeroRondas * 2;
+    }
+
+    //TODO: NotasDeMigue: No asignar goles ni puntos a los partidos que se generen en la lista.
+    //TODO: hacerlo en otro metodo que luego se podra decidir que jornadas jugar.
+    //TODO: metodo que coja la lista y se vaya jugando hasta la jornada que se indique, luego almacenar,
+    //TODO: en que jornada nos hemos quedado. numJornadaClasificacion = 0. y siempre se gette.
+
+    public static Jornada[] crearListaJornadas(Liga liga, int maximoJornadas) {
         //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
         //
@@ -385,6 +414,7 @@ public class Invocador {
             numeroRondas = numeroEquipos;
             numeroPartidosPorRonda = (numeroEquipos - 1) / 2;
         }
+
         Jornada[] listaJornadas = new Jornada[numeroRondas * 2];
 
         int contadorJornadas = 0;
@@ -429,13 +459,14 @@ public class Invocador {
                 contadorJornadas++;
             }
         }
-<<<<<<< ours
-        System.out.println("DEBUG crearListaJornada(): Numero Partidos total: " + numeroPartidosEnTotal * 2);
-=======
         //debertia de borrarse este syso, ya que este metodo solo deberia crear el array y no imprimir NADA
         System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
->>>>>>> theirs
         return listaJornadas;
+    }
+    //Overloading
+    public static Jornada[] crearListaJornadas(Liga liga) {
+        int maximoJornadas = calcularNumeroJornadas(liga.getListaEquipos().length) + 1;
+        return crearListaJornadas(liga, maximoJornadas);
     }
 
     public static Partido[] crearPartidosJornadaParIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
@@ -528,6 +559,24 @@ public class Invocador {
         return partido;
     }
 
+    public static void jugarJornada(Liga liga, int numeroJornadasAJugar) {
+        Jornada[] listajornada = liga.getCalendario().getListaJornadas();
+        int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
+        if (ultimaJornadaJugada > listajornada.length) ultimaJornadaJugada = listajornada.length;
+        if (numeroJornadasAJugar > listajornada.length) numeroJornadasAJugar = listajornada.length;
+        for (int i = ultimaJornadaJugada; i < numeroJornadasAJugar; i++) {
+            System.out.println("DEBUG jugarJornada: Numero Jornada: " + i);
+            Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+            for (int j = 0; j < listasPartidos.length; j++) {
+//                jugarPartido(listasPartidos[j]);
+                jugarPartido(
+                    liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
+                );
+            }
+        }
+        liga.setUltimaJornadaJugada(numeroJornadasAJugar);
+
+    }
 
     //TODO: CALENDARIO
 
@@ -570,9 +619,39 @@ public class Invocador {
     }
 
     public static void mostrarCalendario(Liga liga) {
-        int numeroJornada = liga.getCalendario().getListaJornadas().length;
+        int numeroJornadas = liga.getCalendario().getListaJornadas().length;
 
-        mostrarCalendario(liga, numeroJornada);
+        mostrarCalendario(liga, numeroJornadas);
+    }
+
+    public static void mostrarCalendarioConGoles(Liga liga) {
+        int numeroJornadas = liga.getUltimaJornadaJugada();
+        int maximoJornadas = liga.getCalendario().getListaJornadas().length;
+        //Para mostar la jornada 5 que es la posicion array 6.
+
+        if (numeroJornadas > maximoJornadas) {
+            numeroJornadas = maximoJornadas;
+        } else if (numeroJornadas < 0) {
+            numeroJornadas = 0;
+        }
+
+        Calendario calendario = Invocador.crearCalendario(liga);
+        Jornada[] listaJornadas = calendario.getListaJornadas();
+
+        int contadorJornadas = 1;
+        for (int i = 0; i < numeroJornadas; i++) {
+            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
+            if (i != 0) System.out.println("───────────────────────────────────────────────────────");
+            System.out.println("\nJornada " + contadorJornadas + ".\n");
+            for (int j = 0; j < listaPartidos.length; j++) {
+                Partido partido = listaPartidos[j];
+                System.out.printf("\tPartido %4s. %25s %6s\n", partido.getNumeroPartido(), dateToString(partido.getFecha()), partido.getHoraInicio());
+                System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
+                System.out.printf("\t%-20s      %20s\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
+                System.out.printf("\t%10s%-10s      %10s%-10s\n\n", "Goles: ", partido.getGolesEquipoCasa(), "Goles: ", partido.getGolesEquipoFuera());
+            }
+            contadorJornadas++;
+        }
     }
 
     //TODO: CLASIFICACION
@@ -593,7 +672,7 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
-//TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
+    //TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
@@ -633,7 +712,7 @@ public class Invocador {
 
     //TODO: LIGA
     public static Liga crearLiga() {
-        //TODO: queda por setear Calendario y Clasificacion
+        //TODO: queda por setear Calendario, clasificacion se setea en el menu MostrarClasificacion
         String categoria = generarCategoriaLiga();
         Liga liga = new Liga();
         int numeroEquipos = generarNumeroJugadores();
@@ -642,6 +721,7 @@ public class Invocador {
         liga.setListaArbitros(crearListaArbitros(numeroEquipos));
         liga.setFechaInicio(generarFechaInicio());
         liga.setCalendario(crearCalendario(liga));
+        liga.setUltimaJornadaJugada(0);
 
         return liga;
     }

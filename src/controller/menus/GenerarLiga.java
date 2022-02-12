@@ -64,9 +64,9 @@ public class GenerarLiga {
                 liga.setListaEquipos(Invocador.crearListaEquipos(liga.getListaEquipos().length,liga.getCategoria()));
                 break;
             case 3:
-                if (){
-
-                }
+//                if (){
+//
+//                }
                 System.out.println("Cuantos equipos deseas tener: ");
                 liga.setListaEquipos(Invocador.crearListaEquipos(sc.nextInt(),liga.getCategoria()));
                 break;

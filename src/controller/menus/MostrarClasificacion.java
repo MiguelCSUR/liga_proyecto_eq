@@ -24,7 +24,7 @@ public class MostrarClasificacion {
         int seleccion = input.nextInt();
         switch (seleccion) {
             case 1:
-                Invocador.mostarClasificacion(liga);
+                Invocador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 2:
