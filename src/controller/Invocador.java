@@ -564,6 +564,7 @@ public class Invocador {
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
         if (ultimaJornadaJugada > listajornada.length) ultimaJornadaJugada = listajornada.length;
         if (numeroJornadasAJugar > listajornada.length) numeroJornadasAJugar = listajornada.length;
+
         for (int i = ultimaJornadaJugada; i < numeroJornadasAJugar; i++) {
             System.out.println("DEBUG jugarJornada: Numero Jornada: " + i);
             Partido[] listasPartidos = listajornada[i].getlistaPartidos();
@@ -574,8 +575,9 @@ public class Invocador {
                 );
             }
         }
-        liga.setUltimaJornadaJugada(numeroJornadasAJugar);
-
+        if (numeroJornadasAJugar > ultimaJornadaJugada) {
+            liga.setUltimaJornadaJugada(numeroJornadasAJugar);
+        }
     }
 
     //TODO: CALENDARIO
@@ -702,12 +704,14 @@ public class Invocador {
     public static void mostrarClasificacion(Liga liga) {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = clasificarEquipos(listaEquipos);
+        System.out.println("Jornada " + liga.getUltimaJornadaJugada() + ".");
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
         System.out.println("────────────────────────────────────────");
         for (int i = clasificacion.length - 1; i >= 0; i--) {
             System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(),
                     clasificacion[i].getPuntos(), clasificacion[i].getGoles());
         }
+        System.out.println("(P : Puntos totales, G : Goles totales)");
     }
 
     //TODO: LIGA

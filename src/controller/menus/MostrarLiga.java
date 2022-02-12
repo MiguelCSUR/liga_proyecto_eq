@@ -11,7 +11,7 @@ public class MostrarLiga {
     }
 
     public static void imprimirMenu(Liga liga) {
-        System.out.println(" 1. Ver calendario ");
+        System.out.println(" 1. Ver calendario ");//TODO: porque el espacio? por si es la seleccion de 2 digitos (10)?
         System.out.println(" 2. Ver clasificacion ");
         System.out.println(" 3. Añadir/Modificar datos ");
         System.out.println(" 4. Crear nueva liga ");
@@ -33,7 +33,7 @@ public class MostrarLiga {
                 //Invocador.mostrarCalendario(desde-1, hasta-1);
                 break;
             case 2:
-                //MostrarClasificacion.iniciarMenu(liga);
+                MostrarClasificacion.iniciarMenu(liga);
                 break;
             case 3:
                 //TODO Por definir que poner aqui

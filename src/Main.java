@@ -23,10 +23,10 @@ public class Main {
 
 //        System.out.println("Numero de Rondas" + Invocador.calcularNumeroJornadas(liga.getListaEquipos().length));
 
-        Invocador.jugarJornada(liga, 2);
-
 
         //TODO: DEBUG - jugar Jornanda, luego en mostartCalendarioConGoles, los goles estan a 0
+//        Invocador.jugarJornada(liga, 2);
+
 //        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
@@ -43,6 +43,6 @@ public class Main {
 //        GenerarLiga.iniciarImprimirMenuLiga();
 //        Invocador.mostrarCalendario(liga);
 
-
+        MostrarClasificacion.iniciarMenu(liga);
     }
 }
