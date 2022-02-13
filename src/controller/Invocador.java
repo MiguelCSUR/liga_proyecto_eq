@@ -227,27 +227,16 @@ public class Invocador {
     }
 
     //Creamos las equipaciones de los equipos de casa y se la damos
-    public static String generarEquipacionCasa() {
-
-        String[] equipC = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
-
-        int numero = (int) Math.floor(Math.random() * equipC.length);
-        // String equipacioncasa = equipC[numero];
-
-        return equipC[numero];
+    public static String generarEquipacionCasa(int numeroEquipacion) {
+        String[] listaEquipacion = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
+        return listaEquipacion[numeroEquipacion];
 
     }
 
     //Creamos las equipaciones de los equipos de fuera y se la damos
-    public static String generarEquipacionFuera() {
-
+    public static String generarEquipacionFuera(int numeroEquipacion) {
         String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
-
-        int numero = (int) Math.floor(Math.random() * equipacionFuera.length);
-        //String equipacionfuera = equipacionFuera[numero];
-
-        return equipacionFuera[numero];
-
+        return equipacionFuera[numeroEquipacion];
     }
 
     //Creamos un numero aleatorio para elejir el maximo de jugadores que tendra un equipo
@@ -260,8 +249,9 @@ public class Invocador {
     public static Equipo crearEquipo(String categoria) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
-        equipo.setEquipacionCasa(generarEquipacionCasa());
-        equipo.setEquipacionCasa(generarEquipacionFuera());
+        int numeroEquipacion = generarNumeroEntre(0, 8);
+        equipo.setEquipacionCasa(generarEquipacionCasa(numeroEquipacion));
+        equipo.setEquipacionFuera(generarEquipacionFuera(numeroEquipacion));
         equipo.setClub(generarClub());
         equipo.setEntrenador(crearEntrenador(equipo));
         equipo.setJugadores(crearListaJugadores(categoria, equipo));
@@ -287,6 +277,67 @@ public class Invocador {
     public static String generarClub() {
         String nombre = generarCiudad() + " F.C.";
         return nombre;
+    }
+
+    //Si le pasas true, te numero los equipos, false no los numera
+    public static void mostrarListaEquipos(Equipo[] listaEquipo, boolean estanNumerados) {
+        if (estanNumerados) {
+            System.out.println("     Número total de equipos: " + listaEquipo.length + ".\n");
+            for (int i = 0; i < listaEquipo.length; i++) {
+                System.out.printf("%3d. %s\n", (i + 1), listaEquipo[i].getNombre());
+                System.out.println("     " + listaEquipo[i].getClub());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Número total de equipos: " + listaEquipo.length + ".\n");
+            for (int i = 0; i < listaEquipo.length; i++) {
+                System.out.println(listaEquipo[i].getNombre());
+                System.out.println(listaEquipo[i].getClub());
+                System.out.println();
+            }
+        }
+    }
+
+    public static void mostarPlantilla(Equipo equipo, boolean estanNumerados) {
+        Entrenador entrenador = equipo.getEntrenador();
+        Jugador[] listaJugadores = equipo.getJugadores();
+
+        System.out.println("Nombre equipo: " + equipo.getNombre());
+        System.out.println("Nombre club: " + equipo.getClub());
+        System.out.println("Categoria: " + listaJugadores[0].getCategoria());
+        System.out.println();
+
+        if (estanNumerados) {
+            System.out.println("    Entrenador: ");
+            System.out.printf("\t%2d. Nombre: " + entrenador.getNombre() + entrenador.getApellidos() + "\n", 1);
+            System.out.println("\t    Edad: " + entrenador.getEdad());
+            System.out.println("\t    Licencia: " + entrenador.getNumeroLicencia());
+            System.out.println();
+            System.out.println("    Jugadores: ");
+            for (int i = 0; i < listaJugadores.length; i++) {
+                Jugador jugador = listaJugadores[i];
+                System.out.printf("\t%2d. Nombre: " + jugador.getNombre() + jugador.getApellidos() + "\n", (i + 2));
+                System.out.println("\t    Dorsal: " + jugador.getDorsal());
+                System.out.println("\t    Edad: " + jugador.getEdad());
+                System.out.println("\t    Posición: " + jugador.getPosicion());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Entrenador: ");
+            System.out.println("\tNombre: " + entrenador.getNombre() + entrenador.getApellidos());
+            System.out.println("\tEdad: " + entrenador.getEdad());
+            System.out.println("\tLicencia: " + entrenador.getNumeroLicencia());
+            System.out.println();
+            System.out.println("Jugadores: ");
+            for (int i = 0; i < listaJugadores.length; i++) {
+                Jugador jugador = listaJugadores[i];
+                System.out.println("\tNombre: " + jugador.getNombre() + jugador.getApellidos());
+                System.out.println("\tDorsal: " + jugador.getDorsal());
+                System.out.println("\tEdad: " + jugador.getEdad());
+                System.out.println("\tPosición: " + jugador.getPosicion());
+                System.out.println();
+            }
+        }
     }
 
     //TODO: PARTIDO
@@ -757,5 +808,13 @@ public class Invocador {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
+    }
+
+    //TODO: revisar
+    public static Liga resetLigaConEquipo(Liga liga) {
+        Equipo[] listaEquipo = liga.getListaEquipos();
+        liga = new Liga();
+        liga.setListaEquipos(listaEquipo);
+        return liga;
     }
 }

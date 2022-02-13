@@ -19,6 +19,7 @@ public class MostrarLiga {
         System.out.println();
         System.out.println("Elige una opción:");
         elegirOpcion(liga);
+        imprimirMenu(liga);
     }
 
     public static void elegirOpcion(Liga liga) {
@@ -26,11 +27,11 @@ public class MostrarLiga {
         int opcion = sc.nextInt();
         switch (opcion) {
             case 1:
-                System.out.println("Introduce desde que Jornada quieres ver (Min: 1)");
-                int desde = sc.nextInt();
+//                System.out.println("Introduce desde que Jornada quieres ver (Min: 1)");
+//                int desde = sc.nextInt();
                 System.out.println("Introduce hasta que Jornada quieres ver (Max: "+liga.getCalendario().getListaJornadas().length+")");
                 int hasta = sc.nextInt();
-                //Invocador.mostrarCalendario(desde-1, hasta-1);
+                Invocador.mostrarCalendario(liga, hasta);
                 break;
             case 2:
                 MostrarClasificacion.iniciarMenu(liga);
