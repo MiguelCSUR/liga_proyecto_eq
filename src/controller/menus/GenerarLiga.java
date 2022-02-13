@@ -61,9 +61,9 @@ public class GenerarLiga {
                 System.out.println(" 7. Juvenil");
                 liga.setCategoria(elegirCategoria(sc.nextInt()));
                 if (liga.getListaEquipos() == null) {
-                    liga.setListaEquipos(Invocador.crearListaEquipos(Invocador.generarNumeroEquipos(), liga.getCategoria()));
+                    liga.setListaEquipos(Invocador.crearListaEquipos(Invocador.generarNumeroEquipos(), liga.getCategoria(),Invocador.generarFormacionAleatoria()));
                 } else
-                    liga.setListaEquipos(Invocador.crearListaEquipos(liga.getListaEquipos().length, liga.getCategoria()));
+                    liga.setListaEquipos(Invocador.crearListaEquipos(liga.getListaEquipos().length, liga.getCategoria(),Invocador.generarFormacionAleatoria()));
                 break;
             case 3:
 
@@ -73,7 +73,7 @@ public class GenerarLiga {
                 }
 
                 System.out.println("Cuantos equipos deseas tener: ");
-                liga.setListaEquipos(Invocador.crearListaEquipos(sc.nextInt(), liga.getCategoria()));
+                liga.setListaEquipos(Invocador.crearListaEquipos(sc.nextInt(), liga.getCategoria(),Invocador.generarFormacionAleatoria()));
                 break;
             case 4:
                 //fecha inic
@@ -121,7 +121,7 @@ public class GenerarLiga {
                         int numero = (int) Math.floor(Math.random()*7)+1;
                         liga.setCategoria(elegirCategoria(numero));
                     }
-                    liga.setListaEquipos(Invocador.crearListaEquipos(Invocador.generarNumeroEquipos(),liga.getCategoria()));
+                    liga.setListaEquipos(Invocador.crearListaEquipos(Invocador.generarNumeroEquipos(),liga.getCategoria(),Invocador.generarFormacionAleatoria()));
                 }
                 if(liga.getFechaInicio()==null){
                     liga.setFechaInicio(Invocador.generarFechaInicio());

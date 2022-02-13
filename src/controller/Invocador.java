@@ -92,23 +92,24 @@ public class Invocador {
     //TODO: JUGADOR
 
     //Te he cambiado el codigo de crear jugador y te he creado una lista de jugadores
-    public static Jugador crearJugador(String categoria, int dorsal) {
+    public static Jugador crearJugador(String categoria, int dorsal,int formacion) {
         Jugador jugador = new Jugador();
         jugador.setNombre(generarNombrePersona());
         jugador.setApellidos(generarApellidosPersona());
         jugador.setCategoria(categoria);
         jugador.setDorsal(dorsal);
         jugador.setEdad(generarEdadJugador(categoria));
+        jugador.setPosicion(generarPosicion(dorsal,formacion));
         return jugador;
     }
 
-    public static Jugador[] crearListaJugadores(String categoria, Equipo equipo) {
+    public static Jugador[] crearListaJugadores(String categoria, Equipo equipo,int formacion) {
         int numJugadores = generarNumeroJugadores();
         Jugador[] jugadores = new Jugador[numJugadores];
         //Se van creando los jugadores y asignando a un array
         for (int i = 0; i < numJugadores; i++) {
             Jugador jugador = new Jugador();
-            jugador = crearJugador(categoria, i + 1);
+            jugador = crearJugador(categoria, i + 1,formacion);
             jugador.setEquipo(equipo);
             jugadores[i] = jugador;
         }
@@ -136,37 +137,96 @@ public class Invocador {
         }
     }
 
-    public static String generarPosicion(int dorsal) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
+    public static String generarPosicion(int dorsal,int formacion) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
         while (dorsal > 11) {
             int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
             dorsal = numeroAleatorio;
         }
-
-        switch (dorsal) {
-            case 1:
-                return "Portero";
-            case 2:
-                return "Lateral derecho";
-            case 3:
-                return "Lateral izquierdp";
-            case 4:
-            case 5:
-                return "Central";
-            case 6:
-                return "Pivote";
-            case 7:
-                return "Extremo derecho";
-            case 8:
-                return "Centrocampista";
-            case 9:
-                return "Delantero";
-            case 10:
-                return "Mediapunta";
-            case 11:
-                return "Extremo izquierdo";
-            default:
-                return "Error se sale de dorsal en Jugador.setPosition()";
+        if (formacion == 1) {//Formacion 4-4-2
+            switch (dorsal) {
+                case 1:
+                    return "Portero";
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    return "Defensa";
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    return "Centrocampista";
+                case 10:
+                case 11:
+                    return "Delantero";
+                default:
+                    return "Error se sale de dorsal en Jugador.setPosition()";
+            }
         }
+        if (formacion == 2) {//Formacion 4-3-3
+            switch (dorsal) {
+                case 1:
+                    return "Portero";
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                    return "Defensa";
+                case 6:
+                case 7:
+                case 8:
+                    return "Centrocampista";
+                case 9:
+                case 10:
+                case 11:
+                    return "Delantero";
+                default:
+                    return "Error se sale de dorsal en Jugador.setPosition()";
+            }
+        }
+        if (formacion == 3) {//Formacion 3-4-3
+            switch (dorsal) {
+                case 1:
+                    return "Portero";
+                case 2:
+                case 3:
+                case 4:
+                    return "Defensa";
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                    return "Centrocampista";
+                case 9:
+                case 10:
+                case 11:
+                    return "Delantero";
+                default:
+                    return "Error se sale de dorsal en Jugador.setPosition()";
+            }
+        }
+        if (formacion == 4) {//Formacion 5-4-1
+            switch (dorsal) {
+                case 1:
+                    return "Portero";
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                    return "Defensa";
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    return "Centrocampista";
+                case 11:
+                    return "Delantero";
+                default:
+                    return "Error se sale de dorsal en Jugador.setPosition()";
+            }
+        }
+        return "Error no ha elegido una posicion/formacion posible";
     }
 
     //TODO: ENTRENADOR
@@ -257,23 +317,23 @@ public class Invocador {
     }
 
     //Esto crea un equipo en individual
-    public static Equipo crearEquipo(String categoria) {
+    public static Equipo crearEquipo(String categoria,int formacion) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
         equipo.setEquipacionCasa(generarEquipacionCasa());
         equipo.setEquipacionCasa(generarEquipacionFuera());
         equipo.setClub(generarClub());
         equipo.setEntrenador(crearEntrenador(equipo));
-        equipo.setJugadores(crearListaJugadores(categoria, equipo));
+        equipo.setJugadores(crearListaJugadores(categoria, equipo,formacion));
         return equipo;
     }
 
     //Asigna los equipos según el número de equipos que se han generado previamente
-    public static Equipo[] crearListaEquipos(int numEquipos, String categoria) {
+    public static Equipo[] crearListaEquipos(int numEquipos, String categoria,int formacion) {
         Equipo[] listaEquipos = new Equipo[numEquipos];
 
         for (int i = 0; i < numEquipos; i++) {
-            Equipo equipo = crearEquipo(categoria);
+            Equipo equipo = crearEquipo(categoria,formacion);
             listaEquipos[i] = equipo;
         }
         return listaEquipos;
@@ -289,6 +349,10 @@ public class Invocador {
         return nombre;
     }
 
+    public static int generarFormacionAleatoria(){
+        int numero = (int) Math.floor(Math.random()*4)+1;
+        return numero;
+    }
     //TODO: PARTIDO
 
     public static int[] generadorProbabilidades() {
@@ -718,10 +782,11 @@ public class Invocador {
     public static Liga crearLiga() {
         //TODO: queda por setear Calendario, clasificacion se setea en el menu MostrarClasificacion
         String categoria = generarCategoriaLiga();
+        int formacion = generarFormacionAleatoria();
         Liga liga = new Liga();
         int numeroEquipos = generarNumeroJugadores();
         liga.setNombre(generarNombresLiga());
-        liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria));
+        liga.setListaEquipos(crearListaEquipos(numeroEquipos, categoria,formacion));
         liga.setListaArbitros(crearListaArbitros(numeroEquipos));
         liga.setFechaInicio(generarFechaInicio());
         liga.setCalendario(crearCalendario(liga));
