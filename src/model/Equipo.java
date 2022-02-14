@@ -40,6 +40,13 @@ public class Equipo {
         this.entrenador = entrenador;
     }
 
+    public void setPuntos(int puntos) {
+        this.puntos = puntos;
+    }
+    public int getPuntos() {
+        return puntos;
+    }
+
     public String getEquipacionCasa() {
         return equipacionCasa;
     }
@@ -54,11 +61,11 @@ public class Equipo {
         this.equipacionFuera = equipacionFuera;
     }
 
-    public void setPuntos(int puntos) {
-        this.puntos = puntos;
+    public int getNumJugadores() {
+        return numJugadores;
     }
-    public int getPuntos() {
-        return puntos;
+    public void setNumJugadores(int numJugadores) {
+        this.numJugadores = numJugadores;
     }
 
     public void setJugadores(Jugador[] jugadores) {

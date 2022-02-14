@@ -249,6 +249,23 @@ public class Invocador {
         return (int) Math.floor(Math.random() * 10000);
     }
 
+    public static void mostrarJugador(Jugador jugador, boolean estanNumerados) {
+        if (estanNumerados) {
+            System.out.println("\t1. Nombre: " + jugador.getNombre() + jugador.getApellidos());
+            System.out.println("\t2. Dorsal: " + jugador.getDorsal());
+            System.out.println("\t3. Edad: " + jugador.getEdad());
+            System.out.println("\t4. Posición: " + jugador.getPosicion());
+            System.out.println();
+        } else {
+            System.out.println("\tNombre: " + jugador.getNombre() + jugador.getApellidos());
+            System.out.println("\tDorsal: " + jugador.getDorsal());
+            System.out.println("\tEdad: " + jugador.getEdad());
+            System.out.println("\tPosición: " + jugador.getPosicion());
+            System.out.println();
+        }
+    }
+
+
     //TODO: ARBITRO
 
     //Tambien he tocado un poco esto(Nacho)
@@ -288,27 +305,16 @@ public class Invocador {
     }
 
     //Creamos las equipaciones de los equipos de casa y se la damos
-    public static String generarEquipacionCasa() {
-
-        String[] equipC = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
-
-        int numero = (int) Math.floor(Math.random() * equipC.length);
-        // String equipacioncasa = equipC[numero];
-
-        return equipC[numero];
+    public static String generarEquipacionCasa(int numeroEquipacion) {
+        String[] listaEquipacion = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
+        return listaEquipacion[numeroEquipacion];
 
     }
 
     //Creamos las equipaciones de los equipos de fuera y se la damos
-    public static String generarEquipacionFuera() {
-
+    public static String generarEquipacionFuera(int numeroEquipacion) {
         String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
-
-        int numero = (int) Math.floor(Math.random() * equipacionFuera.length);
-        //String equipacionfuera = equipacionFuera[numero];
-
-        return equipacionFuera[numero];
-
+        return equipacionFuera[numeroEquipacion];
     }
 
     //Creamos un numero aleatorio para elejir el maximo de jugadores que tendra un equipo
@@ -321,8 +327,9 @@ public class Invocador {
     public static Equipo crearEquipo(String categoria,int formacion) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
-        equipo.setEquipacionCasa(generarEquipacionCasa());
-        equipo.setEquipacionFuera(generarEquipacionFuera());
+        int numeroEquipacion = generarNumeroEntre(0, 8);
+        equipo.setEquipacionCasa(generarEquipacionCasa(numeroEquipacion));
+        equipo.setEquipacionFuera(generarEquipacionFuera(numeroEquipacion));
         equipo.setClub(generarClub());
         equipo.setEntrenador(crearEntrenador(equipo));
         equipo.setJugadores(crearListaJugadores(categoria, equipo,formacion));
@@ -350,10 +357,86 @@ public class Invocador {
         return nombre;
     }
 
+    //Si le pasas true, te numero los equipos, false no los numera
+    public static void mostrarListaEquipos(Equipo[] listaEquipo, boolean estanNumerados) {
+        if (estanNumerados) {
+            System.out.println("     Número total de equipos: " + listaEquipo.length + ".\n");
+            for (int i = 0; i < listaEquipo.length; i++) {
+                System.out.printf("%3d. %s\n", (i + 1), listaEquipo[i].getNombre());
+                System.out.println("     " + listaEquipo[i].getClub());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Número total de equipos: " + listaEquipo.length + ".\n");
+            for (int i = 0; i < listaEquipo.length; i++) {
+                System.out.println(listaEquipo[i].getNombre());
+                System.out.println(listaEquipo[i].getClub());
+                System.out.println();
+            }
+        }
+    }
+    public static void mostrarEntrenador(Entrenador entrenador, boolean estanNumerados) {
+        if (estanNumerados) {
+            System.out.println("\t1. Nombre: " + entrenador.getNombre() + entrenador.getApellidos());
+            System.out.println("\t2. Edad: " + entrenador.getEdad());
+            System.out.println("\t3. Licencia: " + entrenador.getNumeroLicencia());
+        } else {
+            System.out.println("\tNombre: " + entrenador.getNombre() + entrenador.getApellidos());
+            System.out.println("\tEdad: " + entrenador.getEdad());
+            System.out.println("\tLicencia: " + entrenador.getNumeroLicencia());
+        }
+    }
+
+    public static void mostrarEquipo(Equipo equipo, boolean estanNumerados) {
+        Entrenador entrenador = equipo.getEntrenador();
+        if (estanNumerados) {
+            System.out.println("1. Nombre equipo: " + equipo.getNombre());
+            System.out.println("2. Nombre club: " + equipo.getClub());
+            System.out.println("3. Categoria: " + equipo.getJugadores()[0].getCategoria());
+            System.out.println("4. Entrenador: " + entrenador.getNombre() + " "
+                    + entrenador.getApellidos());
+        } else {
+            System.out.println("Nombre equipo: " + equipo.getNombre());
+            System.out.println("Nombre club: " + equipo.getClub());
+            System.out.println("Categoria: " + equipo.getJugadores()[0].getCategoria());
+            System.out.println("Equipación Casa: " + equipo.getEquipacionCasa());
+            System.out.println("Equipación Fuera: " + equipo.getEquipacionCasa());
+            System.out.println("Entrenador: " + entrenador.getNombre() + " "
+                    + entrenador.getApellidos());
+        }
+    }
+
+    public static void mostrarListaJugadores(Equipo equipo, boolean estanNumerados) {
+        Jugador[] listaJugadores = equipo.getJugadores();
+        System.out.println();
+        if (estanNumerados) {
+            System.out.println("    Jugadores: ");
+            for (int i = 0; i < listaJugadores.length; i++) {
+                Jugador jugador = listaJugadores[i];
+                System.out.printf("\t%2d. Nombre: " + jugador.getNombre() + jugador.getApellidos() + "\n", (i + 2));
+                System.out.println("\t    Dorsal: " + jugador.getDorsal());
+                System.out.println("\t    Edad: " + jugador.getEdad());
+                System.out.println("\t    Posición: " + jugador.getPosicion());
+                System.out.println();
+            }
+        } else {
+            System.out.println("Jugadores: ");
+            for (int i = 0; i < listaJugadores.length; i++) {
+                Jugador jugador = listaJugadores[i];
+                System.out.println("\tNombre: " + jugador.getNombre() + jugador.getApellidos());
+                System.out.println("\tDorsal: " + jugador.getDorsal());
+                System.out.println("\tEdad: " + jugador.getEdad());
+                System.out.println("\tPosición: " + jugador.getPosicion());
+                System.out.println();
+            }
+        }
+    }
+
     public static int generarFormacionAleatoria(){
         int numero = (int) Math.floor(Math.random()*4)+1;
         return numero;
     }
+
     //TODO: PARTIDO
 
     public static int[] generadorProbabilidades() {
@@ -507,7 +590,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -516,7 +599,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -528,7 +611,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -537,7 +620,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -547,6 +630,7 @@ public class Invocador {
         System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
+
     //Overloading
     public static Jornada[] crearListaJornadas(Liga liga) {
         int maximoJornadas = calcularNumeroJornadas(liga.getListaEquipos().length) + 1;
@@ -655,7 +739,7 @@ public class Invocador {
             for (int j = 0; j < listasPartidos.length; j++) {
 //                jugarPartido(listasPartidos[j]);
                 jugarPartido(
-                    liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
+                        liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
                 );
             }
         }
@@ -758,6 +842,7 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
+
     //TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
@@ -838,9 +923,17 @@ public class Invocador {
         return generarNumeroEntre(5, 10);
     }
 
-    public static void generarEspacio(){
+    public static void generarEspacio() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
+    }
+
+    //TODO: revisar
+    public static Liga resetLigaConEquipo(Liga liga) {
+        Equipo[] listaEquipo = liga.getListaEquipos();
+        liga = new Liga();
+        liga.setListaEquipos(listaEquipo);
+        return liga;
     }
 }

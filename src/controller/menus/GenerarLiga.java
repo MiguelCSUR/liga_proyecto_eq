@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class GenerarLiga {
     public static void iniciarImprimirMenuLiga() {
+        Menu.limpiarPantalla();
         Liga liga = new Liga();
         imprimirMenu(liga);
     }
@@ -156,5 +157,7 @@ public class GenerarLiga {
                 return "ERROR. Opción introducida incorrecta";
         }
     }
+
+
 
 }

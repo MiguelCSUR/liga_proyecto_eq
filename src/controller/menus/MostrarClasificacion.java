@@ -21,8 +21,8 @@ public class MostrarClasificacion {
             textoNumeroJornada += ".";
         }
         System.out.println("CLASIFICACIÓN:");
-        System.out.println("1. Mostrar selección de jornadas. " + textoNumeroJornada);  //TODO: Tal vez sea mejor poner Jugar
-        System.out.println("2. Mostrar todas las jornadas."); //TODO: Tal vez sea mejor poner Jugar
+        System.out.println("1. Mostrar selección de jornadas. " + textoNumeroJornada);
+        System.out.println("2. Mostrar todas las jornadas.");
         System.out.println("3. Volver.");
         seleccionClasificacion(liga);
     }
@@ -66,7 +66,7 @@ public class MostrarClasificacion {
                 MostrarLiga.iniciarMenu(liga);
                 break;
             default:
-                System.out.println("Esta opción no es correcta");
+                System.out.println("Esta opción no es correcta. Elige otra.");
                 imprimirMenu(liga);
                 break;
         }
