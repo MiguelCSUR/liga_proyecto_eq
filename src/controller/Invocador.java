@@ -188,6 +188,23 @@ public class Invocador {
         return (int) Math.floor(Math.random() * 10000);
     }
 
+    public static void mostrarJugador(Jugador jugador, boolean estanNumerados) {
+        if (estanNumerados) {
+            System.out.println("\t1. Nombre: " + jugador.getNombre() + jugador.getApellidos());
+            System.out.println("\t2. Dorsal: " + jugador.getDorsal());
+            System.out.println("\t3. Edad: " + jugador.getEdad());
+            System.out.println("\t4. Posición: " + jugador.getPosicion());
+            System.out.println();
+        } else {
+            System.out.println("\tNombre: " + jugador.getNombre() + jugador.getApellidos());
+            System.out.println("\tDorsal: " + jugador.getDorsal());
+            System.out.println("\tEdad: " + jugador.getEdad());
+            System.out.println("\tPosición: " + jugador.getPosicion());
+            System.out.println();
+        }
+    }
+
+
     //TODO: ARBITRO
 
     //Tambien he tocado un poco esto(Nacho)
@@ -297,22 +314,41 @@ public class Invocador {
             }
         }
     }
-
-    public static void mostarPlantilla(Equipo equipo, boolean estanNumerados) {
-        Entrenador entrenador = equipo.getEntrenador();
-        Jugador[] listaJugadores = equipo.getJugadores();
-
-        System.out.println("Nombre equipo: " + equipo.getNombre());
-        System.out.println("Nombre club: " + equipo.getClub());
-        System.out.println("Categoria: " + listaJugadores[0].getCategoria());
-        System.out.println();
-
+    public static void mostrarEntrenador(Entrenador entrenador, boolean estanNumerados) {
         if (estanNumerados) {
-            System.out.println("    Entrenador: ");
-            System.out.printf("\t%2d. Nombre: " + entrenador.getNombre() + entrenador.getApellidos() + "\n", 1);
-            System.out.println("\t    Edad: " + entrenador.getEdad());
-            System.out.println("\t    Licencia: " + entrenador.getNumeroLicencia());
-            System.out.println();
+            System.out.println("\t1. Nombre: " + entrenador.getNombre() + entrenador.getApellidos());
+            System.out.println("\t2. Edad: " + entrenador.getEdad());
+            System.out.println("\t3. Licencia: " + entrenador.getNumeroLicencia());
+        } else {
+            System.out.println("\tNombre: " + entrenador.getNombre() + entrenador.getApellidos());
+            System.out.println("\tEdad: " + entrenador.getEdad());
+            System.out.println("\tLicencia: " + entrenador.getNumeroLicencia());
+        }
+    }
+
+    public static void mostrarEquipo(Equipo equipo, boolean estanNumerados) {
+        Entrenador entrenador = equipo.getEntrenador();
+        if (estanNumerados) {
+            System.out.println("1. Nombre equipo: " + equipo.getNombre());
+            System.out.println("2. Nombre club: " + equipo.getClub());
+            System.out.println("3. Categoria: " + equipo.getJugadores()[0].getCategoria());
+            System.out.println("4. Entrenador: " + entrenador.getNombre() + " "
+                    + entrenador.getApellidos());
+        } else {
+            System.out.println("Nombre equipo: " + equipo.getNombre());
+            System.out.println("Nombre club: " + equipo.getClub());
+            System.out.println("Categoria: " + equipo.getJugadores()[0].getCategoria());
+            System.out.println("Equipación Casa: " + equipo.getEquipacionCasa());
+            System.out.println("Equipación Fuera: " + equipo.getEquipacionCasa());
+            System.out.println("Entrenador: " + entrenador.getNombre() + " "
+                    + entrenador.getApellidos());
+        }
+    }
+
+    public static void mostrarListaJugadores(Equipo equipo, boolean estanNumerados) {
+        Jugador[] listaJugadores = equipo.getJugadores();
+        System.out.println();
+        if (estanNumerados) {
             System.out.println("    Jugadores: ");
             for (int i = 0; i < listaJugadores.length; i++) {
                 Jugador jugador = listaJugadores[i];
@@ -323,11 +359,6 @@ public class Invocador {
                 System.out.println();
             }
         } else {
-            System.out.println("Entrenador: ");
-            System.out.println("\tNombre: " + entrenador.getNombre() + entrenador.getApellidos());
-            System.out.println("\tEdad: " + entrenador.getEdad());
-            System.out.println("\tLicencia: " + entrenador.getNumeroLicencia());
-            System.out.println();
             System.out.println("Jugadores: ");
             for (int i = 0; i < listaJugadores.length; i++) {
                 Jugador jugador = listaJugadores[i];
@@ -474,7 +505,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -483,7 +514,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -495,7 +526,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
                 listaJornadas[i] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -504,7 +535,7 @@ public class Invocador {
                 Jornada jornada = new Jornada();
                 jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
                 listaJornadas[i + numeroRondas] = jornada;
-                if(contadorJornadas>maximoJornadas){
+                if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
@@ -514,6 +545,7 @@ public class Invocador {
         System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
+
     //Overloading
     public static Jornada[] crearListaJornadas(Liga liga) {
         int maximoJornadas = calcularNumeroJornadas(liga.getListaEquipos().length) + 1;
@@ -622,7 +654,7 @@ public class Invocador {
             for (int j = 0; j < listasPartidos.length; j++) {
 //                jugarPartido(listasPartidos[j]);
                 jugarPartido(
-                    liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
+                        liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
                 );
             }
         }
@@ -725,6 +757,7 @@ public class Invocador {
             equipoFuera.setPuntos(equipoFuera.getPuntos() + 3);
         }
     }
+
     //TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
@@ -804,7 +837,7 @@ public class Invocador {
         return generarNumeroEntre(5, 10);
     }
 
-    public static void generarEspacio(){
+    public static void generarEspacio() {
         for (int i = 0; i < 100; i++) {
             System.out.println();
         }
