@@ -5,9 +5,7 @@ public class Entrenador extends Persona{
     private int numeroLicencia;
     private Equipo equipo;
 
-    public Entrenador() {
-        super.setEdad(20, 60);
-    }
+
 
     public int getNumeroLicencia() {
         return numeroLicencia;
@@ -15,6 +13,10 @@ public class Entrenador extends Persona{
     public void setNumeroLicencia(int numeroLicencia) {
         this.numeroLicencia = numeroLicencia;
     }
+
+    public void setEquipo(Equipo equipo){
+        this.equipo=equipo;
+        }
     public Equipo getEquipo() {
         return equipo;
     }
