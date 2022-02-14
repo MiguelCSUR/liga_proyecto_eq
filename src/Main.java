@@ -2,7 +2,6 @@ import controller.Invocador;
 import controller.menus.GenerarLiga;
 import controller.menus.Menu;
 import controller.menus.MostrarClasificacion;
-import controller.menus.MostrarEquipos;
 import model.*;
 
 import java.text.ParseException;
@@ -26,14 +25,14 @@ public class Main {
 
         //TODO: DEBUG - jugar Jornanda, luego en mostartCalendarioConGoles, los goles estan a 0
 //        Invocador.jugarJornada(liga, 2);
-//
+
 //        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
 //        System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-
+//
 //        Invocador.mostrarCalendarioConGoles(liga);
-
+//
 //        System.out.println("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getEquipoCasa().getClub());
 //        System.out.println(liga.getCalendario().getListaJornadas()[0].getlistaPartidos()[0].getGolesEquipoCasa());
@@ -42,9 +41,12 @@ public class Main {
         //TODO: DEBUG
 //        GenerarLiga.iniciarImprimirMenuLiga();
 //        Invocador.mostrarCalendario(liga);
+<<<<<<< ours
 //        GenerarLiga.iniciarImprimirMenuLiga();
 
         MostrarEquipos.iniciarMenu(liga);
+=======
+>>>>>>> theirs
 
     }
 }

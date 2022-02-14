@@ -82,7 +82,7 @@ public class GenerarLiga {
                 int dia = sc.nextInt();
                 String diaString;
                 while (dia < 1 || dia > 31) {
-                    System.out.println("Introduzca una fecha correcta");
+                    System.out.println("Introduzca un dia correcto: ");
                     dia = sc.nextInt();
                 }
                 if (dia > 0 && dia < 10) {
@@ -92,7 +92,7 @@ public class GenerarLiga {
                 int mes = sc.nextInt();
                 String mesString;
                 while (mes < 1 || mes > 12) {
-                    System.out.println("Introduzca un mes correcto");
+                    System.out.println("Introduzca un mes correcto: ");
                     mes = sc.nextInt();
                 }
                 if (mes > 0 && mes < 10) {
@@ -102,7 +102,7 @@ public class GenerarLiga {
                 int ano = sc.nextInt();
                 String anoString;
                 while (ano <= 0 || ano > 10000) {
-                    System.out.println("Introduzca un año correcto");
+                    System.out.println("Introduzca un año correcto: ");
                     ano = sc.nextInt();
                 }
                 if (ano > 0 && ano < 10) anoString = "000" + ano;

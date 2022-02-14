@@ -10,6 +10,7 @@
 package controller;
 
 import data.Nombres;
+import jdk.swing.interop.SwingInterOpUtils;
 import model.*;
 
 import java.time.DayOfWeek;
@@ -488,6 +489,25 @@ public class Invocador {
         }
         asignarHoraPartidos(listaPartidos, liga.getFechaInicio());
         return listaPartidos;
+    }
+
+    public static void mostrarPartido(Partido partido){
+
+        System.out.println("Partido "+partido.getNumeroPartido()+":");
+        System.out.println("------------------------------------------");
+        System.out.println("Equipos Casa: "+partido.getEquipoCasa().getNombre()+"        "+partido.getEquipoCasa().getClub());
+        System.out.println("Equipos Fuera: "+partido.getEquipoFuera().getNombre()+"        "+partido.getEquipoFuera().getClub());
+
+        System.out.println("Goles Casa: "+partido.getGolesEquipoCasa()+"                "+
+                "Goles Fuera: "+partido.getGolesEquipoFuera());
+
+        System.out.println("Equipación de Casa: "+partido.getEquipoCasa().getEquipacionCasa());
+        System.out.println("Equipación de Fuera: "+partido.getEquipoFuera().getEquipacionFuera());
+
+        System.out.println("Árbitro: "+partido.getArbitro().getNombre()+ " " +partido.getArbitro().getApellidos());
+        System.out.println("Empezó en "+partido.getFecha()+" a las "+partido.getHoraInicio());
+        System.out.println();
+
     }
 
     public static void jugarPartido(Partido partido) {
