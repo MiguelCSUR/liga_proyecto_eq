@@ -407,7 +407,6 @@ public class Invocador {
 
     public static void mostrarListaJugadores(Equipo equipo, boolean estanNumerados) {
         Jugador[] listaJugadores = equipo.getJugadores();
-        System.out.println();
         if (estanNumerados) {
             System.out.println("    Jugadores: ");
             for (int i = 0; i < listaJugadores.length; i++) {
