@@ -14,10 +14,12 @@ import static java.time.DayOfWeek.*;
 //import static model.Liga.crearEquipo;
 
 public class Main {
-    static Liga liga = Invocador.crearLiga();
+    //static Liga liga = Invocador.crearLiga();
 
     public static void main(String[] args) throws ParseException {
 
+        GenerarLiga.iniciarImprimirMenuLiga();
+        //Liga liga = Invocador.crearLiga();
 //        Invocador.mostrarClasificacion(liga);
 
 //        System.out.println("Numero de Rondas" + Invocador.calcularNumeroJornadas(liga.getListaEquipos().length));
@@ -43,6 +45,7 @@ public class Main {
 //        Invocador.mostrarCalendario(liga);
 //        GenerarLiga.iniciarImprimirMenuLiga();
 
-        MostrarEquipos.iniciarMenu(liga);
+
+       // MostrarClasificacion.iniciarMenu(liga);
     }
 }
