@@ -97,7 +97,7 @@ public class GenerarLiga {
                 if (mes > 0 && mes < 10) {
                     mesString = "0" + mes;
                 } else mesString = "" + mes;
-                System.out.println("Que dia quieres que comience: ");
+                System.out.println("Que año quieres que comience: ");
                 int ano = sc.nextInt();
                 String anoString;
                 while (ano <= 0 || ano > 10000) {
