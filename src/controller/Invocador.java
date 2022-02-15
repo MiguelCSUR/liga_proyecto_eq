@@ -10,7 +10,6 @@
 package controller;
 
 import data.Nombres;
-import jdk.swing.interop.SwingInterOpUtils;
 import model.*;
 
 import java.time.DayOfWeek;
@@ -489,7 +488,7 @@ public class Invocador {
         return listaPartidos;
     }
 
-    public static void resetPartido(Partido partido) {
+    public static void deshacerPartido(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();
         Equipo equipoFuera = partido.getEquipoFuera();
 
@@ -727,25 +726,26 @@ public class Invocador {
         return partido;
     }
 
-    public static void resetJornada(Liga liga, int numeroJornadaAResetear) {
+    public static void deshacerJornada(Liga liga, int hastaJornadaResetear) {
         Jornada[] listajornada = liga.getCalendario().getListaJornadas();
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
-        if (ultimaJornadaJugada > listajornada.length) ultimaJornadaJugada = listajornada.length;
-        if (numeroJornadasAJugar > listajornada.length) numeroJornadasAJugar = listajornada.length;
 
-        for (int i = ultimaJornadaJugada; i < numeroJornadasAJugar; i++) {
-            System.out.println("DEBUG jugarJornada: Numero Jornada: " + i);
+        if (hastaJornadaResetear < 0) {
+            hastaJornadaResetear = 0;
+        } else if (hastaJornadaResetear < ultimaJornadaJugada) {
+            System.out.println("Error: No puedes volver a una jornada anterior a la ultima jugada: "
+                    + ultimaJornadaJugada + 1);
+        }
+
+        for (int i = ultimaJornadaJugada; i >= hastaJornadaResetear; i--) {
+            System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
             Partido[] listasPartidos = listajornada[i].getlistaPartidos();
             for (int j = 0; j < listasPartidos.length; j++) {
-//                jugarPartido(listasPartidos[j]);
-                jugarPartido(
-                        liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
-                );
+                deshacerPartido(listasPartidos[j]);
             }
         }
-        if (numeroJornadasAJugar > ultimaJornadaJugada) {
-            liga.setUltimaJornadaJugada(numeroJornadasAJugar);
-        }
+
+        liga.setUltimaJornadaJugada(hastaJornadaResetear);
     }
 
     public static void jugarJornada(Liga liga, int numeroJornadasAJugar) {
