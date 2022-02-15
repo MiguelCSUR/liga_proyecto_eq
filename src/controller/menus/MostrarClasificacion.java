@@ -1,5 +1,6 @@
 package controller.menus;
 import controller.Invocador;
+import controller.Mostrador;
 import model.Liga;
 
 import java.util.Scanner;
@@ -54,12 +55,12 @@ public class MostrarClasificacion {
                     numeroJornadasJugar = input.nextInt();
                 }
                 Invocador.jugarJornada(liga, numeroJornadasJugar);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 2:
                 Invocador.jugarJornada(liga, liga.getCalendario().getListaJornadas().length);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 3:

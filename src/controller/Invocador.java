@@ -249,21 +249,7 @@ public class Invocador {
         return (int) Math.floor(Math.random() * 10000);
     }
 
-    public static void mostrarJugador(Jugador jugador, boolean estanNumerados) {
-        if (estanNumerados) {
-            System.out.println("\t1. Nombre: " + jugador.getNombre() + jugador.getApellidos());
-            System.out.println("\t2. Dorsal: " + jugador.getDorsal());
-            System.out.println("\t3. Edad: " + jugador.getEdad());
-            System.out.println("\t4. Posición: " + jugador.getPosicion());
-            System.out.println();
-        } else {
-            System.out.println("\tNombre: " + jugador.getNombre() + jugador.getApellidos());
-            System.out.println("\tDorsal: " + jugador.getDorsal());
-            System.out.println("\tEdad: " + jugador.getEdad());
-            System.out.println("\tPosición: " + jugador.getPosicion());
-            System.out.println();
-        }
-    }
+
 
 
     //TODO: ARBITRO
@@ -357,6 +343,7 @@ public class Invocador {
         return nombre;
     }
 
+<<<<<<< Updated upstream
     //Si le pasas true, te numero los equipos, false no los numera
     public static void mostrarListaEquipos(Equipo[] listaEquipo, boolean estanNumerados) {
         if (estanNumerados) {
@@ -430,6 +417,8 @@ public class Invocador {
         }
     }
 
+=======
+>>>>>>> Stashed changes
     public static int generarFormacionAleatoria(){
         int numero = (int) Math.floor(Math.random()*4)+1;
         return numero;
@@ -776,70 +765,7 @@ public class Invocador {
         return calendario;
     }
 
-    //Falta asignar horas a la lista de partidos, que no hay lista de partidos.
-    public static void mostrarCalendario(Liga liga, int numeroJornadas) {
-        int maximoJornadas = liga.getCalendario().getListaJornadas().length;
-        //Para mostar la jornada 5 que es la posicion array 6.
 
-        if (numeroJornadas > maximoJornadas) {
-            numeroJornadas = maximoJornadas;
-        } else if (numeroJornadas < 0) {
-            numeroJornadas = 0;
-        }
-
-        Calendario calendario = Invocador.crearCalendario(liga);
-        Jornada[] listaJornadas = calendario.getListaJornadas();
-
-        int contadorJornadas = 1;
-        for (int i = 0; i < numeroJornadas; i++) {
-            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
-            if (i != 0) System.out.println("───────────────────────────────────────────────────────");
-            System.out.println("\nJornada " + contadorJornadas + ".\n");
-            for (int j = 0; j < listaPartidos.length; j++) {
-                Partido partido = listaPartidos[j];
-                System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", dateToString(partido.getFecha()), partido.getHoraInicio());
-                System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
-                System.out.printf("\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
-            }
-            contadorJornadas++;
-        }
-    }
-
-    public static void mostrarCalendario(Liga liga) {
-        int numeroJornadas = liga.getCalendario().getListaJornadas().length;
-
-        mostrarCalendario(liga, numeroJornadas);
-    }
-
-    public static void mostrarCalendarioConGoles(Liga liga) {
-        int numeroJornadas = liga.getUltimaJornadaJugada();
-        int maximoJornadas = liga.getCalendario().getListaJornadas().length;
-        //Para mostar la jornada 5 que es la posicion array 6.
-
-        if (numeroJornadas > maximoJornadas) {
-            numeroJornadas = maximoJornadas;
-        } else if (numeroJornadas < 0) {
-            numeroJornadas = 0;
-        }
-
-        Calendario calendario = Invocador.crearCalendario(liga);
-        Jornada[] listaJornadas = calendario.getListaJornadas();
-
-        int contadorJornadas = 1;
-        for (int i = 0; i < numeroJornadas; i++) {
-            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
-            if (i != 0) System.out.println("───────────────────────────────────────────────────────");
-            System.out.println("\nJornada " + contadorJornadas + ".\n");
-            for (int j = 0; j < listaPartidos.length; j++) {
-                Partido partido = listaPartidos[j];
-                System.out.printf("\tPartido %4s. %25s %6s\n", partido.getNumeroPartido(), dateToString(partido.getFecha()), partido.getHoraInicio());
-                System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
-                System.out.printf("\t%-20s      %20s\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
-                System.out.printf("\t%10s%-10s      %10s%-10s\n\n", "Goles: ", partido.getGolesEquipoCasa(), "Goles: ", partido.getGolesEquipoFuera());
-            }
-            contadorJornadas++;
-        }
-    }
 
     //TODO: CLASIFICACION
 
@@ -887,18 +813,7 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostrarClasificacion(Liga liga) {
-        Equipo[] listaEquipos = liga.getListaEquipos();
-        Equipo[] clasificacion = clasificarEquipos(listaEquipos);
-        System.out.println("Jornada " + liga.getUltimaJornadaJugada() + ".");
-        System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
-        System.out.println("────────────────────────────────────────");
-        for (int i = clasificacion.length - 1; i >= 0; i--) {
-            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(),
-                    clasificacion[i].getPuntos(), clasificacion[i].getGoles());
-        }
-        System.out.println("(P : Puntos totales, G : Goles totales)");
-    }
+
 
     //TODO: LIGA
     public static Liga crearLiga() {

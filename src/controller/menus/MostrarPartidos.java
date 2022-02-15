@@ -1,6 +1,7 @@
 package controller.menus;
 
 import controller.Invocador;
+import controller.Mostrador;
 import model.Liga;
 import model.Partido;
 
@@ -19,7 +20,7 @@ public class MostrarPartidos {
         if (liga.getUltimaJornadaJugada() <1){
             System.out.println("No hay jornadas jugadas aún, por lo que tampoco hay partidos jugados.");
         }else{
-            mostrarListaPartido(liga);
+            Mostrador.mostrarListaPartido(liga);
             System.out.println();
             System.out.println("Introduce el número del partido que quieres modificar:");
             int partidoElegido = sc.nextInt();
@@ -45,7 +46,7 @@ public class MostrarPartidos {
 
         Partido partido = liga.getCalendario().getListaPartidos()[partidoElegido-1];
 
-        mostrarPartido(partido);
+        Mostrador.mostrarPartido(partido);
 
         System.out.println("Elige que modificar");
         System.out.println("1. Modificar resultado");
@@ -86,7 +87,7 @@ public class MostrarPartidos {
 
                 Invocador.asignarPuntos(partido);
 
-                mostrarPartido(partido);
+                Mostrador.mostrarPartido(partido);
 
                 //metemos el partido modificado en su sitio para que se guarde
                 liga.getCalendario().setListaPartidosConcreto(partido, partidoElegido - 1);
@@ -115,32 +116,6 @@ public class MostrarPartidos {
         }
     }
 
-    public static void mostrarPartido(Partido partido){
 
-        System.out.println("Partido "+partido.getNumeroPartido()+":");
-        System.out.println("────────────────────────────────────────────");
-        System.out.println("Equipos Casa: "+partido.getEquipoCasa().getNombre()+"        "+partido.getEquipoCasa().getClub());
-        System.out.println("Equipos Fuera: "+partido.getEquipoFuera().getNombre()+"        "+partido.getEquipoFuera().getClub());
-
-        System.out.println("Goles Casa: "+partido.getGolesEquipoCasa()+"                "+
-                "Goles Fuera: "+partido.getGolesEquipoFuera());
-
-        System.out.println("Equipación de Casa: "+partido.getEquipoCasa().getEquipacionCasa());
-        System.out.println("Equipación de Fuera: "+partido.getEquipoFuera().getEquipacionFuera());
-
-        System.out.println("Árbitro: "+partido.getArbitro().getNombre()+ " " +partido.getArbitro().getApellidos());
-        System.out.println("Empezó en "+partido.getFecha()+" a las "+partido.getHoraInicio());
-        System.out.println();
-        System.out.println();
-    }
-
-    public static void mostrarListaPartido(Liga liga){
-        Partido [] listaPartidos = liga.getCalendario().getListaPartidos();
-        int ultimoPartidoJugado = liga.getUltimaJornadaJugada()*liga.getCalendario().getListaJornadas()[0].getlistaPartidos().length;
-
-        for(int i = 0 ; i < ultimoPartidoJugado ; i++){
-            mostrarPartido(listaPartidos[i]);
-        }
-    }
 }
 
