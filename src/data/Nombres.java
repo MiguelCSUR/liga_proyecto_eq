@@ -57,7 +57,7 @@ public class Nombres {
                 "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt", "Trevor", "Victor", "Jinx", "VI", "Catelyn",
                 "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro", "Squall", "Yuna", "Riku", "Jill", "Wesker",
                 "Kassandra", "Alexios", "Luigi", "C�trico", "Culo", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
-                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader", "FerNardo", "PENElope"};
+                "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader"};
     }
 
     public static String[] personaApellidos() {

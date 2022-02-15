@@ -377,10 +377,12 @@ public class Invocador {
     }
     public static void mostrarEntrenador(Entrenador entrenador, boolean estanNumerados) {
         if (estanNumerados) {
+            System.out.println("    Entrenador: ");
             System.out.println("\t1. Nombre: " + entrenador.getNombre() + entrenador.getApellidos());
             System.out.println("\t2. Edad: " + entrenador.getEdad());
             System.out.println("\t3. Licencia: " + entrenador.getNumeroLicencia());
         } else {
+            System.out.println("Entreador: ");
             System.out.println("\tNombre: " + entrenador.getNombre() + entrenador.getApellidos());
             System.out.println("\tEdad: " + entrenador.getEdad());
             System.out.println("\tLicencia: " + entrenador.getNumeroLicencia());
@@ -393,16 +395,12 @@ public class Invocador {
             System.out.println("1. Nombre equipo: " + equipo.getNombre());
             System.out.println("2. Nombre club: " + equipo.getClub());
             System.out.println("3. Categoria: " + equipo.getJugadores()[0].getCategoria());
-            System.out.println("4. Entrenador: " + entrenador.getNombre() + " "
-                    + entrenador.getApellidos());
         } else {
             System.out.println("Nombre equipo: " + equipo.getNombre());
             System.out.println("Nombre club: " + equipo.getClub());
             System.out.println("Categoria: " + equipo.getJugadores()[0].getCategoria());
             System.out.println("Equipación Casa: " + equipo.getEquipacionCasa());
             System.out.println("Equipación Fuera: " + equipo.getEquipacionCasa());
-            System.out.println("Entrenador: " + entrenador.getNombre() + " "
-                    + entrenador.getApellidos());
         }
     }
 

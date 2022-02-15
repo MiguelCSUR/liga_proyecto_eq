@@ -12,7 +12,7 @@ public class GenerarLiga {
         imprimirMenu(liga);
     }
 
-    public static void imprimirMenu(Liga liga) {
+    public static void imprimirMenu(Liga liga) { //TODO: aqui va despues de reset liga
         Scanner sc = new Scanner(System.in);
         if (liga.getNombre() == null) {
             System.out.println(" 1. Nombre ");

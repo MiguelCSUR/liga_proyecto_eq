@@ -2,6 +2,7 @@ import controller.Invocador;
 import controller.menus.GenerarLiga;
 import controller.menus.Menu;
 import controller.menus.MostrarClasificacion;
+import controller.menus.MostrarEquipos;
 import model.*;
 
 import java.text.ParseException;
@@ -41,12 +42,9 @@ public class Main {
         //TODO: DEBUG
 //        GenerarLiga.iniciarImprimirMenuLiga();
 //        Invocador.mostrarCalendario(liga);
-<<<<<<< ours
 //        GenerarLiga.iniciarImprimirMenuLiga();
 
         MostrarEquipos.iniciarMenu(liga);
-=======
->>>>>>> theirs
 
     }
 }

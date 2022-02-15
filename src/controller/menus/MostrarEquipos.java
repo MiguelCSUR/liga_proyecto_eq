@@ -1,6 +1,7 @@
 package controller.menus;
 
 import controller.Invocador;
+import model.Entrenador;
 import model.Equipo;
 import model.Jugador;
 import model.Liga;
@@ -9,19 +10,21 @@ import java.util.Scanner;
 
 public class MostrarEquipos {
     public static void iniciarMenu(Liga liga) {
-        printMostrarMenu(liga);
+        printModificarListaEquipos(liga);
     }
 
-    public static void printMostrarMenu(Liga liga) {
+    public static void printModificarListaEquipos(Liga liga) {
         System.out.println("LISTA DE EQUIPOS:");
         System.out.println("1. Mostrar lista de equipos.");
         System.out.println("2. Mostrar un equipo.");
         System.out.println("3. Modificar un equipo.");
         System.out.println("4. Volver.");
-        inputMostrarEquipos(liga);
+        System.out.println();
+        System.out.println("Elige una opción: ");
+        inputModificarListaEquipos(liga);
     }
 
-    public static void inputMostrarEquipos(Liga liga) {
+    public static void inputModificarListaEquipos(Liga liga) {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         Equipo[] listaEquipo = liga.getListaEquipos();
@@ -35,9 +38,7 @@ public class MostrarEquipos {
                 Invocador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
-
-                compruebaNumEquipoValido(numeroEquipo, listaEquipo);
-
+                numeroEquipo =  compruebaNumEquipoValido(numeroEquipo, listaEquipo);
                 Equipo equipoMostrar = listaEquipo[numeroEquipo - 1];
                 Invocador.mostrarEquipo(equipoMostrar, false);
                 Invocador.mostrarEntrenador(equipoMostrar.getEntrenador(), false);
@@ -57,9 +58,11 @@ public class MostrarEquipos {
                 printModificarEquipo(liga, equipoModificar);
                 break;
             case 4: //4. Volver.
-                MostrarLiga.iniciarMenu(liga);
+//                MostrarPartidos.iniciarMenu(liga);
                 break;
             default:
+                System.out.println("Esta opción no es existe. Elige otra.");
+                printModificarListaEquipos(liga);
                 break;
         }
     }
@@ -73,7 +76,7 @@ public class MostrarEquipos {
         System.out.println("4. Jugadores.");
         System.out.println("5. Volver.");
         System.out.println();
-        System.out.println("Elige una opción que modificar:");
+        System.out.println("Elige una opción:");
         inputModificarEquipo(liga, equipo);
     }
 
@@ -84,30 +87,30 @@ public class MostrarEquipos {
         switch (seleccion) {
             case 1: //1. Nombre equipo:
                 System.out.println("Introduce un nombre: ");
-                String nombre = introduceNombre();
+                String nombre = introduceTexto();
                 equipo.setNombre(nombre);
                 printModificarEquipo(liga, equipo);
                 break;
-            case 2: //2. Nombre club: 
+            case 2: //2. Nombre club:
                 System.out.println("Introduce un nombre de club: ");
-                String club = introduceNombre();
+                String club = introduceTexto();
                 equipo.setClub(club);
                 printModificarEquipo(liga, equipo);
                 break;
             case 3: //3. Entrenador: TODO: Comprobar
-                Invocador.mostrarEntrenador(equipo.getEntrenador(), true);
+                printModificarEntrenador(liga, equipo.getEntrenador());
                 //TODO: MENU ENTRENADOR
                 break;
             case 4: //4. Jugadores. TODO: Comprobar
                 Invocador.mostrarListaJugadores(equipo, true);
                 System.out.print("Elige un jugador: ");
                 int numeroJugador = input.nextInt();
-                compruebaNumJugadorValido(numeroJugador, equipo);
+                numeroJugador = compruebaNumJugadorValido(numeroJugador, equipo);
                 Invocador.mostrarJugador(equipo.getJugadores()[numeroJugador], true);
                 //TODO: menu mod datos
                 break;
-            case 5: //5. Volver. TODO: Comprobar
-                printMostrarMenu(liga);
+            case 5: //5. Volver.
+                printModificarListaEquipos(liga);
                 break;
             default:
                 System.out.println("Esta opción no es existe. Elige otra.");
@@ -116,49 +119,100 @@ public class MostrarEquipos {
         }
     }
 
-    public static void printModificadorJugador(Liga liga, Jugador jugador) {
+    public static void printModificarJugador(Liga liga, Jugador jugador) {
         System.out.println("JUGADOR:");
         System.out.println("1. Dorsal: " + jugador.getDorsal());
         System.out.println("2. Nombre: " + jugador.getNombre() + " "
             + jugador.getApellidos());
         System.out.println("3. Edad: " + jugador.getEdad());
-        System.out.println("4. Categoría: " + jugador.getCategoria());
-        System.out.println("5. Posición: " + jugador.getPosicion());
-        System.out.println("6. Volver.");
+        System.out.println("4. Posición: " + jugador.getPosicion());
+        System.out.println("5. Volver.");
         System.out.println();
-        System.out.println("Elige una opción que modificar:");
-        inputModificadorJugador(liga, jugador);
+        System.out.println("Elige una opción:");
+        inputModificarJugador(liga, jugador);
     }
 
-    public static void inputModificadorJugador(Liga liga, Jugador jugador) {
+    public static void inputModificarJugador(Liga liga, Jugador jugador) {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         switch (seleccion) {
             case 1: //Dorsal
-                //TODO: setDorsal
+                System.out.println("Introduce un numero de dorsal: ");
+                jugador.setDorsal(introduceNumero());
+                printModificarJugador(liga, jugador);
                 break;
             case 2: //Nombre
-                //TODO: setNombre
+                System.out.println("Introduce un nombre: ");
+                jugador.setNombre(introduceTexto());
+                System.out.println("Introduce o varios apellidos: ");
+                jugador.setApellidos(introduceTexto());
+                printModificarJugador(liga, jugador);
                 break;
             case 3: //Edad
-                //TODO: setEdad
+                System.out.println("Introduce una edad: ");
+                jugador.setEdad(introduceNumero());
+                printModificarJugador(liga, jugador);
                 break;
-            case 4: //Categoría
-                //TODO: setCategoria
+            case 4: //Posición
+                System.out.println("Introduce una posición: ");
+                //TODO: meter mod posicion
                 break;
-            case 5: //Posición
-                //TODO: setPosicion
-                break;
-            case 6: //Volver
+            case 5: //Volver
                 printModificarEquipo(liga, jugador.getEquipo());
                 break;
             default:
                 System.out.println("Esta opción no es existe. Elige otra.");
-                printModificadorJugador(liga, jugador);
+                printModificarJugador(liga, jugador);
                 break;
         }
     }
 
+    public static void printModificarEntrenador(Liga liga, Entrenador entrenador) {
+        System.out.println("ENTRENADOR:");
+        System.out.println("1. Licencia: " + entrenador.getNumeroLicencia());
+        System.out.println("2. Nombre: " + entrenador.getNombre() + entrenador.getApellidos());
+        System.out.println("3. Edad: " + entrenador.getEdad());
+        System.out.println("4. Volver.");
+        System.out.println();
+        System.out.println("Elige una opción:");
+        inputModificarEntrenador(liga, entrenador);
+    }
+
+    public static void inputModificarEntrenador(Liga liga, Entrenador entrenador) {
+        Scanner input = new Scanner(System.in);
+        int seleccion = input.nextInt();
+        switch (seleccion) {
+            case 1: //Licencia
+                System.out.println("Introduce un numero de licencia: ");
+                int licencia = input.nextInt();
+                while (licencia < 0) {
+                    System.out.println("La licencia tiene que ser mayor que 0");
+                    licencia = input.nextInt();
+                }
+                entrenador.setNumeroLicencia(licencia);
+                printModificarEntrenador(liga, entrenador);
+                break;
+            case 2: //Nombre
+                System.out.println("Introduce un nombre: ");
+                entrenador.setNombre(introduceTexto());
+                System.out.println("Introduce uno o varios apellidos: ");
+                entrenador.setApellidos(introduceTexto());
+                printModificarEntrenador(liga, entrenador);
+                break;
+            case 3: //Edad
+                System.out.println("Introduce una edad: ");
+                entrenador.setEdad(introduceNumero());
+                printModificarEntrenador(liga, entrenador);
+                break;
+            case 4:
+                printModificarEquipo(liga, entrenador.getEquipo());
+                break;
+            default:
+                System.out.println("Esta opción no es existe. Elige otra.");
+                inputModificarEntrenador(liga, entrenador);
+                break;
+        }
+    }
         //HERRAMIENTAS
 
     public static int compruebaNumEquipoValido(int numeroEquipo, Equipo[] listaEquipo) {
@@ -181,7 +235,7 @@ public class MostrarEquipos {
         return numeroJugador;
     }
 
-    public static String introduceNombre() {
+    public static String introduceTexto() {
         Scanner input = new Scanner(System.in);
         String nombre = input.nextLine();
         while (nombre.isEmpty()) {
@@ -190,5 +244,16 @@ public class MostrarEquipos {
             nombre = input.nextLine();
         }
         return nombre;
+    }
+
+    public static int introduceNumero() {
+        Scanner input = new Scanner(System.in);
+        int numero = input.nextInt();
+        while (numero < 0) {
+            System.out.println("El numero no puede ser menor de 0");
+            System.out.println("Introduce otro numero:");
+            numero = input.nextInt();
+        }
+        return numero;
     }
 }
