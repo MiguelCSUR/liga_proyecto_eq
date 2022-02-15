@@ -342,8 +342,7 @@ public class Invocador {
         String nombre = generarCiudad() + " F.C.";
         return nombre;
     }
-
-<<<<<<< Updated upstream
+    
     //Si le pasas true, te numero los equipos, false no los numera
     public static void mostrarListaEquipos(Equipo[] listaEquipo, boolean estanNumerados) {
         if (estanNumerados) {
@@ -417,8 +416,6 @@ public class Invocador {
         }
     }
 
-=======
->>>>>>> Stashed changes
     public static int generarFormacionAleatoria(){
         int numero = (int) Math.floor(Math.random()*4)+1;
         return numero;
