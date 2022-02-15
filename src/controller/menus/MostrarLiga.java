@@ -37,11 +37,12 @@ public class MostrarLiga {
                 break;
             case 2:
                 MostrarClasificacion.iniciarMenu(liga);
-                imprimirMenu(liga);
+                break;
+            case 3:
+                MostrarEquipos.iniciarMenu(liga);
                 break;
             case 4:
-                liga = MostrarPartidos.modificarPartidos(liga);
-                imprimirMenu(liga);
+                MostrarPartidos.iniciarMenu(liga);
                 break;
             case 5:
                 System.out.println("No se podrá volver a esta liga. ¿Está seguro de que quiere crear una nueva liga?");
