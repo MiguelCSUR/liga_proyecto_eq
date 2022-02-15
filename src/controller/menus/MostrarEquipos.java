@@ -58,7 +58,7 @@ public class MostrarEquipos {
                 printModificarEquipo(liga, equipoModificar);
                 break;
             case 4: //4. Volver.
-//                MostrarPartidos.iniciarMenu(liga);
+                MostrarPartidos.iniciarMenu(liga);
                 break;
             default:
                 System.out.println("Esta opción no es existe. Elige otra.");

@@ -730,22 +730,34 @@ public class Invocador {
         Jornada[] listajornada = liga.getCalendario().getListaJornadas();
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
 
-        if (hastaJornadaResetear < 0) {
-            hastaJornadaResetear = 0;
-        } else if (hastaJornadaResetear < ultimaJornadaJugada) {
-            System.out.println("Error: No puedes volver a una jornada anterior a la ultima jugada: "
-                    + ultimaJornadaJugada + 1);
-        }
-
-        for (int i = ultimaJornadaJugada; i >= hastaJornadaResetear; i--) {
-            System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
-            Partido[] listasPartidos = listajornada[i].getlistaPartidos();
-            for (int j = 0; j < listasPartidos.length; j++) {
-                deshacerPartido(listasPartidos[j]);
+        //&& hastaJornadaResetear > 0
+        if (hastaJornadaResetear < ultimaJornadaJugada && hastaJornadaResetear >= 0) {
+            for (int i = ultimaJornadaJugada - 1; i >= hastaJornadaResetear; i--) {
+                System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
+                Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+                for (int j = 0; j < listasPartidos.length; j++) {
+                    deshacerPartido(listasPartidos[j]);
+                }
             }
-        }
 
-        liga.setUltimaJornadaJugada(hastaJornadaResetear);
+            liga.setUltimaJornadaJugada(hastaJornadaResetear);
+        } else if (hastaJornadaResetear == 0) {
+            for (int i = 0; i >= listajornada.length; i--) {
+                System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
+                Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+                for (int j = 0; j < listasPartidos.length; j++) {
+                    listasPartidos[j].setGolesEquipoCasa(0);
+                    listasPartidos[j].setGolesEquipoFuera(0);
+
+                    listasPartidos[j].getEquipoCasa().setGoles(0);
+                    listasPartidos[j].getEquipoCasa().setPuntos(0);
+
+                    listasPartidos[j].getEquipoFuera().setGoles(0);
+                    listasPartidos[j].getEquipoFuera().setPuntos(0);
+                }
+            }
+            liga.setUltimaJornadaJugada(0);
+        }
     }
 
     public static void jugarJornada(Liga liga, int numeroJornadasAJugar) {
@@ -919,7 +931,11 @@ public class Invocador {
     public static void mostrarClasificacion(Liga liga) {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = clasificarEquipos(listaEquipos);
-        System.out.println("Jornada " + liga.getUltimaJornadaJugada() + ".");
+        if (liga.getUltimaJornadaJugada() > 1) {
+            System.out.println("Jornada " + (liga.getUltimaJornadaJugada() - 1) + ".");
+        } else {
+            System.out.println("Jornada no ha empezado.");
+        }
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
         System.out.println("────────────────────────────────────────");
         for (int i = clasificacion.length - 1; i >= 0; i--) {

@@ -12,18 +12,13 @@ public class MostrarClasificacion {
     }
 
     public static void imprimirMenu(Liga liga) {
-        String textoNumeroJornada = "";
-        if (liga.getUltimaJornadaJugada() > 0) {
-            textoNumeroJornada = "La liga va por la jornada " + liga.getUltimaJornadaJugada();
-            if (liga.getUltimaJornadaJugada() == (liga.getCalendario().getListaJornadas().length)) {
-                textoNumeroJornada += " (última)";
-            }
-            textoNumeroJornada += ".";
-        }
         System.out.println("CLASIFICACIÓN:");
-        System.out.println("1. Mostrar selección de jornadas. " + textoNumeroJornada);
-        System.out.println("2. Mostrar todas las jornadas.");
-        System.out.println("3. Volver.");
+        System.out.println("1. Mostrar Clasificación.");
+        System.out.println("2. Jugar un numero de jornadas. " + textoNumeroJornada(liga));
+        System.out.println("3. Jugar todas las jornadas.");
+        System.out.println("4. Seleccionar hasta que jornada hacer reset.");
+        System.out.println("5. Hacer reset de todas las jornadas.");
+        System.out.println("6. Volver.");
         seleccionClasificacion(liga);
     }
 
@@ -31,38 +26,36 @@ public class MostrarClasificacion {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         switch (seleccion) {
-            case 1:
-                String textoNumeroJornada = "";
-                if (liga.getUltimaJornadaJugada() > 0) {
-                    textoNumeroJornada = "La liga va por la jornada " + liga.getUltimaJornadaJugada();
-                    if (liga.getUltimaJornadaJugada() == (liga.getCalendario().getListaJornadas().length)) {
-                        textoNumeroJornada += " (última)";
-                    }
-                    textoNumeroJornada += ".";
-                } else {
-                    textoNumeroJornada = "la liga no ha empezado.";
-                }
-                System.out.println("Elije la jornada que quieres mostrar, " + textoNumeroJornada); //TODO: Tal vez sea mejor poner Jugar
-                int numeroJornadasJugar = input.nextInt();
-                while (numeroJornadasJugar < liga.getUltimaJornadaJugada() || numeroJornadasJugar == 0) {
-                    if (numeroJornadasJugar == 0) {
-                        System.out.println("La Jornada 0, no existe, Elige otra.");
-                    } else {
-                        System.out.println("No puedes mostrar Clasificación de una Jornada anterior a la actual.");
-                        System.out.println("Elige otra, " + textoNumeroJornada);
-                    }
-                    numeroJornadasJugar = input.nextInt();
-                }
-                Invocador.jugarJornada(liga, numeroJornadasJugar);
+            case 1: //Mostrar Clasificacion
                 Invocador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
-            case 2:
+            case 2: //Jugar selección de jornadas
+                System.out.println("Elige la jornada que quieres jugar, " + textoNumeroJornada(liga));
+                int numeroJornadasJugar = inputJornadaJugar(liga);
+                Invocador.jugarJornada(liga, numeroJornadasJugar + 1);
+                Invocador.mostrarClasificacion(liga);
+                imprimirMenu(liga);
+                break;
+            case 3: //Jugar todas las jornadas
                 Invocador.jugarJornada(liga, liga.getCalendario().getListaJornadas().length);
                 Invocador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
-            case 3:
+            case 4: //Reset jornaddas
+                System.out.println("Elige una jornada a la que quieras volver, " + textoNumeroJornada(liga));
+                System.out.println("(Los goles y los puntos se resetearan desde esta jornada en adelante.)");
+                int jornadaHastaReset = inputJornadasReset(liga);
+                Invocador.deshacerJornada(liga, jornadaHastaReset);
+                Invocador.mostrarClasificacion(liga);
+                imprimirMenu(liga);
+                break;
+            case 5:
+                Invocador.deshacerJornada(liga, 0);
+                Invocador.mostrarClasificacion(liga);
+                imprimirMenu(liga);
+                break;
+            case 6:
                 MostrarLiga.iniciarMenu(liga);
                 break;
             default:
@@ -70,5 +63,44 @@ public class MostrarClasificacion {
                 imprimirMenu(liga);
                 break;
         }
+    }
+
+    //HERRAMIENTAS
+
+    public static String textoNumeroJornada(Liga liga) {
+        String textoNumeroJornada = "";
+        if (liga.getUltimaJornadaJugada() > 0) {
+            textoNumeroJornada = "La liga va por la jornada " + (liga.getUltimaJornadaJugada() - 1);
+            if (liga.getUltimaJornadaJugada() == (liga.getCalendario().getListaJornadas().length)) {
+                textoNumeroJornada += " (última)";
+            }
+            textoNumeroJornada += ".";
+        } else {
+            textoNumeroJornada = "la liga no ha empezado.";
+        }
+        return textoNumeroJornada;
+    }
+
+    public static int inputJornadaJugar(Liga liga) {
+        Scanner input = new Scanner(System.in);
+        int numeroJornadasJugar = input.nextInt();
+        while (numeroJornadasJugar < liga.getUltimaJornadaJugada() || numeroJornadasJugar < 1 || numeroJornadasJugar > liga.getCalendario().getListaJornadas().length) {
+            System.out.println("No puedes jugar esta clasificación, tienes que elegir una posterior a la actual, y mayor que 0."); //TODO: revisar este texto
+            System.out.println("Elige otra, " + textoNumeroJornada(liga));
+            numeroJornadasJugar = input.nextInt();
+        }
+
+        return numeroJornadasJugar;
+    }
+
+    public static int inputJornadasReset(Liga liga) {
+        Scanner input = new Scanner(System.in);
+        int jornadaHastaResetear = input.nextInt();
+        while (jornadaHastaResetear > liga.getUltimaJornadaJugada() || jornadaHastaResetear < 0 ) {
+            System.out.println("La jornada tiene que ser menor que la ultima jornada jugada, y mayor que -1.");
+            System.out.println("Elige otra, " + textoNumeroJornada(liga));
+            jornadaHastaResetear = input.nextInt();
+        }
+        return jornadaHastaResetear;
     }
 }

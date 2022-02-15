@@ -1,8 +1,5 @@
 import controller.Invocador;
-import controller.menus.GenerarLiga;
-import controller.menus.Menu;
-import controller.menus.MostrarClasificacion;
-import controller.menus.MostrarEquipos;
+import controller.menus.*;
 import model.*;
 
 import java.text.ParseException;
@@ -44,7 +41,7 @@ public class Main {
 //        Invocador.mostrarCalendario(liga);
 //        GenerarLiga.iniciarImprimirMenuLiga();
 
-        MostrarEquipos.iniciarMenu(liga);
+        MostrarClasificacion.iniciarMenu(liga);
 
     }
 }
