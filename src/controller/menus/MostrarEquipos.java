@@ -99,15 +99,13 @@ public class MostrarEquipos {
                 break;
             case 3: //3. Entrenador: TODO: Comprobar
                 printModificarEntrenador(liga, equipo.getEntrenador());
-                //TODO: MENU ENTRENADOR
                 break;
             case 4: //4. Jugadores. TODO: Comprobar
                 Invocador.mostrarListaJugadores(equipo, true);
                 System.out.print("Elige un jugador: ");
                 int numeroJugador = input.nextInt();
                 numeroJugador = compruebaNumJugadorValido(numeroJugador, equipo);
-                Invocador.mostrarJugador(equipo.getJugadores()[numeroJugador], true);
-                //TODO: menu mod datos
+                printModificarJugador(liga, listaJugadores[numeroJugador - 1]);
                 break;
             case 5: //5. Volver.
                 printModificarListaEquipos(liga);
@@ -213,6 +211,7 @@ public class MostrarEquipos {
                 break;
         }
     }
+
         //HERRAMIENTAS
 
     public static int compruebaNumEquipoValido(int numeroEquipo, Equipo[] listaEquipo) {
@@ -249,8 +248,8 @@ public class MostrarEquipos {
     public static int introduceNumero() {
         Scanner input = new Scanner(System.in);
         int numero = input.nextInt();
-        while (numero < 0) {
-            System.out.println("El numero no puede ser menor de 0");
+        while (numero < 0 || numero > 1000) {
+            System.out.println("El numero no es valido.");
             System.out.println("Introduce otro numero:");
             numero = input.nextInt();
         }
