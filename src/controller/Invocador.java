@@ -305,14 +305,14 @@ public class Invocador {
 
     //Creamos las equipaciones de los equipos de casa y se la damos
     public static String generarEquipacionCasa(int numeroEquipacion) {
-        String[] listaEquipacion = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
-        return listaEquipacion[numeroEquipacion];
+        String[] equipacionCasa = Nombres.equipacionesCasa();
+        return equipacionCasa[numeroEquipacion];
 
     }
 
     //Creamos las equipaciones de los equipos de fuera y se la damos
     public static String generarEquipacionFuera(int numeroEquipacion) {
-        String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
+        String[] equipacionFuera = Nombres.equipacionesFuera();
         return equipacionFuera[numeroEquipacion];
     }
 
@@ -326,7 +326,7 @@ public class Invocador {
     public static Equipo crearEquipo(String categoria,int formacion) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
-        int numeroEquipacion = generarNumeroEntre(0, 8);
+        int numeroEquipacion = generarNumeroEntre(0, (Nombres.equipacionesCasa().length - 1));
         equipo.setEquipacionCasa(generarEquipacionCasa(numeroEquipacion));
         equipo.setEquipacionFuera(generarEquipacionFuera(numeroEquipacion));
         equipo.setClub(generarClub());
