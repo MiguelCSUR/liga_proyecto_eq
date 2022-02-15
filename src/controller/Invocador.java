@@ -401,6 +401,7 @@ public class Invocador {
             System.out.println("Categoria: " + equipo.getJugadores()[0].getCategoria());
             System.out.println("Equipación Casa: " + equipo.getEquipacionCasa());
             System.out.println("Equipación Fuera: " + equipo.getEquipacionCasa());
+            System.out.println("Formacion: " + obtenerFormacionEquipo(equipo));
         }
     }
 
@@ -434,6 +435,44 @@ public class Invocador {
         return numero;
     }
 
+    public static Equipo cambiarFormacionEquipo(Equipo equipo,int formacion){
+        for (int i = 0; i <equipo.getJugadores().length ; i++) {
+            equipo.getJugadores()[i].setPosicion(generarPosicion(i+1,formacion));
+        }
+        return equipo;
+    }
+
+    public static String obtenerFormacionEquipo(Equipo equipo){
+        int contadorDelantero = 0;
+        int contadorCentro = 0;
+        int contadorDefensa = 0;
+        Jugador[] jugadores = equipo.getJugadores();
+        for (int i = 0; i < 11; i++) {
+            if(jugadores[i].getPosicion()=="Delantero"){
+                contadorDelantero++;
+            }
+            else if(jugadores[i].getPosicion()=="Defensa"){
+                contadorDefensa++;
+            }
+            else if(jugadores[i].getPosicion()=="Centrocampista"){
+                contadorCentro++;
+            }
+        }
+        if(contadorDefensa==4&&contadorCentro==4&&contadorDelantero==2){
+            return "4-4-2";
+        }
+        else if(contadorDefensa==4&&contadorCentro==3&&contadorDelantero==3){
+            return "4-3-3";
+        }
+        else if(contadorDefensa==3&&contadorCentro==4&&contadorDelantero==3){
+            return "3-4-3";
+        }
+        else if(contadorDefensa==5&&contadorCentro==4&&contadorDelantero==1){
+            return "5-4-1";
+        }
+        else return "ERROR";
+
+    }
     //TODO: PARTIDO
 
     public static int[] generadorProbabilidades() {

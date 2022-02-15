@@ -66,7 +66,7 @@ public class MostrarEquipos {
                 break;
         }
     }
-
+//Pruebas nacho
     public static void printModificarEquipo(Liga liga, Equipo equipo) {
         System.out.println("EQUIPO:");
         System.out.println("1. Nombre equipo: " + equipo.getNombre());
@@ -74,7 +74,8 @@ public class MostrarEquipos {
         System.out.println("3. Entrenador: " + equipo.getEntrenador().getNombre() + " "
                 + equipo.getEntrenador().getApellidos());
         System.out.println("4. Jugadores.");
-        System.out.println("5. Volver.");
+        System.out.println("5. Formacion: "+ Invocador.obtenerFormacionEquipo(equipo));
+        System.out.println("6. Volver.");
         System.out.println();
         System.out.println("Elige una opción:");
         inputModificarEquipo(liga, equipo);
@@ -107,7 +108,16 @@ public class MostrarEquipos {
                 numeroJugador = compruebaNumJugadorValido(numeroJugador, equipo);
                 printModificarJugador(liga, listaJugadores[numeroJugador - 1]);
                 break;
-            case 5: //5. Volver.
+            case 5:
+                System.out.println("1. Formacion 4-4-2");
+                System.out.println("2. Formacion 4-3-3");
+                System.out.println("3. Formacion 3-4-3");
+                System.out.println("4. Formacion 5-4-1");
+                System.out.print("Elige una formación: ");
+                equipo = Invocador.cambiarFormacionEquipo(equipo,input.nextInt());
+                printModificarEquipo(liga,equipo);
+                break;
+            case 6: //5. Volver.
                 printModificarListaEquipos(liga);
                 break;
             default:
