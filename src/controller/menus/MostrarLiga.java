@@ -2,6 +2,7 @@ package controller.menus;
 import java.util.Scanner;
 
 import controller.Invocador;
+import controller.Mostrador;
 import model.Liga;
 import model.Partido;
 
@@ -32,7 +33,7 @@ public class MostrarLiga {
             case 1:
                 System.out.println("Introduce hasta que jornada quieres ver (Jornada max = " + liga.getCalendario().getListaJornadas().length + "): ");
                 int jornadaMax = sc.nextInt();
-                Invocador.mostrarCalendario(liga, jornadaMax);
+                Mostrador.mostrarCalendario(liga, jornadaMax);
                 imprimirMenu(liga);
                 break;
             case 2:

@@ -1,6 +1,7 @@
 package controller.menus;
 
 import controller.Invocador;
+import controller.Mostrador;
 import model.Entrenador;
 import model.Equipo;
 import model.Jugador;
@@ -31,22 +32,22 @@ public class MostrarEquipos {
         int numeroEquipo = 0;
         switch (seleccion) {
             case 1: //1. Mostrar lista de equipos. HECHO
-                Invocador.mostrarListaEquipos(listaEquipo, false);
+                Mostrador.mostrarListaEquipos(listaEquipo, false);
                 iniciarMenu(liga);
                 break;
             case 2: //2. Mostrar un equipo. HECHO
-                Invocador.mostrarListaEquipos(listaEquipo, true);
+                Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
                 numeroEquipo =  compruebaNumEquipoValido(numeroEquipo, listaEquipo);
                 Equipo equipoMostrar = listaEquipo[numeroEquipo - 1];
-                Invocador.mostrarEquipo(equipoMostrar, false);
-                Invocador.mostrarEntrenador(equipoMostrar.getEntrenador(), false);
-                Invocador.mostrarListaJugadores(equipoMostrar, false);
+                Mostrador.mostrarEquipo(equipoMostrar, false);
+                Mostrador.mostrarEntrenador(equipoMostrar.getEntrenador(), false);
+                Mostrador.mostrarListaJugadores(equipoMostrar, false);
                 iniciarMenu(liga);
                 break;
             case 3: //3. Modificar un equipos.
-                Invocador.mostrarListaEquipos(listaEquipo, true);
+                Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
                 while (numeroEquipo < 1 || numeroEquipo > listaEquipo.length) {
@@ -102,7 +103,7 @@ public class MostrarEquipos {
                 printModificarEntrenador(liga, equipo.getEntrenador());
                 break;
             case 4: //4. Jugadores. TODO: Comprobar
-                Invocador.mostrarListaJugadores(equipo, true);
+                Mostrador.mostrarListaJugadores(equipo, true);
                 System.out.print("Elige un jugador: ");
                 int numeroJugador = input.nextInt();
                 numeroJugador = compruebaNumJugadorValido(numeroJugador, equipo);
