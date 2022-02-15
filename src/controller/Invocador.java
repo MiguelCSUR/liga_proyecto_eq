@@ -489,11 +489,33 @@ public class Invocador {
         return listaPartidos;
     }
 
+    public static void resetPartido(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        restarPuntos(partido);
+
+        int golesEquipoCasa = partido.getGolesEquipoCasa();
+        partido.setGolesEquipoCasa(0);
+        equipoCasa.setGoles(equipoCasa.getGoles() - golesEquipoCasa);
+
+        int golesEquipoFuera = partido.getGolesEquipoFuera();
+        partido.setGolesEquipoFuera(0);
+        equipoFuera.setGoles(equipoFuera.getGoles() - golesEquipoFuera);
+
+        //DEBUG
+        System.out.println("DEBUG jugarPartido()");
+        System.out.println("Partido" + partido.getNumeroPartido());
+
+        System.out.println(equipoCasa.getClub() + " Goles: " + partido.getGolesEquipoCasa() + " Puntos: " + equipoCasa.getPuntos());
+        System.out.println(equipoFuera.getClub() + " Goles: " + partido.getGolesEquipoFuera() + " Puntos: " + equipoFuera.getPuntos());
+    }
+
+
     public static void jugarPartido(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();
         Equipo equipoFuera = partido.getEquipoFuera();
 
-        System.out.println();
         //Generamos los golesEquipoCasa
         int golesEquipoCasa = generadorGoles();
         //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
@@ -705,6 +727,27 @@ public class Invocador {
         return partido;
     }
 
+    public static void resetJornada(Liga liga, int numeroJornadaAResetear) {
+        Jornada[] listajornada = liga.getCalendario().getListaJornadas();
+        int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
+        if (ultimaJornadaJugada > listajornada.length) ultimaJornadaJugada = listajornada.length;
+        if (numeroJornadasAJugar > listajornada.length) numeroJornadasAJugar = listajornada.length;
+
+        for (int i = ultimaJornadaJugada; i < numeroJornadasAJugar; i++) {
+            System.out.println("DEBUG jugarJornada: Numero Jornada: " + i);
+            Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+            for (int j = 0; j < listasPartidos.length; j++) {
+//                jugarPartido(listasPartidos[j]);
+                jugarPartido(
+                        liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
+                );
+            }
+        }
+        if (numeroJornadasAJugar > ultimaJornadaJugada) {
+            liga.setUltimaJornadaJugada(numeroJornadasAJugar);
+        }
+    }
+
     public static void jugarJornada(Liga liga, int numeroJornadasAJugar) {
         Jornada[] listajornada = liga.getCalendario().getListaJornadas();
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
@@ -803,6 +846,31 @@ public class Invocador {
     }
 
     //TODO: CLASIFICACION
+
+    public static Equipo[] resetPuntos(Equipo[] listaEquipos) {
+        for (int i = 0; i < listaEquipos.length; i++) {
+            listaEquipos[i].setPuntos(0);
+            listaEquipos[i].setGoles(0);
+        }
+        return listaEquipos;
+    }
+
+    public static void restarPuntos(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
+            //Empate
+            equipoCasa.setPuntos(equipoCasa.getPuntos() - 1);
+            equipoFuera.setPuntos(equipoFuera.getPuntos() - 1);
+        } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
+            //Gana Equipo Casa
+            equipoCasa.setPuntos(equipoCasa.getPuntos() - 3);
+        } else {
+            //Gana Equipo Fuera
+            equipoFuera.setPuntos(equipoFuera.getPuntos() - 3);
+        }
+    }
 
     public static void asignarPuntos(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();
