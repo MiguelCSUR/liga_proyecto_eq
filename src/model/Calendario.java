@@ -23,6 +23,10 @@ public class Calendario {
         this.listaPartidos = listaPartidos;
     }
 
+    public void setListaPartidosConcreto(Partido partido, int i){
+        this.listaPartidos[i]=partido;
+    }
+
     public String[] getListaHorarios() {
         return listaHorarios;
     }
