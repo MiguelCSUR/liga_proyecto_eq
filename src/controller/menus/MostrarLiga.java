@@ -2,6 +2,7 @@ package controller.menus;
 import java.util.Scanner;
 
 import controller.Invocador;
+import controller.Mostrador;
 import model.Liga;
 import model.Partido;
 
@@ -19,7 +20,8 @@ public class MostrarLiga {
         System.out.println(" 3. Ver Equipos y/o modificarlos");
         System.out.println(" 4. Ver Partidos y/o modificarlos");
         System.out.println(" 5. Crear nueva liga desde cero");
-        System.out.println(" 6. Salir");
+        System.out.println(" 6. Crear nueva liga guardando los equipos");
+        System.out.println(" 7. Salir");
         System.out.println();
         System.out.println("Elige una opción:");
         elegirOpcion(liga);
@@ -32,7 +34,7 @@ public class MostrarLiga {
             case 1:
                 System.out.println("Introduce hasta que jornada quieres ver (Jornada max = " + liga.getCalendario().getListaJornadas().length + "): ");
                 int jornadaMax = sc.nextInt();
-                Invocador.mostrarCalendario(liga, jornadaMax);
+                Mostrador.mostrarCalendario(liga, jornadaMax);
                 imprimirMenu(liga);
                 break;
             case 2:
@@ -62,6 +64,25 @@ public class MostrarLiga {
                 }
                 break;
             case 6:
+                System.out.println("No se podrá volver a esta liga. ¿Está seguro de que quiere crear una nueva liga guardando los equipos?");
+                System.out.println("1. Sí");
+                System.out.println("2. No");
+                opcion = sc.nextInt();
+                switch (opcion) {
+                    case 1:
+                        Liga ligaNueva = new Liga();
+                        ligaNueva.setListaEquipos(liga.getListaEquipos());
+                        ligaNueva.setCategoria(liga.getCategoria());
+                        GenerarLiga.imprimirMenu(ligaNueva);
+                        break;
+                    case 2:
+                        imprimirMenu(liga);
+                        break;
+                    default:
+                        System.out.println("Número introducido erróneo");
+                        imprimirMenu(liga);
+                }
+            case 7:
                 System.out.println("Espero que la aplicación haya sido de su agrado. Adiós...");
                 break;
             default:

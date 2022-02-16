@@ -1,6 +1,7 @@
 package controller.menus;
 
 import controller.Invocador;
+import controller.Mostrador;
 import model.Entrenador;
 import model.Equipo;
 import model.Jugador;
@@ -31,22 +32,22 @@ public class MostrarEquipos {
         int numeroEquipo = 0;
         switch (seleccion) {
             case 1: //1. Mostrar lista de equipos. HECHO
-                Invocador.mostrarListaEquipos(listaEquipo, false);
+                Mostrador.mostrarListaEquipos(listaEquipo, false);
                 iniciarMenu(liga);
                 break;
             case 2: //2. Mostrar un equipo. HECHO
-                Invocador.mostrarListaEquipos(listaEquipo, true);
+                Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
                 numeroEquipo =  compruebaNumEquipoValido(numeroEquipo, listaEquipo);
                 Equipo equipoMostrar = listaEquipo[numeroEquipo - 1];
-                Invocador.mostrarEquipo(equipoMostrar, false);
-                Invocador.mostrarEntrenador(equipoMostrar.getEntrenador(), false);
-                Invocador.mostrarListaJugadores(equipoMostrar, false);
+                Mostrador.mostrarEquipo(equipoMostrar, false);
+                Mostrador.mostrarEntrenador(equipoMostrar.getEntrenador(), false);
+                Mostrador.mostrarListaJugadores(equipoMostrar, false);
                 iniciarMenu(liga);
                 break;
             case 3: //3. Modificar un equipos.
-                Invocador.mostrarListaEquipos(listaEquipo, true);
+                Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
                 while (numeroEquipo < 1 || numeroEquipo > listaEquipo.length) {
@@ -66,7 +67,7 @@ public class MostrarEquipos {
                 break;
         }
     }
-
+//Pruebas nacho
     public static void printModificarEquipo(Liga liga, Equipo equipo) {
         System.out.println("EQUIPO:");
         System.out.println("1. Nombre equipo: " + equipo.getNombre());
@@ -74,7 +75,8 @@ public class MostrarEquipos {
         System.out.println("3. Entrenador: " + equipo.getEntrenador().getNombre() + " "
                 + equipo.getEntrenador().getApellidos());
         System.out.println("4. Jugadores.");
-        System.out.println("5. Volver.");
+        System.out.println("5. Formacion: "+ Invocador.obtenerFormacionEquipo(equipo));
+        System.out.println("6. Volver.");
         System.out.println();
         System.out.println("Elige una opción:");
         inputModificarEquipo(liga, equipo);
@@ -101,13 +103,22 @@ public class MostrarEquipos {
                 printModificarEntrenador(liga, equipo.getEntrenador());
                 break;
             case 4: //4. Jugadores. TODO: Comprobar
-                Invocador.mostrarListaJugadores(equipo, true);
+                Mostrador.mostrarListaJugadores(equipo, true);
                 System.out.print("Elige un jugador: ");
                 int numeroJugador = input.nextInt();
                 numeroJugador = compruebaNumJugadorValido(numeroJugador, equipo);
                 printModificarJugador(liga, listaJugadores[numeroJugador - 1]);
                 break;
-            case 5: //5. Volver.
+            case 5:
+                System.out.println("1. Formacion 4-4-2");
+                System.out.println("2. Formacion 4-3-3");
+                System.out.println("3. Formacion 3-4-3");
+                System.out.println("4. Formacion 5-4-1");
+                System.out.print("Elige una formación: ");
+                equipo = Invocador.cambiarFormacionEquipo(equipo,input.nextInt());
+                printModificarEquipo(liga,equipo);
+                break;
+            case 6: //5. Volver.
                 printModificarListaEquipos(liga);
                 break;
             default:

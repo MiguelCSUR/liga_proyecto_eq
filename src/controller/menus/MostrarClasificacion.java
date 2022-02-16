@@ -1,5 +1,6 @@
 package controller.menus;
 import controller.Invocador;
+import controller.Mostrador;
 import model.Liga;
 
 import java.util.Scanner;
@@ -34,12 +35,12 @@ public class MostrarClasificacion {
                 System.out.println("Elige la jornada que quieres jugar, " + textoNumeroJornada(liga));
                 int numeroJornadasJugar = inputJornadaJugar(liga);
                 Invocador.jugarJornada(liga, numeroJornadasJugar);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 3: //Jugar todas las jornadas
                 Invocador.jugarJornada(liga, liga.getCalendario().getListaJornadas().length);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 4: //Reset jornaddas
