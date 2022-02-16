@@ -19,7 +19,8 @@ public class MostrarEquipos {
         System.out.println("1. Mostrar lista de equipos.");
         System.out.println("2. Mostrar un equipo.");
         System.out.println("3. Modificar un equipo.");
-        System.out.println("4. Volver.");
+        System.out.println("4. Mostrar compromisos de partidos de un equipo.");
+        System.out.println("5. Volver.");
         System.out.println();
         System.out.println("Elige una opción: ");
         inputModificarListaEquipos(liga);
@@ -58,7 +59,16 @@ public class MostrarEquipos {
                 Equipo equipoModificar = listaEquipo[numeroEquipo - 1];
                 printModificarEquipo(liga, equipoModificar);
                 break;
-            case 4: //4. Volver.
+            case 4:
+                Mostrador.mostrarListaEquipos(listaEquipo, true);
+                System.out.print("Elige un equipo: ");
+                numeroEquipo = input.nextInt();
+                numeroEquipo =  compruebaNumEquipoValido(numeroEquipo, listaEquipo);
+                Equipo equipoComprimiso = listaEquipo[numeroEquipo - 1];
+                Mostrador.mostrarCompromisosPartidos(liga, equipoComprimiso);
+                iniciarMenu(liga);
+                break;
+            case 5: //4. Volver.
                 MostrarPartidos.iniciarMenu(liga);
                 break;
             default:

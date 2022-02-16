@@ -1,4 +1,5 @@
 import controller.Invocador;
+import controller.Mostrador;
 import controller.menus.*;
 import model.*;
 
@@ -41,7 +42,6 @@ public class Main {
 //        Invocador.mostrarCalendario(liga);
 //        GenerarLiga.iniciarImprimirMenuLiga();
 
-        MostrarClasificacion.iniciarMenu(liga);
-
+        MostrarEquipos.iniciarMenu(liga);
     }
 }

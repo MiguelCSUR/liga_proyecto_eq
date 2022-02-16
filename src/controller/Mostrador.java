@@ -214,7 +214,32 @@ public class Mostrador {
         }
     }
 
+    public static void mostrarCompromisosPartidos(Liga liga, Equipo equipo) {
 
+        Jornada[] listaJornadas = liga.getCalendario().getListaJornadas();
+        System.out.println("Equipo:");
+        System.out.println(equipo.getNombre());
+        System.out.println(equipo.getClub());
+        System.out.println("Enfrentamientos contra:");
+
+        for (int i = 0; i < listaJornadas.length; i++) {
+            Partido[] listaPartidos = listaJornadas[i].getlistaPartidos();
+            for (int j = 0; j < listaPartidos.length; j++) {
+                Partido partido = listaPartidos[j];
+                if (equipo == partido.getEquipoCasa()) {
+                    System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", Invocador.dateToString(partido.getFecha()), partido.getHoraInicio());
+                    System.out.printf("\t%s\n", partido.getEquipoFuera().getNombre());
+                    System.out.printf("\t%s\n", partido.getEquipoFuera().getClub());
+                    System.out.println();
+                } else if (equipo == partido.getEquipoFuera()) {
+                    System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", Invocador.dateToString(partido.getFecha()), partido.getHoraInicio());
+                    System.out.printf("\t%s\n", partido.getEquipoCasa().getNombre());
+                    System.out.printf("\t%s\n", partido.getEquipoCasa().getClub());
+                    System.out.println();
+                }
+            }
+        }
+    }
 
 }
 
