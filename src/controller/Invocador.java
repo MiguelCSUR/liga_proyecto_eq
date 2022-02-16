@@ -890,22 +890,6 @@ public class Invocador {
         return listaEquipos;
     }
 
-    public static void mostrarClasificacion(Liga liga) {
-        Equipo[] listaEquipos = liga.getListaEquipos();
-        Equipo[] clasificacion = clasificarEquipos(listaEquipos);
-        if (liga.getUltimaJornadaJugada() > 1) {
-            System.out.println("Jornada " + (liga.getUltimaJornadaJugada()) + ".");
-        } else {
-            System.out.println("Jornada no ha empezado.");
-        }
-        System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
-        System.out.println("────────────────────────────────────────");
-        for (int i = clasificacion.length - 1; i >= 0; i--) {
-            System.out.printf("%-23s      %5s%5s\n\n", clasificacion[i].getClub(),
-                    clasificacion[i].getPuntos(), clasificacion[i].getGoles());
-        }
-        System.out.println("(P : Puntos totales, G : Goles totales)");
-    }
 
 
     //TODO: LIGA

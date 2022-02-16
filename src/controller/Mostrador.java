@@ -170,7 +170,11 @@ public class Mostrador {
     public static void mostrarClasificacion(Liga liga) {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = Invocador.clasificarEquipos(listaEquipos);
-        System.out.println("Jornada " + liga.getUltimaJornadaJugada() + ".");
+        if (liga.getUltimaJornadaJugada() > 1) {
+            System.out.println("Jornada " + (liga.getUltimaJornadaJugada()) + ".");
+        } else {
+            System.out.println("Jornada no ha empezado.");
+        }
         System.out.printf("%-23s      %5s%5s\n", "Nombre", "P", "G");
         System.out.println("────────────────────────────────────────");
         for (int i = clasificacion.length - 1; i >= 0; i--) {
@@ -179,6 +183,7 @@ public class Mostrador {
         }
         System.out.println("(P : Puntos totales, G : Goles totales)");
     }
+
 
     //PARTIDOS
     public static void mostrarPartido(Partido partido){

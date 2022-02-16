@@ -28,7 +28,7 @@ public class MostrarClasificacion {
         int seleccion = input.nextInt();
         switch (seleccion) {
             case 1: //Mostrar Clasificacion
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 2: //Jugar selección de jornadas
@@ -48,12 +48,12 @@ public class MostrarClasificacion {
                 System.out.println("(Los goles y los puntos se resetearan desde esta jornada en adelante.)");
                 int jornadaHastaReset = inputJornadasReset(liga);
                 Invocador.deshacerJornada(liga, jornadaHastaReset);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 5:
                 Invocador.deshacerJornada(liga, 0);
-                Invocador.mostrarClasificacion(liga);
+                Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
             case 6:
