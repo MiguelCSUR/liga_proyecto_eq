@@ -33,7 +33,7 @@ public class MostrarClasificacion {
             case 2: //Jugar selección de jornadas
                 System.out.println("Elige la jornada que quieres jugar, " + textoNumeroJornada(liga));
                 int numeroJornadasJugar = inputJornadaJugar(liga);
-                Invocador.jugarJornada(liga, numeroJornadasJugar + 1);
+                Invocador.jugarJornada(liga, numeroJornadasJugar);
                 Invocador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
@@ -70,7 +70,7 @@ public class MostrarClasificacion {
     public static String textoNumeroJornada(Liga liga) {
         String textoNumeroJornada = "";
         if (liga.getUltimaJornadaJugada() > 0) {
-            textoNumeroJornada = "La liga va por la jornada " + (liga.getUltimaJornadaJugada() - 1);
+            textoNumeroJornada = "La liga va por la jornada " + (liga.getUltimaJornadaJugada());
             if (liga.getUltimaJornadaJugada() == (liga.getCalendario().getListaJornadas().length)) {
                 textoNumeroJornada += " (última)";
             }

@@ -932,7 +932,7 @@ public class Invocador {
         Equipo[] listaEquipos = liga.getListaEquipos();
         Equipo[] clasificacion = clasificarEquipos(listaEquipos);
         if (liga.getUltimaJornadaJugada() > 1) {
-            System.out.println("Jornada " + (liga.getUltimaJornadaJugada() - 1) + ".");
+            System.out.println("Jornada " + (liga.getUltimaJornadaJugada()) + ".");
         } else {
             System.out.println("Jornada no ha empezado.");
         }
