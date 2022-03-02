@@ -26,7 +26,7 @@ public class Main {
         System.out.println("Creado por: Ignacio Barranco, Pablo Jiménez y Miguel Muñoz");
         System.out.println("con el apoyo de Artsiom Krautsou y María Jiménez");
 
-
+        
         GenerarLiga.iniciarImprimirMenuLiga();
     }
 }

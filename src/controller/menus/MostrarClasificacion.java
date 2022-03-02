@@ -28,23 +28,23 @@ public class MostrarClasificacion {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         switch (seleccion) {
-            case 1: //Mostrar Clasificacion
+            case 1:
                 Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
-            case 2: //Jugar selección de jornadas
+            case 2:
                 System.out.println("Elige la jornada que quieres jugar, " + textoNumeroJornada(liga));
                 int numeroJornadasJugar = inputJornadaJugar(liga);
                 Invocador.jugarJornada(liga, numeroJornadasJugar);
                 Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
-            case 3: //Jugar todas las jornadas
+            case 3:
                 Invocador.jugarJornada(liga, liga.getCalendario().getListaJornadas().length);
                 Mostrador.mostrarClasificacion(liga);
                 imprimirMenu(liga);
                 break;
-            case 4: //Reset jornaddas
+            case 4:
                 System.out.println("Elige una jornada a la que quieras volver, " + textoNumeroJornada(liga));
                 System.out.println("(Los goles y los puntos se resetearan desde esta jornada en adelante.)");
                 int jornadaHastaReset = inputJornadasReset(liga);

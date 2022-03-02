@@ -13,6 +13,8 @@ public class GenerarLiga {
 
     public static void imprimirMenu(Liga liga) { //TODO: aqui va despues de reset liga
         Scanner sc = new Scanner(System.in);
+        System.out.println("CREAR LIGA:");
+        System.out.println();
         if (liga.getNombre() == null) {
             System.out.println(" 1. Nombre ");
         } else {
@@ -129,6 +131,7 @@ public class GenerarLiga {
                 }
                 liga.setListaArbitros(Invocador.crearListaArbitros(liga.getListaEquipos().length));
                 liga.setCalendario(Invocador.crearCalendario(liga));
+                Invocador.generarEspacio();
                 MostrarLiga.iniciarMenu(liga);
                 break;
             case 6:

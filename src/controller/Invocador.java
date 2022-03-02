@@ -91,7 +91,6 @@ public class Invocador {
 
     //TODO: JUGADOR
 
-    //Te he cambiado el codigo de crear jugador y te he creado una lista de jugadores
     public static Jugador crearJugador(String categoria, int dorsal,int formacion) {
         Jugador jugador = new Jugador();
         jugador.setNombre(generarNombrePersona());
@@ -137,7 +136,7 @@ public class Invocador {
         }
     }
 
-    public static String generarPosicion(int dorsal,int formacion) {//Probamos si le metemos el numero del dorsal que tiene le da una posicion exacta.
+    public static String generarPosicion(int dorsal,int formacion) {
         while (dorsal > 11) {
             int numeroAleatorio = (int) Math.floor(Math.random() * 12) + 1;
             dorsal = numeroAleatorio;
@@ -231,7 +230,6 @@ public class Invocador {
 
     //TODO: ENTRENADOR
 
-    //Te he creado esta clase de entrenador
     public static Entrenador crearEntrenador(Equipo equipo) {
         final int EDADMIN = 18;
         final int EDADMAX = 40;
@@ -253,7 +251,6 @@ public class Invocador {
 
     //TODO: ARBITRO
 
-    //Tambien he tocado un poco esto(Nacho)
     public static Arbitro crearArbitro() {
         final int EDADMIN = 18;
         final int EDADMAX = 40;
@@ -545,7 +542,6 @@ public class Invocador {
         //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
         partido.setGolesEquipoCasa(golesEquipoCasa);
         //Seteamos los goles del Equipo casa, al equipo en la propiedad equipo.goles
-        //TODO: Este último paso es redundante eliminar en el futuro.
         equipoCasa.setGoles(equipoCasa.getGoles() + golesEquipoCasa);
 
         //Se repite el mismo proceso con golesEquipoFuera.
@@ -555,15 +551,6 @@ public class Invocador {
 
         //Se asignan los puntos
         asignarPuntos(partido);
-
-        //DEBUG
-        System.out.println("DEBUG jugarPartido()");
-        System.out.println("Partido" + partido.getNumeroPartido());
-//        System.out.println(equipoCasa.getClub() + " Goles: " + golesEquipoCasa + " Puntos: " + equipoCasa.getPuntos());
-//        System.out.println(equipoFuera.getClub() + " Goles: " + golesEquipoFuera + " Puntos: " + equipoFuera.getPuntos());
-
-        System.out.println(equipoCasa.getClub() + " Goles: " + partido.getGolesEquipoCasa() + " Puntos: " + equipoCasa.getPuntos());
-        System.out.println(equipoFuera.getClub() + " Goles: " + partido.getGolesEquipoFuera() + " Puntos: " + equipoFuera.getPuntos());
     }
 
     //TODO: JORNADA
@@ -578,16 +565,8 @@ public class Invocador {
         return numeroRondas * 2;
     }
 
-    //TODO: NotasDeMigue: No asignar goles ni puntos a los partidos que se generen en la lista.
-    //TODO: hacerlo en otro metodo que luego se podra decidir que jornadas jugar.
-    //TODO: metodo que coja la lista y se vaya jugando hasta la jornada que se indique, luego almacenar,
-    //TODO: en que jornada nos hemos quedado. numJornadaClasificacion = 0. y siempre se gette.
-
     public static Jornada[] crearListaJornadas(Liga liga, int maximoJornadas) {
-        //x y son variables auxiliares para hacer facilmente "la elaboración de fixture" visto en https://es.wikipedia.org/wiki/Sistema_de_todos_contra_todos
         //Creamos las variables que eligen el numero de partidos que hay
-        //
-        //TODO: pasando liga ya no hace falta pasar listaEquipos, y listaArbitros por separado
         Equipo[] listaEquipos = liga.getListaEquipos();
         Arbitro[] listaArbitros = liga.getListaArbitros();
         int numeroEquipos = listaEquipos.length;
@@ -596,11 +575,7 @@ public class Invocador {
         //variables auxiliares para las posiciones de los equipos en las jornadas
         int x = 0;
         int y = 0;
-
-        //TODO: revisar si esta variable se usa
         int numeroPartidosPorRonda;
-
-
         if (numeroEquipos % 2 == 0) {
             numeroRondas = numeroEquipos - 1;
             numeroPartidosPorRonda = numeroEquipos / 2;
@@ -651,9 +626,6 @@ public class Invocador {
                 contadorJornadas++;
             }
         } else {//para los impares
-            //para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
-            //asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno.
- 
             x = 0;
             y = numeroEquipos-1;
             for (int i = 0; i < numeroRondas; i++) {
@@ -691,12 +663,9 @@ public class Invocador {
                 contadorJornadas++;
             }
         }
-        //debertia de borrarse este syso, ya que este metodo solo deberia crear el array y no imprimir NADA
-        System.out.println("DEBUG crearListaJornadas: Numero Partidos total: " + numeroPartidosEnTotal * 2);
         return listaJornadas;
     }
 
-    //Overloading
     public static Jornada[] crearListaJornadas(Liga liga) {
         int maximoJornadas = calcularNumeroJornadas(liga.getListaEquipos().length) + 1;
         return crearListaJornadas(liga, maximoJornadas);
@@ -706,8 +675,6 @@ public class Invocador {
             listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
-        //int x = 0;
-        //int y = numeroEquipos - 2;
         Partido[] partido = new Partido[partidosPorRonda];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -730,8 +697,6 @@ public class Invocador {
             listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
-        //int x = 0;
-        //int y = numeroEquipos - 2;
         Partido[] partido = new Partido[partidosPorRonda];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -754,8 +719,6 @@ public class Invocador {
             listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
-        //int x = 0;
-        //int y = numeroEquipos - 1;
         Partido[] partido = new Partido[partidosPorRonda - 1];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -775,8 +738,6 @@ public class Invocador {
             listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
-        //int x = 0;
-        //int y = numeroEquipos - 1;
         Partido[] partido = new Partido[partidosPorRonda - 1];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -795,8 +756,6 @@ public class Invocador {
     public static void deshacerJornada(Liga liga, int hastaJornadaResetear) {
         Jornada[] listajornada = liga.getCalendario().getListaJornadas();
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
-
-        //&& hastaJornadaResetear > 0
         if (hastaJornadaResetear < ultimaJornadaJugada && hastaJornadaResetear >= 0) {
             for (int i = ultimaJornadaJugada - 1; i >= hastaJornadaResetear; i--) {
                 System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
@@ -836,7 +795,6 @@ public class Invocador {
             System.out.println("DEBUG jugarJornada: Numero Jornada: " + i);
             Partido[] listasPartidos = listajornada[i].getlistaPartidos();
             for (int j = 0; j < listasPartidos.length; j++) {
-//                jugarPartido(listasPartidos[j]);
                 jugarPartido(
                         liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j]
                 );
@@ -904,7 +862,6 @@ public class Invocador {
         }
     }
 
-    //TODO: Mirar si conviene que sea bubblesort o quicksort. Este es un bubble muy sencillito, que al menos funciona
     public static Equipo[] clasificarEquipos(Equipo[] listaEquipos) {
 
         Equipo aux;
@@ -978,8 +935,6 @@ public class Invocador {
             System.out.println();
         }
     }
-
-    //TODO: revisar
     public static Liga resetLigaConEquipo(Liga liga) {
         Equipo[] listaEquipo = liga.getListaEquipos();
         liga = new Liga();

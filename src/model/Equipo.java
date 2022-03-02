@@ -3,19 +3,15 @@ import controller.Invocador;
 
 import java.util.Arrays;
 
-
-//En equipo generamos lo que pertenece a equipo, excepto la lista de jugadores
-//TODO: pasar a una clase generadora o GenerarEquipos, los metodos generadores
 public class Equipo {
     private String      nombre;
     private String      club;
-    private Entrenador  entrenador; //Cualidad de Agregación
+    private Entrenador  entrenador;
     private String      equipacionCasa;
     private String      equipacionFuera;
     private int         numJugadores;
     private Jugador[]   jugadores;
 
-    //TODO: Estas propiedades son probisionales deberian estar en otro sitio.
     private int puntos;
     private int goles;
 
@@ -82,7 +78,6 @@ public class Equipo {
         return goles;
     }
 
-    //Para invocar desde Liga correctamente.
 
 }
 

@@ -102,7 +102,6 @@ public class Mostrador {
     }
 
     //CALENDARIO
-    //Falta asignar horas a la lista de partidos, que no hay lista de partidos.
     public static void mostrarCalendario(Liga liga, int numeroJornadas) {
         int maximoJornadas = liga.getCalendario().getListaJornadas().length;
         //Para mostar la jornada 5 que es la posicion array 6.

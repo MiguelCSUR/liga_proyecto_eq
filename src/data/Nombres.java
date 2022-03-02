@@ -20,7 +20,6 @@ public class Nombres {
         return new String[] {"Chupetín", "Prebenjamín", "Benjamín", "Alevín", "Infantil", "Cadete", "Juvenil"};
     }
 
-    //Añadir Array de nombres
     public static String[] ligaNombres() {
         return new String[]{"Juegos Pentacard", "Juegos De Westcoast", "Mightyming Gaming", "Puente Escarlata", "Club De Pixelmate", "Juegos De Appleton",
                 "Juegos De Winocrew", "Club De Costa Blanca", "Mysticmerry", "Bridgeburst Club", "Juegos Scruze Mate", "Brightnest",
