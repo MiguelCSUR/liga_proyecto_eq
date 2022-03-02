@@ -18,7 +18,7 @@ public class Mostrador {
             System.out.println("    Jugadores: ");
             for (int i = 0; i < listaJugadores.length; i++) {
                 Jugador jugador = listaJugadores[i];
-                System.out.printf("\t%2d. Nombre: " + jugador.getNombre() + jugador.getApellidos() + "\n", (i + 2));
+                System.out.printf("\t%2d. Nombre: " + jugador.getNombre() + jugador.getApellidos() + "\n", (i + 1));
                 System.out.println("\t    Dorsal: " + jugador.getDorsal());
                 System.out.println("\t    Edad: " + jugador.getEdad());
                 System.out.println("\t    Posición: " + jugador.getPosicion());
