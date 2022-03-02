@@ -7,7 +7,6 @@ import java.util.Scanner;
 
 public class GenerarLiga {
     public static void iniciarImprimirMenuLiga() {
-        Invocador.generarEspacio();
         Liga liga = new Liga();
         imprimirMenu(liga);
     }
