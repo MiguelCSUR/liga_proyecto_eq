@@ -13,8 +13,6 @@ import static java.time.DayOfWeek.*;
 public class Main {
 
     public static void main(String[] args) throws ParseException {
-
-        Liga liga = Invocador.crearLiga();
-        MostrarEquipos.iniciarMenu(liga);
+        GenerarLiga.iniciarImprimirMenuLiga();
     }
 }

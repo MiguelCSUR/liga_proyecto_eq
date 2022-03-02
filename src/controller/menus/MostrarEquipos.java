@@ -24,6 +24,7 @@ public class MostrarEquipos {
         System.out.println();
         System.out.println("Elige una opción: ");
         inputModificarListaEquipos(liga);
+        Invocador.generarEspacio();
     }
 
     public static void inputModificarListaEquipos(Liga liga) {
@@ -89,6 +90,7 @@ public class MostrarEquipos {
         System.out.println();
         System.out.println("Elige una opción:");
         inputModificarEquipo(liga, equipo);
+        Invocador.generarEspacio();
     }
 
     public static void inputModificarEquipo(Liga liga, Equipo equipo) {
@@ -209,6 +211,7 @@ public class MostrarEquipos {
         System.out.println();
         System.out.println("Elige una opción:");
         inputModificarEntrenador(liga, entrenador);
+        Invocador.generarEspacio();
     }
 
     public static void inputModificarEntrenador(Liga liga, Entrenador entrenador) {

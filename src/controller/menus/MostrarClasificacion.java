@@ -13,7 +13,7 @@ public class MostrarClasificacion {
     }
 
     public static void imprimirMenu(Liga liga) {
-        System.out.println("CLASIFICACIÓN:");
+        System.out.printf("CLASIFICACIÓN (Liga de %d Jornadas):\n", liga.getCalendario().getListaJornadas().length);
         System.out.println("1. Mostrar Clasificación.");
         System.out.println("2. Jugar un numero de jornadas. " + textoNumeroJornada(liga));
         System.out.println("3. Jugar todas las jornadas.");
@@ -21,6 +21,7 @@ public class MostrarClasificacion {
         System.out.println("5. Hacer reset de todas las jornadas.");
         System.out.println("6. Volver.");
         seleccionClasificacion(liga);
+        Invocador.generarEspacio();
     }
 
     public static void seleccionClasificacion(Liga liga) {
@@ -86,7 +87,7 @@ public class MostrarClasificacion {
         Scanner input = new Scanner(System.in);
         int numeroJornadasJugar = input.nextInt();
         while (numeroJornadasJugar < liga.getUltimaJornadaJugada() || numeroJornadasJugar < 1 || numeroJornadasJugar > liga.getCalendario().getListaJornadas().length) {
-            System.out.println("No puedes jugar esta clasificación, tienes que elegir una posterior a la actual, y mayor que 0."); //TODO: revisar este texto
+            System.out.println("No puedes jugar esta clasificación, tienes que elegir una posterior a la actual, y menor que la última."); //TODO: revisar este texto
             System.out.println("Elige otra, " + textoNumeroJornada(liga));
             numeroJornadasJugar = input.nextInt();
         }

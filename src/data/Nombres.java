@@ -46,7 +46,7 @@ public class Nombres {
                 "Casa De Guerra", "Juego De Sicario", "Aplastamiento De Aves", "Aplastar Al Hombre", "Rey Del Cosmos", "Rey De Pandora",
                 "Versos Sicario", "Cobes Ultimate Battle", "Espíritu Nova", "Juegos Extra", "Juegos Rápidos", "Juegos Grady",
                 "Gradiente De Juegos", "Juego De Contraste", "Juegos Alphabate", "Uno Diez Juegos", "Futura Juegos", "Vivid Smash Gaming",
-                "Copa Hombre Cubo", "Ea Sparatan", "La Candovell", "Juegos Colombiana", "Aplastadores Africanos", "Juegos Hitbird",
+                "Copa Hombre Cubo", "La Candovell", "Juegos Colombiana", "Aplastadores Africanos", "Juegos Hitbird",
                 "Ca Go Gaming", "Juego Competitivo", "Juego Inferno", "Juego De Platino", "Imperra Gaming"};
     }
 
@@ -55,7 +55,7 @@ public class Nombres {
                 "Ratchet", "Donkey Kong", "Goku", "Doraemon", "Perchita", "Suneo", "Gandalf", "Frodo", "Bilbo",
                 "Dovahkiin", "Sonic", "Cloud", "Sephiroth", "Dante", "Geralt", "Trevor", "Victor", "Jinx", "VI", "Catelyn",
                 "Katarina", "Treiny", "Shuna", "Talim", "Ivy", "CJ", "Spyro", "Squall", "Yuna", "Riku", "Jill", "Wesker",
-                "Kassandra", "Alexios", "Luigi", "C�trico", "Culo", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
+                "Kassandra", "Alexios", "Luigi", "Cítrico", "Duke", "Tifa", "Alucard", "Drake", "Koopa", "Axel", "Arwen",
                 "Eowyn", "Sakura", "Naruto", "Ash", "Sasuke", "Vegeta", "Sauron", "Legolas", "Leia", "Luke", "Vader"};
     }
 
