@@ -36,6 +36,7 @@ public class GenerarLiga {
             System.out.println(" 4. Fecha Inicio - " +"\033[0;1m"+ Invocador.dateToString(liga.getFechaInicio())+"\033[0;0m");
         }
         System.out.println(" 5. Crear Liga ");
+        System.out.println(" 6. Salir ");
         System.out.println(" Si falta por rellenar algun campo este se generara de modo aleatorio");
         System.out.println();
         System.out.println("Elige una opción:");
@@ -130,6 +131,9 @@ public class GenerarLiga {
                 liga.setListaArbitros(Invocador.crearListaArbitros(liga.getListaEquipos().length));
                 liga.setCalendario(Invocador.crearCalendario(liga));
                 MostrarLiga.iniciarMenu(liga);
+                break;
+            case 6:
+                System.exit(0);
                 break;
             default:
                 System.out.println("ERROR. Opción introducida incorrecta");
