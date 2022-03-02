@@ -10,7 +10,6 @@
 package controller;
 
 import data.Nombres;
-import jdk.swing.interop.SwingInterOpUtils;
 import model.*;
 
 import java.time.DayOfWeek;
@@ -292,14 +291,14 @@ public class Invocador {
 
     //Creamos las equipaciones de los equipos de casa y se la damos
     public static String generarEquipacionCasa(int numeroEquipacion) {
-        String[] listaEquipacion = {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Negro-Blanco", "Gris-Negro"};
-        return listaEquipacion[numeroEquipacion];
+        String[] equipacionCasa = Nombres.equipacionesCasa();
+        return equipacionCasa[numeroEquipacion];
 
     }
 
     //Creamos las equipaciones de los equipos de fuera y se la damos
     public static String generarEquipacionFuera(int numeroEquipacion) {
-        String[] equipacionFuera = {"Rojo", "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Rosa", "Blanco", "Gris"};
+        String[] equipacionFuera = Nombres.equipacionesFuera();
         return equipacionFuera[numeroEquipacion];
     }
 
@@ -313,7 +312,7 @@ public class Invocador {
     public static Equipo crearEquipo(String categoria,int formacion) {
         Equipo equipo = new Equipo();
         equipo.setNombre(generarNombreEquipo());
-        int numeroEquipacion = generarNumeroEntre(0, 8);
+        int numeroEquipacion = generarNumeroEntre(0, (Nombres.equipacionesCasa().length - 1));
         equipo.setEquipacionCasa(generarEquipacionCasa(numeroEquipacion));
         equipo.setEquipacionFuera(generarEquipacionFuera(numeroEquipacion));
         equipo.setClub(generarClub());
@@ -514,11 +513,33 @@ public class Invocador {
         return listaPartidos;
     }
 
+    public static void deshacerPartido(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        restarPuntos(partido);
+
+        int golesEquipoCasa = partido.getGolesEquipoCasa();
+        partido.setGolesEquipoCasa(0);
+        equipoCasa.setGoles(equipoCasa.getGoles() - golesEquipoCasa);
+
+        int golesEquipoFuera = partido.getGolesEquipoFuera();
+        partido.setGolesEquipoFuera(0);
+        equipoFuera.setGoles(equipoFuera.getGoles() - golesEquipoFuera);
+
+        //DEBUG
+        System.out.println("DEBUG jugarPartido()");
+        System.out.println("Partido" + partido.getNumeroPartido());
+
+        System.out.println(equipoCasa.getClub() + " Goles: " + partido.getGolesEquipoCasa() + " Puntos: " + equipoCasa.getPuntos());
+        System.out.println(equipoFuera.getClub() + " Goles: " + partido.getGolesEquipoFuera() + " Puntos: " + equipoFuera.getPuntos());
+    }
+
+
     public static void jugarPartido(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();
         Equipo equipoFuera = partido.getEquipoFuera();
 
-        System.out.println();
         //Generamos los golesEquipoCasa
         int golesEquipoCasa = generadorGoles();
         //Seteamos los goles del Equipo casa, al partido en la propiedad partido.golesEquipoCasa
@@ -771,6 +792,40 @@ public class Invocador {
         return partido;
     }
 
+    public static void deshacerJornada(Liga liga, int hastaJornadaResetear) {
+        Jornada[] listajornada = liga.getCalendario().getListaJornadas();
+        int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
+
+        //&& hastaJornadaResetear > 0
+        if (hastaJornadaResetear < ultimaJornadaJugada && hastaJornadaResetear >= 0) {
+            for (int i = ultimaJornadaJugada - 1; i >= hastaJornadaResetear; i--) {
+                System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
+                Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+                for (int j = 0; j < listasPartidos.length; j++) {
+                    deshacerPartido(listasPartidos[j]);
+                }
+            }
+
+            liga.setUltimaJornadaJugada(hastaJornadaResetear);
+        } else if (hastaJornadaResetear == 0) {
+            for (int i = 0; i >= listajornada.length; i--) {
+                System.out.println("DEBUG deshacerJornada: Numero Jornada: " + i);
+                Partido[] listasPartidos = listajornada[i].getlistaPartidos();
+                for (int j = 0; j < listasPartidos.length; j++) {
+                    listasPartidos[j].setGolesEquipoCasa(0);
+                    listasPartidos[j].setGolesEquipoFuera(0);
+
+                    listasPartidos[j].getEquipoCasa().setGoles(0);
+                    listasPartidos[j].getEquipoCasa().setPuntos(0);
+
+                    listasPartidos[j].getEquipoFuera().setGoles(0);
+                    listasPartidos[j].getEquipoFuera().setPuntos(0);
+                }
+            }
+            liga.setUltimaJornadaJugada(0);
+        }
+    }
+
     public static void jugarJornada(Liga liga, int numeroJornadasAJugar) {
         Jornada[] listajornada = liga.getCalendario().getListaJornadas();
         int ultimaJornadaJugada = liga.getUltimaJornadaJugada();
@@ -806,6 +861,31 @@ public class Invocador {
 
 
     //TODO: CLASIFICACION
+
+    public static Equipo[] resetPuntos(Equipo[] listaEquipos) {
+        for (int i = 0; i < listaEquipos.length; i++) {
+            listaEquipos[i].setPuntos(0);
+            listaEquipos[i].setGoles(0);
+        }
+        return listaEquipos;
+    }
+
+    public static void restarPuntos(Partido partido) {
+        Equipo equipoCasa = partido.getEquipoCasa();
+        Equipo equipoFuera = partido.getEquipoFuera();
+
+        if (partido.getGolesEquipoCasa() == partido.getGolesEquipoFuera()) {
+            //Empate
+            equipoCasa.setPuntos(equipoCasa.getPuntos() - 1);
+            equipoFuera.setPuntos(equipoFuera.getPuntos() - 1);
+        } else if (partido.getGolesEquipoCasa() > partido.getGolesEquipoFuera()) {
+            //Gana Equipo Casa
+            equipoCasa.setPuntos(equipoCasa.getPuntos() - 3);
+        } else {
+            //Gana Equipo Fuera
+            equipoFuera.setPuntos(equipoFuera.getPuntos() - 3);
+        }
+    }
 
     public static void asignarPuntos(Partido partido) {
         Equipo equipoCasa = partido.getEquipoCasa();

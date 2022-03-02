@@ -91,4 +91,12 @@ public class Nombres {
                 "Ciudad Porcelana", "Ciudad Mayolica", "Pueblo Biscuit", "Ciudad Fayenza", "Ciudad Caolin"};
     }
 
+    public static String[] equipacionesCasa() {
+       return new  String[] {"Rojo-Amarillo", "Verde-Blanco", "Azul-Blanco", "Rojo-Negro", "Amarillo-Azul", "Naranja-Verde", "Rosa-Blanco", "Blanco"};
+    }
+
+    public static String[] equipacionesFuera() {
+        return new String[] {"Verde", "Rojo", "Amarillo", "Negro", "Morado", "Azul", "Negro", "Morado"};
+    }
+
 }
