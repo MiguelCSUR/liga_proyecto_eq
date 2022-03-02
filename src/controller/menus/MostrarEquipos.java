@@ -32,11 +32,11 @@ public class MostrarEquipos {
         Equipo[] listaEquipo = liga.getListaEquipos();
         int numeroEquipo = 0;
         switch (seleccion) {
-            case 1: //1. Mostrar lista de equipos. HECHO
+            case 1:
                 Mostrador.mostrarListaEquipos(listaEquipo, false);
                 iniciarMenu(liga);
                 break;
-            case 2: //2. Mostrar un equipo. HECHO
+            case 2:
                 Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
@@ -47,7 +47,7 @@ public class MostrarEquipos {
                 Mostrador.mostrarListaJugadores(equipoMostrar, false);
                 iniciarMenu(liga);
                 break;
-            case 3: //3. Modificar un equipos.
+            case 3:
                 Mostrador.mostrarListaEquipos(listaEquipo, true);
                 System.out.print("Elige un equipo: ");
                 numeroEquipo = input.nextInt();
@@ -68,7 +68,7 @@ public class MostrarEquipos {
                 Mostrador.mostrarCompromisosPartidos(liga, equipoComprimiso);
                 iniciarMenu(liga);
                 break;
-            case 5: //4. Volver.
+            case 5:
                 MostrarPartidos.iniciarMenu(liga);
                 break;
             default:
@@ -77,7 +77,6 @@ public class MostrarEquipos {
                 break;
         }
     }
-//Pruebas nacho
     public static void printModificarEquipo(Liga liga, Equipo equipo) {
         System.out.println("EQUIPO:");
         System.out.println("1. Nombre equipo: " + equipo.getNombre());
@@ -97,22 +96,22 @@ public class MostrarEquipos {
         int seleccion = input.nextInt();
         Jugador[] listaJugadores = equipo.getJugadores();
         switch (seleccion) {
-            case 1: //1. Nombre equipo:
+            case 1:
                 System.out.println("Introduce un nombre: ");
                 String nombre = introduceTexto();
                 equipo.setNombre(nombre);
                 printModificarEquipo(liga, equipo);
                 break;
-            case 2: //2. Nombre club:
+            case 2:
                 System.out.println("Introduce un nombre de club: ");
                 String club = introduceTexto();
                 equipo.setClub(club);
                 printModificarEquipo(liga, equipo);
                 break;
-            case 3: //3. Entrenador: TODO: Comprobar
+            case 3:
                 printModificarEntrenador(liga, equipo.getEntrenador());
                 break;
-            case 4: //4. Jugadores. TODO: Comprobar
+            case 4:
                 Mostrador.mostrarListaJugadores(equipo, true);
                 System.out.print("Elige un jugador: ");
                 int numeroJugador = input.nextInt();
@@ -128,7 +127,7 @@ public class MostrarEquipos {
                 equipo = Invocador.cambiarFormacionEquipo(equipo,input.nextInt());
                 printModificarEquipo(liga,equipo);
                 break;
-            case 6: //5. Volver.
+            case 6:
                 printModificarListaEquipos(liga);
                 break;
             default:
@@ -155,28 +154,43 @@ public class MostrarEquipos {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         switch (seleccion) {
-            case 1: //Dorsal
+            case 1:
                 System.out.println("Introduce un numero de dorsal: ");
                 jugador.setDorsal(introduceNumero());
                 printModificarJugador(liga, jugador);
                 break;
-            case 2: //Nombre
+            case 2:
                 System.out.println("Introduce un nombre: ");
                 jugador.setNombre(introduceTexto());
                 System.out.println("Introduce o varios apellidos: ");
                 jugador.setApellidos(introduceTexto());
                 printModificarJugador(liga, jugador);
                 break;
-            case 3: //Edad
+            case 3:
                 System.out.println("Introduce una edad: ");
                 jugador.setEdad(introduceNumero());
                 printModificarJugador(liga, jugador);
                 break;
-            case 4: //Posición
-                System.out.println("Introduce una posición: ");
-                //TODO: meter mod posicion
+            case 4:
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Introduce una opción: ");
+                System.out.println("1. Portero");
+                System.out.println("2. Defensa");
+                System.out.println("3. Centrocampista");
+                System.out.println("4. Delantero");
+                int opcion = sc.nextInt();
+                switch (opcion){
+                    case 1:
+                        jugador.setPosicion("Portero");
+                    case 2:
+                        jugador.setPosicion("Defensa");
+                    case 3:
+                        jugador.setPosicion("Centrocampista");
+                    case 4:
+                        jugador.setPosicion("Delantero");
+                }
                 break;
-            case 5: //Volver
+            case 5:
                 printModificarEquipo(liga, jugador.getEquipo());
                 break;
             default:
@@ -201,7 +215,7 @@ public class MostrarEquipos {
         Scanner input = new Scanner(System.in);
         int seleccion = input.nextInt();
         switch (seleccion) {
-            case 1: //Licencia
+            case 1:
                 System.out.println("Introduce un numero de licencia: ");
                 int licencia = input.nextInt();
                 while (licencia < 0) {
@@ -211,14 +225,14 @@ public class MostrarEquipos {
                 entrenador.setNumeroLicencia(licencia);
                 printModificarEntrenador(liga, entrenador);
                 break;
-            case 2: //Nombre
+            case 2:
                 System.out.println("Introduce un nombre: ");
                 entrenador.setNombre(introduceTexto());
                 System.out.println("Introduce uno o varios apellidos: ");
                 entrenador.setApellidos(introduceTexto());
                 printModificarEntrenador(liga, entrenador);
                 break;
-            case 3: //Edad
+            case 3:
                 System.out.println("Introduce una edad: ");
                 entrenador.setEdad(introduceNumero());
                 printModificarEntrenador(liga, entrenador);

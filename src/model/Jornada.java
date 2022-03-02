@@ -2,7 +2,6 @@ package model;
 
 import java.util.Arrays;
 public class Jornada {
-    //Esto iría en Liga
     private Partido [] listaPartidos;
 
     public Jornada() {
