@@ -1,8 +1,6 @@
 package controller.menus;
-
 import controller.Invocador;
 import model.*;
-
 import java.util.Scanner;
 
 public class GenerarLiga {

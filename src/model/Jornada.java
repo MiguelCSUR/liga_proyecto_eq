@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Arrays;
+
 public class Jornada {
     private Partido [] listaPartidos;
 

@@ -1,5 +1,6 @@
 package model;
 
+
 public class Arbitro extends Persona {
     int licencia;
 

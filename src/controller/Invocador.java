@@ -1,20 +1,8 @@
-//Criterios
-//CREAR para Objetos propios. Ejemplos: Persona, Equipo, etc
-//crearPartido() crearListaPartidos() crearEquipo
-//Si creas un array de X será crearListaX(). Ejemplo crearJugador(), crearListaJugadores()
-
-//GENERAR para atributos, propiedades, parámetros que no sean objetos propios
-//generarNombre()
-//Ejemplo: String, int, Integer, etc
-
 package controller;
-
 import data.Nombres;
 import model.*;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-
 import static java.time.DayOfWeek.SATURDAY;
 import static java.time.DayOfWeek.SUNDAY;
 

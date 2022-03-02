@@ -1,7 +1,5 @@
 package controller.menus;
 import java.util.Scanner;
-
-import controller.Invocador;
 import controller.Mostrador;
 import model.Liga;
 

@@ -4,7 +4,6 @@ import controller.Invocador;
 import controller.Mostrador;
 import model.Liga;
 import model.Partido;
-
 import java.util.Scanner;
 
 public class MostrarPartidos {

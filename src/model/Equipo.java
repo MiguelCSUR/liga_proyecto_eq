@@ -1,7 +1,5 @@
 package model;
-import controller.Invocador;
 
-import java.util.Arrays;
 
 public class Equipo {
     private String      nombre;

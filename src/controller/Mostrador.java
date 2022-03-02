@@ -1,13 +1,5 @@
 package controller;
-
-import data.Nombres;
 import model.*;
-
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-
-import static java.time.DayOfWeek.SATURDAY;
-import static java.time.DayOfWeek.SUNDAY;
 
 public class Mostrador {
 

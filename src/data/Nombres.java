@@ -1,7 +1,5 @@
 package data;
-
 import controller.Invocador;
-
 import java.time.format.DateTimeFormatter;
 
 public class Nombres {

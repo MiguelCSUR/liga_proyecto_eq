@@ -1,7 +1,5 @@
 package model;
 
-import model.Persona;
-
 
 public class Jugador extends Persona {
     private String categoria;

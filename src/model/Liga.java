@@ -1,9 +1,6 @@
 package model;
-
-import controller.Invocador;
-
 import java.time.LocalDate;
-import java.util.Arrays;
+
 
 public class Liga {
 
