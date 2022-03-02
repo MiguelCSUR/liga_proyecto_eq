@@ -114,8 +114,7 @@ public class MostrarPartidos {
             default:
                 System.out.println("Opción incorrecta");
         }
+        MostrarLiga.imprimirMenu(liga);
     }
-
-
 }
 

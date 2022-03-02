@@ -126,6 +126,15 @@ public class Mostrador {
                 System.out.printf("\tPartido " + partido.getNumeroPartido() + ". %27s %5s\n", Invocador.dateToString(partido.getFecha()), partido.getHoraInicio());
                 System.out.printf("\t%-20s  VS  %20s\n", "Casa", "Visitante");
                 System.out.printf("\t%-20s      %20s\n\n", partido.getEquipoCasa().getClub(), partido.getEquipoFuera().getClub());
+                
+                if (i < liga.getUltimaJornadaJugada()){
+                    int golesCasa = liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j].getGolesEquipoCasa();
+                    int golesFuera = liga.getCalendario().getListaJornadas()[i].getlistaPartidos()[j].getGolesEquipoFuera();
+
+                    System.out.println();
+                    System.out.println("\t\t  Goles Casa \t\t Goles Fuera");
+                    System.out.println("\t\t\t   "+golesCasa+"\tVS\t "+golesFuera+"\t");
+                }
             }
             contadorJornadas++;
         }

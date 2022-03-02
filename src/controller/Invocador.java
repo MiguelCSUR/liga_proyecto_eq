@@ -572,6 +572,9 @@ public class Invocador {
         int numeroEquipos = listaEquipos.length;
         int numeroPartidosEnTotal = (numeroEquipos * (numeroEquipos - 1)) / 2;
         int numeroRondas;
+        //variables auxiliares para las posiciones de los equipos en las jornadas
+        int x = 0;
+        int y = 0;
 
         //TODO: revisar si esta variable se usa
         int numeroPartidosPorRonda;
@@ -588,19 +591,38 @@ public class Invocador {
         Jornada[] listaJornadas = new Jornada[numeroRondas * 2];
 
         int contadorJornadas = 0;
+        
         if (numeroEquipos % 2 == 0) {//para los pares
+            x=0;
+            y=numeroEquipos-2;
             for (int i = 0; i < numeroRondas; i++) {
                 Jornada jornada = new Jornada();
-                jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros));
+                jornada.setListaPartidos(crearPartidosJornadaParIda(i, listaEquipos, listaArbitros, x, y));
+                
+                x+=numeroPartidosPorRonda;
+                y-=numeroPartidosPorRonda-1;
+
+                if (x > numeroEquipos-2) x-= numeroEquipos-2;
+                if (y < 0)               y+= numeroEquipos-2;
+
                 listaJornadas[i] = jornada;
                 if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
             }
+            x=0;
+            y=numeroEquipos-2;
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
-                jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros));
+                jornada.setListaPartidos(crearPartidosJornadaParVuelta(i, listaEquipos, listaArbitros, x, y));
+                
+                x+=numeroPartidosPorRonda;
+                y-=numeroPartidosPorRonda-1;
+
+                if (x > numeroEquipos-2) x-= numeroEquipos-2;
+                if (y < 0)               y+= numeroEquipos-2;
+
                 listaJornadas[i + numeroRondas] = jornada;
                 if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
@@ -610,19 +632,38 @@ public class Invocador {
         } else {//para los impares
             //para los impares hay que hacerlo como el numero par encima del impar, solo que saltandote la primera fila (j=0).
             //asi que hay que todo lo que tenga que ver con numEquipos y numPartidosPorRonda se le suma uno.
+ 
+            x = 0;
+            y = numeroEquipos-1;
             for (int i = 0; i < numeroRondas; i++) {
                 Jornada jornada = new Jornada();
-                jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros));
+                jornada.setListaPartidos(crearPartidosJornadaImparIda(i, listaEquipos, listaArbitros, x, y));
                 listaJornadas[i] = jornada;
+
+                x += numeroPartidosPorRonda+1;
+                y -= numeroPartidosPorRonda;
+                
+                if (x > (numeroEquipos - 1))  x -= numeroEquipos;
+                if (y < 0)                    y += numeroEquipos-1;
+
                 if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
                 contadorJornadas++;
             }
+            x = 0;
+            y = numeroEquipos-1;
             for (int i = 0; i < numeroRondas; i++) {//otra vez lo mismo pero con los datos cambiados para que los de casa sean fuera y viceversa
                 Jornada jornada = new Jornada();
-                jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros));
+                jornada.setListaPartidos(crearPartidosJornadaImparVuelta(i, listaEquipos, listaArbitros, x, y));
                 listaJornadas[i + numeroRondas] = jornada;
+
+                x += numeroPartidosPorRonda;
+                y -= numeroPartidosPorRonda-1;
+                
+                if (x > (numeroEquipos - 1))  x -= numeroEquipos;
+                if (y < 0)                    y += numeroEquipos-1;
+
                 if (contadorJornadas > maximoJornadas) {
                     return listaJornadas;
                 }
@@ -641,11 +682,11 @@ public class Invocador {
     }
 
     public static Partido[] crearPartidosJornadaParIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-            listaArbitros) {
+            listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
-        int x = 0;
-        int y = numeroEquipos - 2;
+        //int x = 0;
+        //int y = numeroEquipos - 2;
         Partido[] partido = new Partido[partidosPorRonda];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -665,11 +706,11 @@ public class Invocador {
     }
 
     public static Partido[] crearPartidosJornadaParVuelta(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-            listaArbitros) {
+            listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = numeroEquipos / 2;
-        int x = 0;
-        int y = numeroEquipos - 2;
+        //int x = 0;
+        //int y = numeroEquipos - 2;
         Partido[] partido = new Partido[partidosPorRonda];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -689,11 +730,11 @@ public class Invocador {
     }
 
     public static Partido[] crearPartidosJornadaImparIda(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-            listaArbitros) {
+            listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
-        int x = 0;
-        int y = numeroEquipos - 1;
+        //int x = 0;
+        //int y = numeroEquipos - 1;
         Partido[] partido = new Partido[partidosPorRonda - 1];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
@@ -710,11 +751,11 @@ public class Invocador {
     }
 
     public static Partido[] crearPartidosJornadaImparVuelta(int numeroJornada, Equipo[] listaEquipos, Arbitro[]
-            listaArbitros) {
+            listaArbitros, int x, int y) {
         int numeroEquipos = listaEquipos.length;
         int partidosPorRonda = (numeroEquipos / 2) + 1;
-        int x = 0;
-        int y = numeroEquipos - 1;
+        //int x = 0;
+        //int y = numeroEquipos - 1;
         Partido[] partido = new Partido[partidosPorRonda - 1];
         for (int j = 0; j < partidosPorRonda; j++) {
             if (j == 0) {
